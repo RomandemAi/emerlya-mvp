@@ -163,81 +163,128 @@ export async function createStripePortalSession() {
 }
 
 export async function createCheckoutSession() {
-  const supabase = await createClient();
+  try {
+    console.log('Starting checkout session creation...');
+    
+    const supabase = await createClient();
 
-  // Get the current user's session
-  const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
+    // Get the current user's session
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
-  if (sessionError || !session) {
-    return redirect('/login');
-  }
+    if (sessionError) {
+      console.error('Session error:', sessionError);
+      throw new Error('Failed to get user session');
+    }
 
-  const user = session.user;
+    if (!session) {
+      console.error('No active session found');
+      throw new Error('You must be logged in to upgrade');
+    }
 
-  // First, ensure the user has a profile record
-  const { data: existingProfile } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', user.id)
-    .single();
+    const user = session.user;
+    console.log('Creating checkout for user:', user.email);
 
-  if (!existingProfile) {
-    // Create profile if it doesn't exist
-    const { error: profileError } = await supabase
+    // First, ensure the user has a profile record
+    const { data: existingProfile } = await supabase
       .from('profiles')
-      .insert({
-        id: user.id,
-        subscription_status: null,
-        stripe_customer_id: null,
+      .select('id')
+      .eq('id', user.id)
+      .single();
+
+    if (!existingProfile) {
+      console.log('Creating new user profile...');
+      // Create profile if it doesn't exist
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: user.id,
+          subscription_status: null,
+          stripe_customer_id: null,
+        });
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError);
+        throw new Error('Failed to create user profile');
+      }
+    }
+
+    // Get or create Stripe customer
+    const { data: profile, error: profileFetchError } = await supabase
+      .from('profiles')
+      .select('stripe_customer_id')
+      .eq('id', user.id)
+      .single();
+
+    if (profileFetchError) {
+      console.error('Profile fetch error:', profileFetchError);
+      throw new Error('Failed to fetch user profile');
+    }
+
+    let customerId = profile?.stripe_customer_id;
+    
+    if (!customerId) {
+      console.log('Creating new Stripe customer...');
+      try {
+        // Create a new customer in Stripe
+        const customer = await stripe.customers.create({ 
+          email: user.email,
+          metadata: {
+            supabase_user_id: user.id
+          }
+        });
+        customerId = customer.id;
+        console.log('Created Stripe customer:', customerId);
+        
+        // Save the new customer ID in our database
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', user.id);
+
+        if (updateError) {
+          console.error('Customer ID update error:', updateError);
+          throw new Error('Failed to save customer information');
+        }
+      } catch (stripeError) {
+        console.error('Stripe customer creation error:', stripeError);
+        throw new Error('Failed to create Stripe customer');
+      }
+    }
+
+    console.log('Creating Stripe checkout session...');
+
+    // Create Stripe Checkout Session
+    try {
+      const checkoutSession = await stripe.checkout.sessions.create({
+        customer: customerId,
+        client_reference_id: user.id,
+        line_items: [
+          {
+            price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID!,
+            quantity: 1,
+          },
+        ],
+        mode: 'subscription',
+        success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?success=true`,
+        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
       });
 
-    if (profileError) {
-      throw new Error('Failed to create user profile');
+      console.log('Checkout session created successfully:', checkoutSession.id);
+      return checkoutSession.id;
+
+    } catch (stripeError) {
+      console.error('Stripe checkout creation error:', stripeError);
+      throw new Error('Failed to create checkout session');
     }
-  }
 
-  // Get or create Stripe customer
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('stripe_customer_id')
-    .eq('id', user.id)
-    .single();
-
-  let customerId = profile?.stripe_customer_id;
-  if (!customerId) {
-    // Create a new customer in Stripe
-    const customer = await stripe.customers.create({ 
-      email: user.email,
-      metadata: {
-        supabase_user_id: user.id
-      }
-    });
-    customerId = customer.id;
+  } catch (error) {
+    console.error('createCheckoutSession error:', error);
     
-    // Save the new customer ID in our database
-    await supabase
-      .from('profiles')
-      .update({ stripe_customer_id: customerId })
-      .eq('id', user.id);
+    // Re-throw with a user-friendly message
+    const message = error instanceof Error ? error.message : 'Failed to create checkout session';
+    throw new Error(message);
   }
-
-  // Create Stripe Checkout Session
-  const checkoutSession = await stripe.checkout.sessions.create({
-    customer: customerId,
-    client_reference_id: user.id,
-    line_items: [
-      {
-        price: 'price_1Rt6t1FL0Nt3XbK9UnNDtTnj',
-        quantity: 1,
-      },
-    ],
-    mode: 'subscription',
-    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?success=true`,
-    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
-  });
-
-  return checkoutSession.id;
 }

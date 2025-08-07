@@ -12,12 +12,22 @@ export default function UpgradeButton() {
   const handleUpgrade = async () => {
     setIsLoading(true);
     try {
+      console.log('Starting upgrade process...');
+      
       const sessionId = await createCheckoutSession();
+      console.log('Received session ID:', sessionId);
+      
+      if (!sessionId) {
+        throw new Error('No session ID returned from server');
+      }
+
       const stripe = await stripePromise;
       
       if (!stripe) {
         throw new Error('Stripe failed to initialize');
       }
+
+      console.log('Redirecting to Stripe checkout...');
 
       // Redirect to Stripe Checkout
       const { error } = await stripe.redirectToCheckout({
@@ -26,11 +36,12 @@ export default function UpgradeButton() {
 
       if (error) {
         console.error('Error redirecting to checkout:', error);
-        alert('Failed to redirect to checkout. Please try again.');
+        alert(`Checkout redirect failed: ${error.message || 'Please try again.'}`);
       }
     } catch (error) {
-      console.error('Error creating checkout session:', error);
-      alert('Failed to start checkout. Please try again.');
+      console.error('Error in upgrade process:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      alert(`Failed to start checkout: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
