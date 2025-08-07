@@ -9,7 +9,12 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
 
-  if (code) {
+  if (!code) {
+    console.error('No code provided in auth callback')
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_code`)
+  }
+
+  try {
     const cookieStore = await cookies()
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -28,14 +33,26 @@ export async function GET(request: NextRequest) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (error) {
-      console.error('Supabase auth error:', error)
-      // Optionally, redirect to an error page
-    }
-  }
 
-  // URL to redirect to after sign in process completes
-  const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-return NextResponse.redirect(redirectUrl);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    
+    if (error) {
+      console.error('Supabase auth exchange error:', error.message)
+      return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=auth_failed&message=${encodeURIComponent(error.message)}`)
+    }
+
+    if (!data.session) {
+      console.error('No session created after successful exchange')
+      return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_session`)
+    }
+
+    console.log('Auth callback successful for user:', data.user?.email)
+    
+    // Successful authentication - redirect to dashboard
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)
+
+  } catch (error) {
+    console.error('Auth callback unexpected error:', error)
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=unexpected`)
+  }
 }
