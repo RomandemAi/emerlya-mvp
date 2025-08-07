@@ -98,10 +98,17 @@ export async function createBrand(formData: FormData) {
 export async function createStripePortalSession() {
   const supabase = await createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  // Get the current user's session (same pattern as createBrand)
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  if (sessionError || !session) {
     return redirect('/login');
   }
+
+  const user = session.user;
 
   // First, ensure the user has a profile record
   const { data: existingProfile } = await supabase
