@@ -161,3 +161,83 @@ export async function createStripePortalSession() {
 
   return portalSession.url;
 }
+
+export async function createCheckoutSession() {
+  const supabase = await createClient();
+
+  // Get the current user's session
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  if (sessionError || !session) {
+    return redirect('/login');
+  }
+
+  const user = session.user;
+
+  // First, ensure the user has a profile record
+  const { data: existingProfile } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', user.id)
+    .single();
+
+  if (!existingProfile) {
+    // Create profile if it doesn't exist
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: user.id,
+        subscription_status: null,
+        stripe_customer_id: null,
+      });
+
+    if (profileError) {
+      throw new Error('Failed to create user profile');
+    }
+  }
+
+  // Get or create Stripe customer
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('stripe_customer_id')
+    .eq('id', user.id)
+    .single();
+
+  let customerId = profile?.stripe_customer_id;
+  if (!customerId) {
+    // Create a new customer in Stripe
+    const customer = await stripe.customers.create({ 
+      email: user.email,
+      metadata: {
+        supabase_user_id: user.id
+      }
+    });
+    customerId = customer.id;
+    
+    // Save the new customer ID in our database
+    await supabase
+      .from('profiles')
+      .update({ stripe_customer_id: customerId })
+      .eq('id', user.id);
+  }
+
+  // Create Stripe Checkout Session
+  const checkoutSession = await stripe.checkout.sessions.create({
+    customer: customerId,
+    client_reference_id: user.id,
+    line_items: [
+      {
+        price: 'price_1Rt6t1FL0Nt3XbK9UnNDtTnj',
+        quantity: 1,
+      },
+    ],
+    mode: 'subscription',
+    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?success=true`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
+  });
+
+  return checkoutSession.id;
+}

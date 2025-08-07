@@ -25,8 +25,18 @@ export default async function Home() {
     console.error('Error fetching brands:', error);
   }
 
+  // Fetch user's subscription status
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('subscription_status')
+    .eq('id', session.user.id)
+    .single();
+
   return (
-    <DashboardLayout userEmail={session.user.email || ''}>
+    <DashboardLayout 
+      userEmail={session.user.email || ''}
+      subscriptionStatus={profile?.subscription_status || null}
+    >
       <DashboardContent brands={brands || []} />
     </DashboardLayout>
   );

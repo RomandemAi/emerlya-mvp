@@ -30,7 +30,10 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
 
   if (error || !brand) {
     return (
-      <DashboardLayout userEmail={session.user.email || ''}>
+      <DashboardLayout 
+        userEmail={session.user.email || ''}
+        subscriptionStatus={profile?.subscription_status || null}
+      >
         <div className="flex flex-col items-center justify-center h-64">
           <div className="text-red-400 text-lg mb-4">❌ Brand not found</div>
           <p className="text-gray-400 mb-6">
@@ -48,7 +51,10 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
   }
 
   return (
-    <DashboardLayout userEmail={session.user.email || ''}>
+    <DashboardLayout 
+      userEmail={session.user.email || ''}
+      subscriptionStatus={profile?.subscription_status || null}
+    >
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-2">
           <Link 
