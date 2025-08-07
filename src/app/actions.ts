@@ -281,10 +281,38 @@ export async function createCheckoutSession() {
     }
 
   } catch (error) {
-    console.error('createCheckoutSession error:', error);
+    console.error('=== CHECKOUT SESSION ERROR ===');
+    console.error('Error type:', error?.constructor?.name);
+    console.error('Error message:', error instanceof Error ? error.message : error);
+    console.error('Full error:', error);
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    
+    // Check if it's a Stripe error
+    if (error && typeof error === 'object' && 'type' in error) {
+      console.error('Stripe error type:', error.type);
+      if ('code' in error) {
+        console.error('Stripe error code:', error.code);
+      }
+    }
     
     // Re-throw with a user-friendly message
-    const message = error instanceof Error ? error.message : 'Failed to create checkout session';
+    let message = 'Failed to create checkout session';
+    
+    if (error instanceof Error) {
+      // Check for specific error types
+      if (error.message.includes('Invalid price')) {
+        message = 'Invalid pricing configuration. Please contact support.';
+      } else if (error.message.includes('No such price')) {
+        message = 'Pricing not found. Please contact support.';
+      } else if (error.message.includes('Customer')) {
+        message = 'Customer account error. Please try again.';
+      } else if (error.message.includes('rate_limit')) {
+        message = 'Too many requests. Please wait a moment and try again.';
+      } else {
+        message = `Checkout error: ${error.message}`;
+      }
+    }
+    
     throw new Error(message);
   }
 }
