@@ -1,10 +1,10 @@
 'use client';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { createClient } from '../../lib/supabase/client';
 
 export default function Login() {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   return (
     <div

@@ -1,13 +1,12 @@
 'use server';
 
-import { createServerComponentClient, createServerActionClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { stripe } from '../lib/stripe';
+import { createClient } from '../lib/supabase/actions';
 
 export async function createBrand(formData: FormData) {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = await createClient();
 
   // Get the current user's session
   const {
@@ -97,7 +96,7 @@ export async function createBrand(formData: FormData) {
 }
 
 export async function createStripePortalSession() {
-  const supabase = createServerActionClient({ cookies });
+  const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
