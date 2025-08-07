@@ -4,13 +4,23 @@ import DashboardContent from '../components/DashboardContent';
 import { createClient } from '../lib/supabase/server';
 
 export default async function Home() {
+  console.log('=== HOME PAGE ACCESSED ===');
+  
   const supabase = await createClient();
 
   const {
     data: { session },
+    error: sessionError,
   } = await supabase.auth.getSession();
 
+  console.log('Session check result:', { 
+    hasSession: !!session, 
+    userEmail: session?.user?.email,
+    error: sessionError 
+  });
+
   if (!session) {
+    console.log('=== NO SESSION FOUND - REDIRECTING TO LOGIN ===');
     redirect('/login');
   }
 

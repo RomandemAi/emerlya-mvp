@@ -6,11 +6,17 @@ import type { NextRequest } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
+  console.log('=== AUTH CALLBACK ROUTE HIT ===');
+  console.log('Request URL:', request.url);
+  
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
+  
+  console.log('Search params:', Object.fromEntries(searchParams.entries()));
+  console.log('Code parameter:', code);
 
   if (!code) {
-    console.error('No code provided in auth callback')
+    console.error('=== NO CODE PROVIDED ===')
     return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_code`)
   }
 
