@@ -130,5 +130,5 @@ export async function createStripePortalSession() {
     return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/`,
   });
 
-  return redirect(portalSession.url);
+  return portalSession.url;
 }
