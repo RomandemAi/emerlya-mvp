@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { stripe } from '../lib/stripe';
 import { createClient } from '../lib/supabase/actions';
 
@@ -105,7 +104,7 @@ export async function createStripePortalSession() {
   } = await supabase.auth.getSession();
 
   if (sessionError || !session) {
-    return redirect('/login');
+    throw new Error('You must be logged in to manage billing');
   }
 
   const user = session.user;
