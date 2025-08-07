@@ -103,6 +103,28 @@ export async function createStripePortalSession() {
     return redirect('/login');
   }
 
+  // First, ensure the user has a profile record
+  const { data: existingProfile } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', user.id)
+    .single();
+
+  if (!existingProfile) {
+    // Create profile if it doesn't exist
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: user.id,
+        subscription_status: null,
+        stripe_customer_id: null,
+      });
+
+    if (profileError) {
+      throw new Error('Failed to create user profile');
+    }
+  }
+
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('stripe_customer_id')
