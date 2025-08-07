@@ -1,7 +1,6 @@
 // src/app/api/generate/route.ts
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '../../../lib/supabase/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import OpenAI from 'openai';
 
@@ -13,7 +12,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export async function POST(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {

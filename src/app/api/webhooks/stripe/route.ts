@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '../../../../lib/supabase/server';
 import Stripe from 'stripe';
 
 // Initialize Stripe with the secret key
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Initialize Supabase client
-    const supabase = createServerComponentClient({ cookies });
+    const supabase = await createClient();
 
     // Handle the event
     switch (event.type) {
