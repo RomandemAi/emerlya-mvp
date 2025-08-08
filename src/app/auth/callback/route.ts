@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
@@ -22,24 +22,80 @@ export async function GET(request: NextRequest) {
 
   try {
     const cookieStore = await cookies()
+    
+    // Create response object that we'll modify with cookies
+    let response = NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)
+    
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
           get(name: string) {
-            return cookieStore.get(name)?.value
+            const value = cookieStore.get(name)?.value
+            console.log(`[Auth Callback] Getting cookie ${name}:`, value ? 'exists' : 'missing')
+            return value
           },
-          set(name: string, value: string, options) {
-            cookieStore.set({ name, value, ...options })
+          set(name: string, value: string, options: CookieOptions) {
+            console.log(`[Auth Callback] Setting cookie ${name} with domain:`, process.env.NODE_ENV === 'production' ? '.emerlya.com' : 'localhost')
+            
+            // Set cookie on the request (for downstream usage)
+            cookieStore.set({ 
+              name, 
+              value, 
+              ...options,
+              // CRITICAL: Use same domain configuration as middleware
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+            })
+            
+            // Also set on the response to ensure it's sent to the client
+            response.cookies.set({
+              name,
+              value,
+              ...options,
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+            })
           },
-          remove(name: string, options) {
-            cookieStore.delete({ name, ...options })
+          remove(name: string, options: CookieOptions) {
+            console.log(`[Auth Callback] Removing cookie ${name}`)
+            
+            cookieStore.set({ 
+              name, 
+              value: '', 
+              ...options,
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+              maxAge: 0,
+            })
+            
+            response.cookies.set({
+              name,
+              value: '',
+              ...options,
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+              maxAge: 0,
+            })
           },
         },
       }
     )
 
+    console.log('Exchanging code for session...')
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (error) {
@@ -52,29 +108,45 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_session`)
     }
 
+    console.log('Session created for user:', data.user?.email)
+    console.log('Session access token exists:', !!data.session.access_token)
+    console.log('Session refresh token exists:', !!data.session.refresh_token)
+
     // Force set the session for better persistence on Netlify
     try {
+      console.log('Force-setting session for persistence...')
       await supabase.auth.setSession(data.session)
-      console.log('Session forcefully set for better persistence')
       
       // Additional verification - get the session again to ensure it's set
-      const { data: verifyData } = await supabase.auth.getSession()
+      const { data: verifyData, error: verifyError } = await supabase.auth.getSession()
       if (verifyData.session) {
-        console.log('Session verified after force-set:', verifyData.session.user?.email)
+        console.log('✅ Session verified after force-set:', verifyData.session.user?.email)
       } else {
-        console.warn('Session verification failed after force-set')
+        console.warn('⚠️ Session verification failed after force-set:', verifyError?.message)
+      }
+      
+      // Get user to ensure auth is working
+      const { data: userData, error: userError } = await supabase.auth.getUser()
+      if (userData.user) {
+        console.log('✅ User verified:', userData.user.email)
+      } else {
+        console.warn('⚠️ User verification failed:', userError?.message)
       }
     } catch (setError) {
       console.error('Failed to force-set session:', setError)
     }
 
-    console.log('Auth callback successful for user:', data.user?.email)
+    console.log('=== AUTH CALLBACK COMPLETE - REDIRECTING TO DASHBOARD ===')
+    
+    // List all cookies being set
+    const allCookies = cookieStore.getAll()
+    console.log('Cookies after auth:', allCookies.map(c => ({ name: c.name, hasValue: !!c.value })))
     
     // Add small delay to ensure cookies are set before redirect
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise(resolve => setTimeout(resolve, 200))
     
-    // Successful authentication - redirect to dashboard
-    return NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)
+    // Return the response with all the cookies set
+    return response
 
   } catch (error) {
     console.error('Auth callback unexpected error:', error)
