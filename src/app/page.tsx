@@ -2,21 +2,20 @@ import { redirect } from 'next/navigation';
 import DashboardLayout from '../components/DashboardLayout';
 import DashboardContent from '../components/DashboardContent';
 import { createClient } from '../lib/supabase/server';
+import { getAuthenticatedUser } from '../lib/supabase/auth';
 
 export default async function Home() {
   console.log('=== HOME PAGE ACCESSED ===');
   
   const supabase = await createClient();
-
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  
+  // Use the safe auth check that doesn't throw
+  const user = await getAuthenticatedUser();
 
   console.log('User check result:', { 
     hasUser: !!user, 
     userEmail: user?.email,
-    error: userError 
+    error: user ? null : 'No user session'
   });
 
   if (!user) {

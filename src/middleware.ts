@@ -17,30 +17,83 @@ export async function middleware(request: NextRequest) {
           return request.cookies.get(name)?.value
         },
         set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({ name, value, ...options })
+          // Cookie options optimized for Netlify production
+          const cookieOptions = {
+            ...options,
+            sameSite: 'lax' as const,
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            path: '/',
+          }
+          
+          request.cookies.set({ 
+            name, 
+            value,
+            ...cookieOptions 
+          })
+          
           response = NextResponse.next({
             request: { headers: request.headers },
           })
-          response.cookies.set({ name, value, ...options })
+          
+          response.cookies.set({ 
+            name, 
+            value,
+            ...cookieOptions 
+          })
         },
         remove(name: string, options: CookieOptions) {
-          request.cookies.set({ name, value: '', ...options })
+          const cookieOptions = {
+            ...options,
+            sameSite: 'lax' as const,
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            path: '/',
+          }
+          
+          request.cookies.set({ 
+            name, 
+            value: '',
+            ...cookieOptions 
+          })
+          
           response = NextResponse.next({
             request: { headers: request.headers },
           })
-          response.cookies.set({ name, value: '', ...options })
+          
+          response.cookies.set({ 
+            name, 
+            value: '',
+            ...cookieOptions 
+          })
         },
       },
     }
   )
 
-  await supabase.auth.getSession()
+  // This will refresh the session if expired - critical for Server Components
+  // Using try-catch to handle cases where no session exists
+  try {
+    await supabase.auth.getUser()
+  } catch (error) {
+    // Log for debugging but don't throw - let the page handle auth
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Middleware: No active session or session refresh failed')
+    }
+  }
 
   return response
 }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public files with extensions
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

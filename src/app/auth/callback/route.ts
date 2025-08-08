@@ -52,6 +52,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_session`)
     }
 
+    // Force set the session for better persistence on Netlify
+    try {
+      await supabase.auth.setSession(data.session)
+      console.log('Session forcefully set for better persistence')
+    } catch (setError) {
+      console.error('Failed to force-set session:', setError)
+    }
+
     console.log('Auth callback successful for user:', data.user?.email)
     
     // Successful authentication - redirect to dashboard

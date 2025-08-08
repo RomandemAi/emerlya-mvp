@@ -3,17 +3,15 @@
 import { revalidatePath } from 'next/cache';
 import { stripe } from '../lib/stripe';
 import { createClient } from '../lib/supabase/actions';
+import { getAuthenticatedUser, ensureUserProfile } from '../lib/supabase/auth';
 
 export async function createBrand(formData: FormData) {
   const supabase = await createClient();
 
-  // Get the current user
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  // Get the current user using safe auth check
+  const user = await getAuthenticatedUser();
 
-  if (userError || !user) {
+  if (!user) {
     throw new Error('You must be logged in to create a brand');
   }
 
@@ -35,27 +33,8 @@ export async function createBrand(formData: FormData) {
   }
 
   try {
-    // First, ensure the user has a profile record
-    const { data: existingProfile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', user.id)
-      .single();
-
-    if (!existingProfile) {
-      // Create profile if it doesn't exist
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: user.id,
-          subscription_status: null,
-          stripe_customer_id: null,
-        });
-
-      if (profileError) {
-        throw new Error('Failed to create user profile');
-      }
-    }
+    // Ensure the user has a profile record
+    await ensureUserProfile(user.id);
 
     // Insert the new brand into the brands table
     const { data: brandData, error: brandError } = await supabase
@@ -97,37 +76,15 @@ export async function createBrand(formData: FormData) {
 export async function createStripePortalSession() {
   const supabase = await createClient();
 
-  // Get the current user
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  // Get the current user using safe auth check
+  const user = await getAuthenticatedUser();
 
-  if (userError || !user) {
+  if (!user) {
     throw new Error('You must be logged in to manage billing');
   }
 
-  // First, ensure the user has a profile record
-  const { data: existingProfile } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', user.id)
-    .single();
-
-  if (!existingProfile) {
-    // Create profile if it doesn't exist
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .insert({
-        id: user.id,
-        subscription_status: null,
-        stripe_customer_id: null,
-      });
-
-    if (profileError) {
-      throw new Error('Failed to create user profile');
-    }
-  }
+  // Ensure the user has a profile record
+  await ensureUserProfile(user.id);
 
   const { data: profile, error } = await supabase
     .from('profiles')
@@ -165,16 +122,8 @@ export async function createCheckoutSession() {
     
     const supabase = await createClient();
 
-    // Get the current user
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError) {
-      console.error('User error:', userError);
-      throw new Error('Failed to get user');
-    }
+    // Get the current user using safe auth check
+    const user = await getAuthenticatedUser();
 
     if (!user) {
       console.error('No authenticated user found');
@@ -183,29 +132,8 @@ export async function createCheckoutSession() {
 
     console.log('Creating checkout for user:', user.email);
 
-    // First, ensure the user has a profile record
-    const { data: existingProfile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', user.id)
-      .single();
-
-    if (!existingProfile) {
-      console.log('Creating new user profile...');
-      // Create profile if it doesn't exist
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: user.id,
-          subscription_status: null,
-          stripe_customer_id: null,
-        });
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        throw new Error('Failed to create user profile');
-      }
-    }
+    // Ensure the user has a profile record
+    await ensureUserProfile(user.id);
 
     // Get or create Stripe customer
     const { data: profile, error: profileFetchError } = await supabase
