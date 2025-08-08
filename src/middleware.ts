@@ -75,7 +75,7 @@ export async function middleware(request: NextRequest) {
   // Using try-catch to handle cases where no session exists
   try {
     await supabase.auth.getUser()
-  } catch (error) {
+  } catch {
     // Log for debugging but don't throw - let the page handle auth
     if (process.env.NODE_ENV === 'development') {
       console.log('Middleware: No active session or session refresh failed')

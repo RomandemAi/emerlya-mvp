@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   console.log('=== AUTH CALLBACK ROUTE HIT ===');
   console.log('Request URL:', request.url);
   
-  const { searchParams, origin } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
   
   console.log('Search params:', Object.fromEntries(searchParams.entries()));

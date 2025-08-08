@@ -16,11 +16,14 @@ export async function getAuthenticatedUser() {
     }
     
     return user
-  } catch (error: any) {
+  } catch (error) {
     // Handle AuthSessionMissingError specifically
-    if (error?.message?.includes('AuthSessionMissingError') || 
-        error?.name === 'AuthSessionMissingError' ||
-        error?.message?.includes('session')) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorName = error instanceof Error ? error.name : ''
+    
+    if (errorMessage.includes('AuthSessionMissingError') || 
+        errorName === 'AuthSessionMissingError' ||
+        errorMessage.includes('session')) {
       console.log('No active session found')
       return null
     }
