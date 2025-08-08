@@ -138,22 +138,26 @@ export async function POST(request: NextRequest) {
         error: null 
       });
 
-    } catch (stripeError: any) {
+    } catch (stripeError: unknown) {
       console.error('Stripe checkout creation error:', stripeError);
       
       // Check for specific Stripe errors
       let errorMessage = 'Failed to create checkout session';
       
-      if (stripeError?.message?.includes('Invalid price')) {
+      const errorMsg = stripeError instanceof Error ? stripeError.message : 
+                       typeof stripeError === 'object' && stripeError !== null && 'message' in stripeError 
+                       ? String((stripeError as {message: unknown}).message) : '';
+      
+      if (errorMsg.includes('Invalid price')) {
         errorMessage = 'Invalid pricing configuration. Please contact support.';
-      } else if (stripeError?.message?.includes('No such price')) {
+      } else if (errorMsg.includes('No such price')) {
         errorMessage = 'Pricing not found. Please contact support.';
-      } else if (stripeError?.message?.includes('Customer')) {
+      } else if (errorMsg.includes('Customer')) {
         errorMessage = 'Customer account error. Please try again.';
-      } else if (stripeError?.message?.includes('rate_limit')) {
+      } else if (errorMsg.includes('rate_limit')) {
         errorMessage = 'Too many requests. Please wait a moment and try again.';
-      } else if (stripeError?.message) {
-        errorMessage = `Checkout error: ${stripeError.message}`;
+      } else if (errorMsg) {
+        errorMessage = `Checkout error: ${errorMsg}`;
       }
       
       return NextResponse.json(
@@ -162,12 +166,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('=== CHECKOUT API ROUTE ERROR ===');
     console.error('Error:', error);
     
+    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+    
     return NextResponse.json(
-      { error: error?.message || 'An unexpected error occurred' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
