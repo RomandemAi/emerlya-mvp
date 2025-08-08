@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { createCheckoutSession } from '../app/actions';
 import { useRouter } from 'next/navigation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -16,13 +15,22 @@ export default function UpgradeButton() {
     try {
       console.log('Starting upgrade process...');
       
-      const result = await createCheckoutSession();
+      // Call the API route instead of server action
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Important: Include cookies
+      });
+
+      const result = await response.json();
       console.log('Checkout result:', result);
       
       // Check if there's an error in the response
       if (result.error) {
         // If authentication is required, redirect to login
-        if (result.requiresAuth) {
+        if (result.requiresAuth || response.status === 401) {
           console.log('Authentication required, redirecting to login...');
           router.push('/login');
           return;
