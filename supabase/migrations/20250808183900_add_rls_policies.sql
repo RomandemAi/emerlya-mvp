@@ -1,3 +1,4 @@
+-- GitHub Integration Test: Added 2025-08-08
 -- 1. Create policy to allow users to insert their own profile
 create policy "Users can insert their own profile."
 on public.profiles for insert
