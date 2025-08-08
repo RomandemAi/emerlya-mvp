@@ -9,18 +9,18 @@ export default async function Home() {
   const supabase = await createClient();
 
   const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  console.log('Session check result:', { 
-    hasSession: !!session, 
-    userEmail: session?.user?.email,
-    error: sessionError 
+  console.log('User check result:', { 
+    hasUser: !!user, 
+    userEmail: user?.email,
+    error: userError 
   });
 
-  if (!session) {
-    console.log('=== NO SESSION FOUND - REDIRECTING TO LOGIN ===');
+  if (!user) {
+    console.log('=== NO USER FOUND - REDIRECTING TO LOGIN ===');
     redirect('/login');
   }
 
@@ -28,7 +28,7 @@ export default async function Home() {
   const { data: brands, error } = await supabase
     .from('brands')
     .select('id, name, created_at')
-    .eq('profile_id', session.user.id)
+    .eq('profile_id', user.id)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -39,12 +39,12 @@ export default async function Home() {
   const { data: profile } = await supabase
     .from('profiles')
     .select('subscription_status')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single();
 
   return (
     <DashboardLayout 
-      userEmail={session.user.email || ''}
+      userEmail={user.email || ''}
       subscriptionStatus={profile?.subscription_status || null}
     >
       <DashboardContent brands={brands || []} />

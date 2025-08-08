@@ -7,13 +7,13 @@ import { createClient } from '../lib/supabase/actions';
 export async function createBrand(formData: FormData) {
   const supabase = await createClient();
 
-  // Get the current user's session
+  // Get the current user
   const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  if (sessionError || !session) {
+  if (userError || !user) {
     throw new Error('You must be logged in to create a brand');
   }
 
@@ -39,7 +39,7 @@ export async function createBrand(formData: FormData) {
     const { data: existingProfile } = await supabase
       .from('profiles')
       .select('id')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single();
 
     if (!existingProfile) {
@@ -47,7 +47,7 @@ export async function createBrand(formData: FormData) {
       const { error: profileError } = await supabase
         .from('profiles')
         .insert({
-          id: session.user.id,
+          id: user.id,
           subscription_status: null,
           stripe_customer_id: null,
         });
@@ -61,7 +61,7 @@ export async function createBrand(formData: FormData) {
     const { data: brandData, error: brandError } = await supabase
       .from('brands')
       .insert({
-        profile_id: session.user.id,
+        profile_id: user.id,
         name: brandName,
         persona_config_json: parsedPersonaConfig,
       })
@@ -97,17 +97,15 @@ export async function createBrand(formData: FormData) {
 export async function createStripePortalSession() {
   const supabase = await createClient();
 
-  // Get the current user's session (same pattern as createBrand)
+  // Get the current user
   const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  if (sessionError || !session) {
+  if (userError || !user) {
     throw new Error('You must be logged in to manage billing');
   }
-
-  const user = session.user;
 
   // First, ensure the user has a profile record
   const { data: existingProfile } = await supabase
@@ -167,23 +165,22 @@ export async function createCheckoutSession() {
     
     const supabase = await createClient();
 
-    // Get the current user's session
+    // Get the current user
     const {
-      data: { session },
-      error: sessionError,
-    } = await supabase.auth.getSession();
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-    if (sessionError) {
-      console.error('Session error:', sessionError);
-      throw new Error('Failed to get user session');
+    if (userError) {
+      console.error('User error:', userError);
+      throw new Error('Failed to get user');
     }
 
-    if (!session) {
-      console.error('No active session found');
+    if (!user) {
+      console.error('No authenticated user found');
       throw new Error('You must be logged in to upgrade');
     }
 
-    const user = session.user;
     console.log('Creating checkout for user:', user.email);
 
     // First, ensure the user has a profile record
