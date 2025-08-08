@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const cookieStore = await cookies()
     
     // Create response object that we'll modify with cookies
-    let response = NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)
+    const response = NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)
     
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
