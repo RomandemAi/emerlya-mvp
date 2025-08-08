@@ -4,6 +4,7 @@
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
+  NODE_ENV = "production"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -15,10 +16,40 @@
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Cookie settings for auth subdomain
+[[headers]]
+  for = "/api/auth/*"
+  [headers.values]
+    Set-Cookie = "SameSite=Lax; Secure; HttpOnly; Domain=.emerlya.com; Path=/"
+
+[[headers]]
+  for = "/auth/callback"
+  [headers.values]
+    Set-Cookie = "SameSite=Lax; Secure; HttpOnly; Domain=.emerlya.com; Path=/"
 
 [functions]
   node_bundler = "esbuild"
+  included_files = ["src/**"]
+  
+# Optimize auth routes as edge functions for better performance
+[[edge_functions]]
+  path = "/api/auth/*"
+  function = "auth"
   
 [[edge_functions]]
-  path = "/api/*"
-  function = "api"
+  path = "/auth/callback"
+  function = "auth-callback"
+
+# Increase function timeout for checkout and webhooks
+[[functions.settings]]
+  "api-webhooks-stripe" = { timeout = 15 }
+  "api-generate" = { timeout = 15 }
+
+# Redirects for better auth flow
+[[redirects]]
+  from = "/api/auth"
+  to = "/api/auth/callback"
+  status = 301
+  force = false

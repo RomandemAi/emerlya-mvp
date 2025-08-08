@@ -118,7 +118,8 @@ export async function createStripePortalSession() {
 
 export async function createCheckoutSession() {
   try {
-    console.log('Starting checkout session creation...');
+    console.log('=== CHECKOUT SESSION START ===');
+    console.log('Environment:', process.env.NODE_ENV);
     
     const supabase = await createClient();
 
@@ -126,8 +127,12 @@ export async function createCheckoutSession() {
     const user = await getAuthenticatedUser();
 
     if (!user) {
-      console.error('No authenticated user found');
-      throw new Error('You must be logged in to upgrade');
+      console.error('No authenticated user found during checkout');
+      // Return error instead of throwing for better client handling
+      return { 
+        error: 'You must be logged in to upgrade',
+        requiresAuth: true 
+      };
     }
 
     console.log('Creating checkout for user:', user.email);
@@ -196,8 +201,9 @@ export async function createCheckoutSession() {
         cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
       });
 
-      console.log('Checkout session created successfully:', checkoutSession.id);
-      return checkoutSession.id;
+    console.log('Checkout session created successfully:', checkoutSession.id);
+    console.log('=== CHECKOUT SESSION SUCCESS ===');
+    return { sessionId: checkoutSession.id, error: null };
 
     } catch (stripeError) {
       console.error('Stripe checkout creation error:', stripeError);
@@ -237,6 +243,10 @@ export async function createCheckoutSession() {
       }
     }
     
-    throw new Error(message);
+    // Return error object instead of throwing
+    return { 
+      error: message,
+      requiresAuth: message.includes('logged in')
+    };
   }
 }

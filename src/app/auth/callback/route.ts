@@ -56,11 +56,22 @@ export async function GET(request: NextRequest) {
     try {
       await supabase.auth.setSession(data.session)
       console.log('Session forcefully set for better persistence')
+      
+      // Additional verification - get the session again to ensure it's set
+      const { data: verifyData } = await supabase.auth.getSession()
+      if (verifyData.session) {
+        console.log('Session verified after force-set:', verifyData.session.user?.email)
+      } else {
+        console.warn('Session verification failed after force-set')
+      }
     } catch (setError) {
       console.error('Failed to force-set session:', setError)
     }
 
     console.log('Auth callback successful for user:', data.user?.email)
+    
+    // Add small delay to ensure cookies are set before redirect
+    await new Promise(resolve => setTimeout(resolve, 100))
     
     // Successful authentication - redirect to dashboard
     return NextResponse.redirect(process.env.NEXT_PUBLIC_SITE_URL!)

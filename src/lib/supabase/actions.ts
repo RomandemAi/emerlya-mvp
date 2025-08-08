@@ -14,7 +14,18 @@ export const createClient = async () => {
         },
         set(name: string, value: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value, ...options })
+            // Set cookie with production settings
+            cookieStore.set({ 
+              name, 
+              value, 
+              ...options,
+              // Production cookie settings for cross-subdomain auth
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+            })
           } catch {
             // The `set` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing sessions.
@@ -22,7 +33,18 @@ export const createClient = async () => {
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: '', ...options })
+            cookieStore.set({ 
+              name, 
+              value: '', 
+              ...options,
+              // Production cookie settings
+              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              httpOnly: true,
+              path: '/',
+              maxAge: 0,
+            })
           } catch {
             // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing sessions.

@@ -3,21 +3,36 @@
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { createCheckoutSession } from '../app/actions';
+import { useRouter } from 'next/navigation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function UpgradeButton() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleUpgrade = async () => {
     setIsLoading(true);
     try {
       console.log('Starting upgrade process...');
       
-      const sessionId = await createCheckoutSession();
-      console.log('Received session ID:', sessionId);
+      const result = await createCheckoutSession();
+      console.log('Checkout result:', result);
       
-      if (!sessionId) {
+      // Check if there's an error in the response
+      if (result.error) {
+        // If authentication is required, redirect to login
+        if (result.requiresAuth) {
+          console.log('Authentication required, redirecting to login...');
+          router.push('/login');
+          return;
+        }
+        
+        // Otherwise show the error
+        throw new Error(result.error);
+      }
+      
+      if (!result.sessionId) {
         throw new Error('No session ID returned from server');
       }
 
@@ -31,7 +46,7 @@ export default function UpgradeButton() {
 
       // Redirect to Stripe Checkout
       const { error } = await stripe.redirectToCheckout({
-        sessionId: sessionId,
+        sessionId: result.sessionId,
       });
 
       if (error) {
