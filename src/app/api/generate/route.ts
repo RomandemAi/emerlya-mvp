@@ -89,7 +89,7 @@ export async function POST(req: Request) {
     let promptVector;
     try {
       const embeddingResponse = await openai.embeddings.create({
-        model: 'text-embedding-3-small',
+        model: 'text-embedding-ada-002',
         input: user_prompt,
       });
       promptVector = embeddingResponse.data[0].embedding;
