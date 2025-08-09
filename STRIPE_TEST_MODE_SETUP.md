@@ -10,7 +10,7 @@ Go to Netlify Dashboard → Site Settings → Environment Variables and update t
 ### Required Updates:
 ```
 STRIPE_SECRET_KEY=[Your test secret key from Stripe Dashboard - starts with sk_test_]
-NEXT_PUBLIC_STRIPE_PRICE_ID=price_1RuA3kFL0Nt3XbK9x80eKj6p
+NEXT_PUBLIC_STRIPE_PRICE_ID=price_1RuAvDFL0Nt3XbK9b6TSnacQ
 ```
 
 **Note:** Get your test secret key from Stripe Dashboard → Developers → API Keys
