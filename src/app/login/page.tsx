@@ -8,48 +8,66 @@ import Link from 'next/link';
 
 function LoginForm() {
   const searchParams = useSearchParams();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showResendHint, setShowResendHint] = useState(false);
-  const [hideAuthComponent, setHideAuthComponent] = useState(false);
+  
+  // Check for error parameters immediately on component initialization
+  const hasError = searchParams.get('error') !== null;
+  const initialErrorCode = searchParams.get('error_code');
+  const initialError = searchParams.get('error');
+  const initialMessage = searchParams.get('message');
+  const initialErrorDescription = searchParams.get('error_description');
+  
+  // Determine initial error message and whether to hide Auth component
+  const getInitialErrorState = () => {
+    if (!hasError) return { message: null, showHint: false };
+    
+    if (initialErrorCode === 'otp_expired' || initialError === 'access_denied') {
+      return {
+        message: initialMessage ? decodeURIComponent(initialMessage) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.',
+        showHint: true
+      };
+    }
+    
+    switch (initialError) {
+      case 'no_code':
+        return {
+          message: initialMessage ? decodeURIComponent(initialMessage) : 'Authentication link is invalid or expired.',
+          showHint: true
+        };
+      case 'auth_failed':
+        return {
+          message: initialMessage ? decodeURIComponent(initialMessage) : 'Authentication failed. Please try again.',
+          showHint: false
+        };
+      case 'no_session':
+        return {
+          message: 'Session could not be created. Please try signing in again.',
+          showHint: false
+        };
+      case 'unexpected':
+        return {
+          message: 'An unexpected error occurred. Please try again.',
+          showHint: false
+        };
+      default:
+        return {
+          message: initialErrorDescription ? decodeURIComponent(initialErrorDescription) : 'Authentication error. Please try again.',
+          showHint: false
+        };
+    }
+  };
+  
+  const initialErrorState = getInitialErrorState();
+  
+  const [errorMessage, setErrorMessage] = useState<string | null>(initialErrorState.message);
+  const [showResendHint, setShowResendHint] = useState(initialErrorState.showHint);
+  const [hideAuthComponent, setHideAuthComponent] = useState(hasError);
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const error = searchParams.get('error');
-    const errorCode = searchParams.get('error_code');
-    const message = searchParams.get('message');
-    const errorDescription = searchParams.get('error_description');
-    
-    if (error) {
-      // Hide the Auth component when there are errors
-      setHideAuthComponent(true);
-      
-      // Check for OTP expired error specifically
-      if (errorCode === 'otp_expired' || error === 'access_denied') {
-        setErrorMessage(message ? decodeURIComponent(message) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.');
-        setShowResendHint(true);
-      } else {
-        switch (error) {
-          case 'no_code':
-            setErrorMessage(message ? decodeURIComponent(message) : 'Authentication link is invalid or expired.');
-            setShowResendHint(true);
-            break;
-          case 'auth_failed':
-            setErrorMessage(message ? decodeURIComponent(message) : 'Authentication failed. Please try again.');
-            break;
-          case 'no_session':
-            setErrorMessage('Session could not be created. Please try signing in again.');
-            break;
-          case 'unexpected':
-            setErrorMessage('An unexpected error occurred. Please try again.');
-            break;
-          default:
-            setErrorMessage(errorDescription ? decodeURIComponent(errorDescription) : 'Authentication error. Please try again.');
-        }
-      }
-
-      // Immediately clear URL parameters
+    if (hasError) {
+      // Clear URL parameters immediately
       window.history.replaceState({}, '', '/login');
 
       // Clear error message and show Auth component again after 20 seconds
@@ -61,7 +79,7 @@ function LoginForm() {
 
       return () => clearTimeout(timeout);
     }
-  }, [searchParams]);
+  }, [hasError]);
 
   const handleSendMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
