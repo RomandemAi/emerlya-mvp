@@ -1,6 +1,18 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
+const cookieDomain = (() => {
+  try {
+    if (process.env.NEXT_PUBLIC_COOKIE_DOMAIN) return process.env.NEXT_PUBLIC_COOKIE_DOMAIN
+    if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_SITE_URL) {
+      return `.${new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname}`
+    }
+  } catch {
+    // If parsing fails, fall back to undefined
+  }
+  return undefined
+})()
+
 export const createClient = async () => {
   const cookieStore = await cookies()
 
@@ -15,12 +27,12 @@ export const createClient = async () => {
         set(name: string, value: string, options: CookieOptions) {
           try {
             // Set cookie with production settings
-            cookieStore.set({ 
-              name, 
-              value, 
+            cookieStore.set({
+              name,
+              value,
               ...options,
-              // Production cookie settings for cross-subdomain auth
-              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              // Use configured cookie domain or derive from NEXT_PUBLIC_SITE_URL in production
+              domain: cookieDomain,
               secure: process.env.NODE_ENV === 'production',
               sameSite: 'lax',
               httpOnly: true,
@@ -33,12 +45,12 @@ export const createClient = async () => {
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ 
-              name, 
-              value: '', 
+            cookieStore.set({
+              name,
+              value: '',
               ...options,
-              // Production cookie settings
-              domain: process.env.NODE_ENV === 'production' ? '.emerlya.com' : undefined,
+              // Use same domain logic for removal
+              domain: cookieDomain,
               secure: process.env.NODE_ENV === 'production',
               sameSite: 'lax',
               httpOnly: true,
