@@ -43,18 +43,90 @@ export default async function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section with 3D Effects */}
+      <style jsx>{`
+        .hero-3d-text {
+          text-shadow: 
+            0 1px 0 #ccc,
+            0 2px 0 #c9c9c9,
+            0 3px 0 #bbb,
+            0 4px 0 #b9b9b9,
+            0 5px 0 #aaa,
+            0 6px 1px rgba(0,0,0,.1),
+            0 0 5px rgba(0,0,0,.1),
+            0 1px 3px rgba(0,0,0,.3),
+            0 3px 5px rgba(0,0,0,.2),
+            0 5px 10px rgba(0,0,0,.25),
+            0 10px 10px rgba(0,0,0,.2),
+            0 20px 20px rgba(0,0,0,.15);
+          transform: perspective(1000px) rotateY(-2deg);
+          transition: all 0.3s ease;
+        }
+        
+        .hero-3d-text:hover {
+          transform: perspective(1000px) rotateY(0deg) scale(1.02);
+          text-shadow: 
+            0 1px 0 #ccc,
+            0 2px 0 #c9c9c9,
+            0 3px 0 #bbb,
+            0 4px 0 #b9b9b9,
+            0 5px 0 #aaa,
+            0 6px 1px rgba(0,0,0,.1),
+            0 0 5px rgba(0,0,0,.1),
+            0 1px 3px rgba(0,0,0,.3),
+            0 3px 5px rgba(0,0,0,.2),
+            0 7px 15px rgba(0,0,0,.3),
+            0 15px 15px rgba(0,0,0,.25),
+            0 25px 25px rgba(0,0,0,.2);
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) perspective(1000px) rotateY(-2deg); }
+          50% { transform: translateY(-10px) perspective(1000px) rotateY(-2deg); }
+        }
+        
+        .floating-3d {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        .gradient-3d {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-shadow: none;
+          position: relative;
+        }
+        
+        .gradient-3d::before {
+          content: attr(data-text);
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: -1;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-shadow: 
+            2px 2px 0px rgba(102, 126, 234, 0.2),
+            4px 4px 0px rgba(118, 75, 162, 0.1),
+            6px 6px 12px rgba(0, 0, 0, 0.1);
+        }
+      `}</style>
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Transform Your Content with{' '}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 hero-3d-text floating-3d">
+            Welcome to the Future of Content
+          </h1>
+          <div className="mb-6">
+            <span className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-3d inline-block" data-text="Emerlya AI">
               Emerlya AI
             </span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Intelligent content generation that captures your brand&apos;s unique voice. 
-            Powered by advanced AI to deliver consistent, high-quality content at scale.
+          </div>
+          <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
+            Create compelling, on-brand content in seconds. Our AI understands your unique voice 
+            and delivers professional results that resonate with your audience.
           </p>
           <div className="flex justify-center space-x-4">
             <Link href="/login">
@@ -74,7 +146,7 @@ export default async function LandingPage() {
       {/* Glass Cards Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-900 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Why Choose Emerlya AI?
           </h2>
           
@@ -87,10 +159,10 @@ export default async function LandingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   AI-Powered Generation
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-sm text-gray-600">
                   Leverage cutting-edge AI models to create compelling content that resonates with your audience.
                 </p>
               </div>
@@ -104,10 +176,10 @@ export default async function LandingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Brand Voice Control
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-sm text-gray-600">
                   Maintain perfect consistency across all content with customizable brand voice profiles.
                 </p>
               </div>
@@ -121,10 +193,10 @@ export default async function LandingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Smart Document Analysis
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-sm text-gray-600">
                   Upload your documents and let AI extract insights to enhance content generation.
                 </p>
               </div>
@@ -138,10 +210,10 @@ export default async function LandingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Enterprise Security
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-sm text-gray-600">
                   GDPR compliant with bank-level encryption. Your data is always secure and private.
                 </p>
               </div>
@@ -154,24 +226,24 @@ export default async function LandingPage() {
       <section className="py-20 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
         <div className="max-w-7xl mx-auto">
           <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-16 shadow-2xl border border-white/50">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10">
               Built for Modern Teams
             </h2>
             <div className="grid md:grid-cols-3 gap-12">
               <div className="text-center">
-                <div className="text-5xl mb-4">🚀</div>
-                <h3 className="text-xl font-semibold mb-3">Lightning Fast</h3>
-                <p className="text-gray-600">Generate content in seconds, not hours</p>
+                <div className="text-4xl mb-4">🚀</div>
+                <h3 className="text-lg font-semibold mb-2">Lightning Fast</h3>
+                <p className="text-sm text-gray-600">Generate content in seconds, not hours</p>
               </div>
               <div className="text-center">
-                <div className="text-5xl mb-4">🎯</div>
-                <h3 className="text-xl font-semibold mb-3">Always On-Brand</h3>
-                <p className="text-gray-600">Maintain consistency across all channels</p>
+                <div className="text-4xl mb-4">🎯</div>
+                <h3 className="text-lg font-semibold mb-2">Always On-Brand</h3>
+                <p className="text-sm text-gray-600">Maintain consistency across all channels</p>
               </div>
               <div className="text-center">
-                <div className="text-5xl mb-4">📈</div>
-                <h3 className="text-xl font-semibold mb-3">Scale Effortlessly</h3>
-                <p className="text-gray-600">From startup to enterprise, we grow with you</p>
+                <div className="text-4xl mb-4">📈</div>
+                <h3 className="text-lg font-semibold mb-2">Scale Effortlessly</h3>
+                <p className="text-sm text-gray-600">From startup to enterprise, we grow with you</p>
               </div>
             </div>
           </div>
@@ -181,10 +253,10 @@ export default async function LandingPage() {
       {/* CTA Section */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Ready to Transform Your Content Strategy?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-lg md:text-xl text-gray-600 mb-8">
             Join thousands of teams already using Emerlya AI to create amazing content.
           </p>
           <Link href="/login">
