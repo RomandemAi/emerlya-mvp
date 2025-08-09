@@ -131,6 +131,23 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Creating Stripe checkout session...');
+    
+    // Debug: Log the price ID being used
+    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
+    console.log('Using Price ID:', priceId);
+    console.log('Price ID starts with:', priceId?.substring(0, 10));
+    console.log('Full environment check:');
+    console.log('- Stripe Secret Key starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 10));
+    console.log('- Publishable Key starts with:', process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.substring(0, 10));
+    console.log('- Site URL:', process.env.NEXT_PUBLIC_SITE_URL);
+
+    if (!priceId) {
+      console.error('CRITICAL: Price ID is undefined!');
+      return NextResponse.json(
+        { error: 'Price ID not configured. Please contact support.' },
+        { status: 500 }
+      );
+    }
 
     // Create Stripe Checkout Session
     try {
@@ -139,7 +156,7 @@ export async function POST(request: NextRequest) {
         client_reference_id: user.id,
         line_items: [
           {
-            price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID!,
+            price: priceId,
             quantity: 1,
           },
         ],
