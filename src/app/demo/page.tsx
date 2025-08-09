@@ -103,8 +103,11 @@ export default function DemoPage() {
             </span>
           </Link>
           <div className="flex items-center space-x-8">
-            <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Home
+            <Link href="/" className="flex items-center space-x-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Back to Home</span>
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
               About

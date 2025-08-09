@@ -78,7 +78,7 @@ function LoginForm() {
           {showResendHint && (
             <div className="mt-3 pt-3 border-t border-red-200">
               <p className="text-xs text-red-600">
-                💡 <strong>Tip:</strong> Enter your email below and click "Send magic link" to get a new login link. 
+                💡 <strong>Tip:</strong> Enter your email below and click &quot;Send magic link&quot; to get a new login link. 
                 Make sure to click the link quickly and avoid email preview features that might consume it.
               </p>
             </div>
