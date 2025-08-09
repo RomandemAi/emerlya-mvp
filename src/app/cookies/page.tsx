@@ -171,7 +171,7 @@ export default function CookiePolicy() {
                   <ul className="list-disc pl-6 text-gray-600 space-y-2 mt-3">
                     <li>You may not be able to log in</li>
                     <li>Some features may not work properly</li>
-                    <li>Your preferences won't be saved</li>
+                    <li>Your preferences won&apos;t be saved</li>
                     <li>You may see the cookie banner repeatedly</li>
                   </ul>
                 </div>

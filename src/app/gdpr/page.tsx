@@ -84,7 +84,7 @@ export default function GDPRPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Right to Erasure - "Right to be Forgotten" (Article 17)</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Right to Erasure - &quot;Right to be Forgotten&quot; (Article 17)</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
                   You can request deletion of your personal data when:
                 </p>
@@ -97,7 +97,7 @@ export default function GDPRPage() {
                 </ul>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Submit a deletion request at privacy@emerlya.com. We'll process it within 30 days.
+                    <strong>How to exercise:</strong> Submit a deletion request at privacy@emerlya.com. We&apos;ll process it within 30 days.
                   </p>
                 </div>
               </section>
@@ -109,7 +109,7 @@ export default function GDPRPage() {
                 </p>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Request data export via privacy@emerlya.com. We'll provide JSON or CSV format.
+                    <strong>How to exercise:</strong> Request data export via privacy@emerlya.com. We&apos;ll provide JSON or CSV format.
                   </p>
                 </div>
               </section>
@@ -135,7 +135,7 @@ export default function GDPRPage() {
                   <li>You contest data accuracy</li>
                   <li>Processing is unlawful but you oppose erasure</li>
                   <li>We no longer need the data but you need it for legal claims</li>
-                  <li>You've objected pending verification of legitimate grounds</li>
+                  <li>You&apos;ve objected pending verification of legitimate grounds</li>
                 </ul>
               </section>
 
@@ -214,7 +214,7 @@ export default function GDPRPage() {
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">Lodge a Complaint</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
-                  If you're unsatisfied with how we handle your data or requests, you have the right to lodge a complaint with:
+                  If you&apos;re unsatisfied with how we handle your data or requests, you have the right to lodge a complaint with:
                 </p>
                 <div className="bg-orange-50 rounded-xl p-6">
                   <p className="text-gray-700 font-medium mb-2">Dutch Data Protection Authority</p>

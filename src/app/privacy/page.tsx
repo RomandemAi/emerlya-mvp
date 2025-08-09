@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
                 <p className="text-gray-600 leading-relaxed">
-                  Emerlya AI ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy 
+                  Emerlya AI (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy 
                   explains how we collect, use, disclose, and safeguard your information when you use our service. 
                   We comply with the General Data Protection Regulation (GDPR) and other applicable data protection laws.
                 </p>
@@ -113,7 +113,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-6 text-gray-600 space-y-2">
                   <li><strong>Access:</strong> Request a copy of your personal data</li>
                   <li><strong>Rectification:</strong> Correct inaccurate data</li>
-                  <li><strong>Erasure:</strong> Request deletion of your data ("right to be forgotten")</li>
+                  <li><strong>Erasure:</strong> Request deletion of your data (&quot;right to be forgotten&quot;)</li>
                   <li><strong>Portability:</strong> Receive your data in a portable format</li>
                   <li><strong>Restriction:</strong> Limit processing of your data</li>
                   <li><strong>Object:</strong> Object to certain processing activities</li>
@@ -158,7 +158,7 @@ export default function PrivacyPolicy() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Children's Privacy</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Children&apos;s Privacy</h2>
                 <p className="text-gray-600 leading-relaxed">
                   Our service is not intended for users under 16 years of age. We do not knowingly collect 
                   personal information from children under 16.

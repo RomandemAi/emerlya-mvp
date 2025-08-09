@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '../../../../lib/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
-import { headers } from 'next/headers';
 
 // Initialize Stripe with the secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

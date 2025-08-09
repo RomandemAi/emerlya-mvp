@@ -57,7 +57,7 @@ export default function AboutPage() {
                 <ul className="list-disc pl-6 text-gray-600 space-y-2">
                   <li>Intelligent content generation that maintains brand consistency</li>
                   <li>Advanced document analysis to extract and utilize your knowledge base</li>
-                  <li>Customizable AI personas that embody your brand's voice</li>
+                  <li>Customizable AI personas that embody your brand&apos;s voice</li>
                   <li>Enterprise-grade security and GDPR compliance</li>
                   <li>Seamless integration with your existing workflow</li>
                 </ul>
@@ -97,8 +97,22 @@ export default function AboutPage() {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">Our Team</h2>
                 <p className="text-gray-600 leading-relaxed">
                   Emerlya AI is built by a passionate team of AI researchers, software engineers, and content strategists 
-                  who believe in the power of technology to enhance human creativity. Based in the European Union, we're 
+                  who believe in the power of technology to enhance human creativity. Based in the European Union, we&apos;re 
                   committed to building ethical AI that respects user privacy and delivers real value.
+                </p>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">Why Choose Emerlya?</h2>
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  We&apos;re building the future of AI-powered content creation, making it accessible and 
+                  intuitive for businesses of all sizes. Our platform learns from your unique style and 
+                  preferences, ensuring every piece of content feels authentically yours.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  Whether you&apos;re a marketer crafting campaigns, a startup founder telling your story,
+                  or an enterprise managing multiple brands, Emerlya AI adapts to your needs and scales 
+                  with your ambitions.
                 </p>
               </section>
 

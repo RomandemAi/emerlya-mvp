@@ -44,7 +44,7 @@ export default function TermsOfService() {
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Agreement to Terms</h2>
                 <p className="text-gray-600 leading-relaxed">
-                  By accessing or using Emerlya AI ("Service"), you agree to be bound by these Terms of Service ("Terms"). 
+                  By accessing or using Emerlya AI (&quot;Service&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). 
                   If you disagree with any part of these terms, you do not have permission to access the Service.
                 </p>
               </section>
@@ -143,7 +143,7 @@ export default function TermsOfService() {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Disclaimers and Limitations</h2>
                 <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">8.1 Service Availability</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  The Service is provided "as is" without warranties of any kind. We do not guarantee uninterrupted 
+                  The Service is provided &quot;as is&quot; without warranties of any kind. We do not guarantee uninterrupted 
                   or error-free operation.
                 </p>
                 

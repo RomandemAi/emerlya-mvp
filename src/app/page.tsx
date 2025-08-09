@@ -53,7 +53,7 @@ export default async function LandingPage() {
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Intelligent content generation that captures your brand's unique voice. 
+            Intelligent content generation that captures your brand&apos;s unique voice. 
             Powered by advanced AI to deliver consistent, high-quality content at scale.
           </p>
           <div className="flex justify-center space-x-4">
