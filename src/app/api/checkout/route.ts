@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
         .from('profiles')
         .insert({
           id: user.id,
-          email: user.email,
           subscription_status: 'inactive',
         });
 
