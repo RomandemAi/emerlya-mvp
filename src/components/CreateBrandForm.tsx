@@ -49,18 +49,62 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
               />
             </div>
 
-            {/* Persona JSON */}
+            {/* Brand's Tone */}
             <div>
-              <label htmlFor="persona_config_json" className="block text-sm font-medium text-white mb-2">
-                Persona Configuration (JSON)
+              <label htmlFor="tone" className="block text-sm font-medium text-white mb-2">
+                Brand's Tone
+              </label>
+              <input
+                type="text"
+                id="tone"
+                name="tone"
+                required
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Witty and informal, Professional and authoritative"
+              />
+            </div>
+
+            {/* Writing Style */}
+            <div>
+              <label htmlFor="style" className="block text-sm font-medium text-white mb-2">
+                Writing Style
+              </label>
+              <input
+                type="text"
+                id="style"
+                name="style"
+                required
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Uses emojis and short sentences, Formal with complex vocabulary"
+              />
+            </div>
+
+            {/* Target Audience */}
+            <div>
+              <label htmlFor="target_audience" className="block text-sm font-medium text-white mb-2">
+                Target Audience
+              </label>
+              <input
+                type="text"
+                id="target_audience"
+                name="target_audience"
+                required
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Gen Z tech enthusiasts, C-suite executives"
+              />
+            </div>
+
+            {/* Words to Avoid */}
+            <div>
+              <label htmlFor="words_to_avoid" className="block text-sm font-medium text-white mb-2">
+                Words to Avoid
               </label>
               <textarea
-                id="persona_config_json"
-                name="persona_config_json"
-                required
-                rows={8}
+                id="words_to_avoid"
+                name="words_to_avoid"
+                rows={3}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder='{"tone": "professional", "style": "friendly", "target_audience": "business professionals"}'
+                placeholder="e.g., synergy, leverage, basically"
               />
             </div>
 

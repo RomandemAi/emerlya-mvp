@@ -17,20 +17,23 @@ export async function createBrand(formData: FormData) {
 
   // Extract form data
   const brandName = formData.get('brand_name') as string;
-  const personaConfigJson = formData.get('persona_config_json') as string;
+  const tone = formData.get('tone') as string;
+  const style = formData.get('style') as string;
+  const targetAudience = formData.get('target_audience') as string;
+  const wordsToAvoid = formData.get('words_to_avoid') as string;
   const documents = formData.get('documents') as string;
 
-  if (!brandName || !personaConfigJson || !documents) {
-    throw new Error('All fields are required');
+  if (!brandName || !tone || !style || !targetAudience || !documents) {
+    throw new Error('All required fields must be filled');
   }
 
-  // Validate JSON format
-  let parsedPersonaConfig;
-  try {
-    parsedPersonaConfig = JSON.parse(personaConfigJson);
-  } catch {
-    throw new Error('Persona configuration must be valid JSON');
-  }
+  // Create persona configuration object from individual fields
+  const personaConfig = {
+    tone,
+    style,
+    target_audience: targetAudience,
+    words_to_avoid: wordsToAvoid || '', // Optional field
+  };
 
   try {
     // Ensure the user has a profile record
@@ -42,7 +45,7 @@ export async function createBrand(formData: FormData) {
       .insert({
         profile_id: user.id,
         name: brandName,
-        persona_config_json: parsedPersonaConfig,
+        persona_config_json: personaConfig,
       })
       .select('id')
       .single();
