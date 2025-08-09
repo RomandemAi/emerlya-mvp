@@ -37,12 +37,16 @@ export async function middleware(request: NextRequest) {
   // Gracefully handle session refresh - don't crash for anonymous users
   try {
     await supabase.auth.getSession()
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log the error for debugging but don't crash the request
-    console.warn('Auth session refresh failed:', error?.message || error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.warn('Auth session refresh failed:', errorMessage)
     
     // For refresh token errors, just continue - user will need to log in again
-    if (error?.code === 'refresh_token_not_found' || error?.name === 'AuthApiError') {
+    if (
+      (error as { code?: string })?.code === 'refresh_token_not_found' || 
+      (error as { name?: string })?.name === 'AuthApiError'
+    ) {
       // Clear any invalid cookies
       response.cookies.delete('sb-access-token')
       response.cookies.delete('sb-refresh-token')
