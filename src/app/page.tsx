@@ -62,9 +62,11 @@ export default async function LandingPage() {
                 Start Free Trial
               </button>
             </Link>
-            <button className="px-8 py-4 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-2xl font-medium text-lg hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-              Watch Demo
-            </button>
+            <Link href="/demo">
+              <button className="px-8 py-4 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-2xl font-medium text-lg hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                Watch Demo
+              </button>
+            </Link>
           </div>
         </div>
       </section>
