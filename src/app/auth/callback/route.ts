@@ -11,13 +11,39 @@ export async function GET(request: NextRequest) {
   
   const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
+  const error = searchParams.get('error')
+  const errorCode = searchParams.get('error_code')
+  const errorDescription = searchParams.get('error_description')
   
   console.log('Search params:', Object.fromEntries(searchParams.entries()));
   console.log('Code parameter:', code);
 
+  // Handle Supabase auth errors
+  if (error) {
+    console.error('=== SUPABASE AUTH ERROR ===')
+    console.error('Error:', error)
+    console.error('Error Code:', errorCode)
+    console.error('Error Description:', errorDescription)
+    
+    let redirectUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/login?error=${error}`
+    
+    // Add specific error handling for common cases
+    if (errorCode === 'otp_expired') {
+      redirectUrl += '&error_code=otp_expired&message=' + encodeURIComponent('Your magic link has expired. This can happen if the link was already used or if your email client previewed it. Please request a new one.')
+    } else if (errorCode) {
+      redirectUrl += `&error_code=${errorCode}`
+    }
+    
+    if (errorDescription) {
+      redirectUrl += `&error_description=${encodeURIComponent(errorDescription)}`
+    }
+    
+    return NextResponse.redirect(redirectUrl)
+  }
+
   if (!code) {
     console.error('=== NO CODE PROVIDED ===')
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_code`)
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/login?error=no_code&message=${encodeURIComponent('No authentication code received. Please try again.')}`)
   }
 
   try {

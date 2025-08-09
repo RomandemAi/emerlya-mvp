@@ -9,35 +9,46 @@ import Link from 'next/link';
 function LoginForm() {
   const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showResendHint, setShowResendHint] = useState(false);
 
   useEffect(() => {
     const error = searchParams.get('error');
+    const errorCode = searchParams.get('error_code');
     const message = searchParams.get('message');
+    const errorDescription = searchParams.get('error_description');
     
     if (error) {
-      switch (error) {
-        case 'no_code':
-          setErrorMessage('Authentication link is invalid or expired.');
-          break;
-        case 'auth_failed':
-          setErrorMessage(message ? decodeURIComponent(message) : 'Authentication failed. Please try again.');
-          break;
-        case 'no_session':
-          setErrorMessage('Session could not be created. Please try signing in again.');
-          break;
-        case 'unexpected':
-          setErrorMessage('An unexpected error occurred. Please try again.');
-          break;
-        default:
-          setErrorMessage('Authentication error. Please try again.');
+      // Check for OTP expired error specifically
+      if (errorCode === 'otp_expired' || error === 'access_denied') {
+        setErrorMessage(message ? decodeURIComponent(message) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.');
+        setShowResendHint(true);
+      } else {
+        switch (error) {
+          case 'no_code':
+            setErrorMessage(message ? decodeURIComponent(message) : 'Authentication link is invalid or expired.');
+            setShowResendHint(true);
+            break;
+          case 'auth_failed':
+            setErrorMessage(message ? decodeURIComponent(message) : 'Authentication failed. Please try again.');
+            break;
+          case 'no_session':
+            setErrorMessage('Session could not be created. Please try signing in again.');
+            break;
+          case 'unexpected':
+            setErrorMessage('An unexpected error occurred. Please try again.');
+            break;
+          default:
+            setErrorMessage(errorDescription ? decodeURIComponent(errorDescription) : 'Authentication error. Please try again.');
+        }
       }
 
-      // Clear error message after 10 seconds
+      // Clear error message after 15 seconds
       const timeout = setTimeout(() => {
         setErrorMessage(null);
+        setShowResendHint(false);
         // Clear URL parameters
         window.history.replaceState({}, '', '/login');
-      }, 10000);
+      }, 15000);
 
       return () => clearTimeout(timeout);
     }
@@ -64,6 +75,14 @@ function LoginForm() {
             <div className="text-red-500 mr-3">⚠️</div>
             <div className="text-red-700 text-sm">{errorMessage}</div>
           </div>
+          {showResendHint && (
+            <div className="mt-3 pt-3 border-t border-red-200">
+              <p className="text-xs text-red-600">
+                💡 <strong>Tip:</strong> Enter your email below and click "Send magic link" to get a new login link. 
+                Make sure to click the link quickly and avoid email preview features that might consume it.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
