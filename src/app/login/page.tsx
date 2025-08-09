@@ -90,6 +90,9 @@ function LoginForm() {
     setSuccessMessage(null);
 
     try {
+      // Save email for callback resend if link expires
+      localStorage.setItem('emerlya_pending_email', email);
+      
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithOtp({
         email,
