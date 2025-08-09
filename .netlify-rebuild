@@ -1,3 +1,4 @@
 # Trigger Netlify rebuild
-# Last rebuild: 8/9/2025, 7:23 PM
+# Last rebuild: 8/9/2025, 7:27 PM
 # This file forces Netlify to clear cache and rebuild
+# Changed build command to npm ci for clean install
