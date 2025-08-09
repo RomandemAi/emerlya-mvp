@@ -57,22 +57,23 @@ export async function POST(request: NextRequest) {
 
     // Update the user's subscription status in Supabase
     // Use service role to bypass RLS policies
-    const { createClient: createServiceClient } = require('@supabase/supabase-js');
-    
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('Missing Supabase service credentials');
-      return NextResponse.json(
-        { error: 'Service configuration error' },
-        { status: 500 }
-      );
+    let supabase;
+    
+    if (supabaseUrl && supabaseServiceKey) {
+      // Import at top of file if needed
+      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+      supabase = createServiceClient(supabaseUrl, supabaseServiceKey);
+      console.log('Using service role client for subscription update');
+    } else {
+      // Fallback to regular client
+      console.warn('Service key not available, using regular client (may fail due to RLS)');
+      supabase = await createClient();
     }
     
-    const supabaseService = createServiceClient(supabaseUrl, supabaseServiceKey);
-    
-    const { error: updateError } = await supabaseService
+    const { error: updateError } = await supabase
       .from('profiles')
       .update({
         subscription_status: subscription.status === 'active' ? 'active' : 'inactive',

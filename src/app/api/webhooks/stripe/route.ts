@@ -49,17 +49,17 @@ export async function POST(req: NextRequest) {
     }
 
     // Initialize Supabase with service role to bypass RLS
-    const { createClient: createServiceClient } = require('@supabase/supabase-js');
-    
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
     let supabase;
     if (supabaseUrl && supabaseServiceKey) {
+      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
       supabase = createServiceClient(supabaseUrl, supabaseServiceKey);
+      console.log('Using service role client for webhook updates');
     } else {
       // Fallback to regular client if service key not available
-      console.warn('Service key not available, using regular client');
+      console.warn('Service key not available, using regular client (may fail due to RLS)');
       supabase = await createClient();
     }
 
