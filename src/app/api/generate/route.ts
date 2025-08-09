@@ -148,7 +148,7 @@ export async function POST(req: Request) {
     console.log(`Generating content for brand: ${brand_id} with prompt: "${user_prompt.substring(0, 100)}..."`);
     
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt5',
       stream: true,
       messages: [
         { role: 'system', content: systemPrompt },
