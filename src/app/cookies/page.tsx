@@ -139,7 +139,7 @@ export default function CookiePolicy() {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">Your Cookie Choices</h2>
                 <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6">
                   <p className="text-gray-700 mb-4">
-                    You have full control over cookies. Here's how to manage them:
+                    You have full control over cookies. Here&#39;s how to manage them:
                   </p>
                   <ul className="list-disc pl-6 text-gray-600 space-y-2">
                     <li><strong>Accept/Reject:</strong> Use our cookie banner to accept or reject non-essential cookies</li>

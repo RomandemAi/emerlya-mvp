@@ -66,7 +66,7 @@ export default function GDPRPage() {
                 </ul>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Email us at privacy@emerlya.com with "Data Access Request" in the subject line.
+                    <strong>How to exercise:</strong> Email us at privacy@emerlya.com with &#34;Data Access Request&#34; in the subject line.
                   </p>
                 </div>
               </section>
