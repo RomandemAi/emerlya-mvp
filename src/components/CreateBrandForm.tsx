@@ -49,10 +49,10 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
               />
             </div>
 
-            {/* Brand's Tone */}
+            {/* Brand Tone */}
             <div>
               <label htmlFor="tone" className="block text-sm font-medium text-white mb-2">
-                Brand's Tone
+                Brand&apos;s Tone
               </label>
               <input
                 type="text"
