@@ -12,10 +12,30 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export async function POST(req: Request) {
   try {
+    console.log('=== GENERATE API ROUTE START ===');
+    
+    // Check if environment variables are set
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('CRITICAL: OPENAI_API_KEY is not set!');
+      return new Response(
+        JSON.stringify({ error: 'OpenAI API key not configured' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    if (!process.env.PINECONE_API_KEY) {
+      console.error('CRITICAL: PINECONE_API_KEY is not set!');
+      return new Response(
+        JSON.stringify({ error: 'Pinecone API key not configured' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {
+      console.error('No session found in generate route');
       return new Response('Unauthorized', { status: 401 });
     }
 
@@ -65,21 +85,45 @@ export async function POST(req: Request) {
     const personaRules = brandData.persona_config_json;
 
     // 2. Vectorize the user's prompt
-    const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
-      input: user_prompt,
-    });
-    const promptVector = embeddingResponse.data[0].embedding;
+    console.log('Creating embeddings for prompt...');
+    let promptVector;
+    try {
+      const embeddingResponse = await openai.embeddings.create({
+        model: 'text-embedding-3-small',
+        input: user_prompt,
+      });
+      promptVector = embeddingResponse.data[0].embedding;
+    } catch (embedError: any) {
+      console.error('OpenAI Embedding Error:', embedError);
+      console.error('Error details:', embedError.message);
+      if (embedError.status === 401) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid OpenAI API key. Please check your configuration.' }),
+          { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      throw embedError;
+    }
 
     // 3. Query Pinecone for relevant context
-    const indexName = 'cora-mvp-index';
-    const index = pinecone.index(indexName).namespace(brand_id);
-    const queryResponse = await index.query({
-      topK: 5,
-      vector: promptVector,
-      includeMetadata: true,
-    });
-    const context = queryResponse.matches.map(match => match.metadata?.text).join('\n---\n');
+    console.log('Querying Pinecone for context...');
+    let context = '';
+    try {
+      const indexName = 'cora-mvp-index';
+      const index = pinecone.index(indexName).namespace(brand_id);
+      const queryResponse = await index.query({
+        topK: 5,
+        vector: promptVector,
+        includeMetadata: true,
+      });
+      context = queryResponse.matches.map(match => match.metadata?.text).join('\n---\n');
+      console.log(`Found ${queryResponse.matches.length} relevant documents`);
+    } catch (pineconeError: any) {
+      console.error('Pinecone Query Error:', pineconeError);
+      console.error('Error details:', pineconeError.message);
+      // Continue without context if Pinecone fails
+      context = 'No additional context available.';
+    }
 
     // 4. Construct the final prompt for GPT-4o
     const systemPrompt = `You are an AI content generator for a brand.
@@ -144,8 +188,23 @@ export async function POST(req: Request) {
       },
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    console.error('=== GENERATE API ERROR ===');
     console.error('Error in generate route:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    
+    // Return more detailed error for debugging
+    return new Response(
+      JSON.stringify({ 
+        error: 'Failed to generate content',
+        details: error.message || 'Unknown error',
+        type: error.constructor.name
+      }),
+      { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
   }
 }

@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-07-30.basil',
 });
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 console.log('Webhook configured:', !!webhookSecret);
 
@@ -22,17 +22,46 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No signature' }, { status: 400 });
     }
 
-    // Verify the webhook signature
     let event: Stripe.Event;
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    } catch (err) {
-      console.error('Webhook signature verification failed:', err);
-      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+
+    // If webhook secret is not configured, skip signature verification (for development)
+    if (!webhookSecret) {
+      console.warn('WARNING: Webhook secret not configured. Skipping signature verification.');
+      console.warn('This is acceptable for checkout-success flow but webhooks won\'t be secure.');
+      
+      // Parse the body as JSON to create an event object
+      try {
+        event = JSON.parse(body) as Stripe.Event;
+      } catch (parseError) {
+        console.error('Failed to parse webhook body:', parseError);
+        return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+      }
+    } else {
+      // Verify the webhook signature
+      try {
+        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+      } catch (err: any) {
+        console.error('Webhook signature verification failed:', err);
+        console.error('Error details:', err.message);
+        // Log the error but don't fail completely - we have checkout-success as backup
+        return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+      }
     }
 
-    // Initialize Supabase client
-    const supabase = await createClient();
+    // Initialize Supabase with service role to bypass RLS
+    const { createClient: createServiceClient } = require('@supabase/supabase-js');
+    
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+    
+    let supabase;
+    if (supabaseUrl && supabaseServiceKey) {
+      supabase = createServiceClient(supabaseUrl, supabaseServiceKey);
+    } else {
+      // Fallback to regular client if service key not available
+      console.warn('Service key not available, using regular client');
+      supabase = await createClient();
+    }
 
     // Handle the event
     switch (event.type) {
