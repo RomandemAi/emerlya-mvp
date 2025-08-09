@@ -51,20 +51,57 @@ export async function createBrand(formData: FormData) {
       .single();
 
     if (brandError || !brandData) {
-      throw new Error('Failed to create brand');
+      console.error('Brand creation error:', brandError);
+      throw new Error(`Failed to create brand: ${brandError?.message || 'Unknown error'}`);
     }
 
     // Insert the documents into the documents table
-    const { error: documentError } = await supabase
+    const { data: documentData, error: documentError } = await supabase
       .from('documents')
       .insert({
         brand_id: brandData.id,
         content: documents,
         status: 'pending',
+      })
+      .select('id')
+      .single();
+
+    if (documentError || !documentData) {
+      console.error('Document save error:', documentError);
+      throw new Error(`Failed to save documents: ${documentError?.message || 'Unknown error'}`);
+    }
+
+    // Trigger document processing webhook
+    console.log('Triggering document processing for document:', documentData.id);
+    
+    try {
+      const webhookUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/process-document`;
+      const webhookSecret = process.env.WEBHOOK_SECRET || 'default-secret';
+      
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-webhook-secret': webhookSecret,
+        },
+        body: JSON.stringify({
+          documentId: documentData.id,
+          brandId: brandData.id,
+        }),
       });
 
-    if (documentError) {
-      throw new Error('Failed to save documents');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Document processing webhook failed:', errorText);
+        // Don't throw here - document is saved, processing can be retried later
+        console.warn('Document saved but processing failed. It can be processed later.');
+      } else {
+        console.log('Document processing triggered successfully');
+      }
+    } catch (webhookError) {
+      console.error('Failed to trigger document processing:', webhookError);
+      // Don't throw here - document is saved, processing can be retried later
+      console.warn('Document saved but processing failed. It can be processed later.');
     }
 
     // Revalidate the dashboard to show the new brand
