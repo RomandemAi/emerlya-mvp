@@ -10,7 +10,10 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showResendHint, setShowResendHint] = useState(false);
-  const [cleanUrl, setCleanUrl] = useState(false);
+  const [hideAuthComponent, setHideAuthComponent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const error = searchParams.get('error');
@@ -18,7 +21,10 @@ function LoginForm() {
     const message = searchParams.get('message');
     const errorDescription = searchParams.get('error_description');
     
-    if (error && !cleanUrl) {
+    if (error) {
+      // Hide the Auth component when there are errors
+      setHideAuthComponent(true);
+      
       // Check for OTP expired error specifically
       if (errorCode === 'otp_expired' || error === 'access_denied') {
         setErrorMessage(message ? decodeURIComponent(message) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.');
@@ -43,19 +49,54 @@ function LoginForm() {
         }
       }
 
-      // Immediately clear URL parameters to prevent Supabase Auth UI from reading them
+      // Immediately clear URL parameters
       window.history.replaceState({}, '', '/login');
-      setCleanUrl(true);
 
-      // Clear error message after 15 seconds
+      // Clear error message and show Auth component again after 20 seconds
       const timeout = setTimeout(() => {
         setErrorMessage(null);
         setShowResendHint(false);
-      }, 15000);
+        setHideAuthComponent(false);
+      }, 20000);
 
       return () => clearTimeout(timeout);
     }
-  }, [searchParams, cleanUrl]);
+  }, [searchParams]);
+
+  const handleSendMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsLoading(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        },
+      });
+
+      if (error) {
+        setErrorMessage(error.message);
+      } else {
+        setSuccessMessage('Check your email for the magic link!');
+        setEmail('');
+        // After success, show the Auth component again after a delay
+        setTimeout(() => {
+          setHideAuthComponent(false);
+          setSuccessMessage(null);
+        }, 5000);
+      }
+    } catch (err) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-md p-10 backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50">
@@ -81,7 +122,7 @@ function LoginForm() {
           {showResendHint && (
             <div className="mt-3 pt-3 border-t border-red-200">
               <p className="text-xs text-red-600">
-                💡 <strong>Tip:</strong> Enter your email below and click &quot;Send magic link&quot; to get a new login link. 
+                💡 <strong>Tip:</strong> Enter your email below to get a new login link. 
                 Make sure to click the link quickly and avoid email preview features that might consume it.
               </p>
             </div>
@@ -89,58 +130,107 @@ function LoginForm() {
         </div>
       )}
 
-      <div className="auth-container">
-        <style jsx global>{`
-          .auth-container .supabase-auth-ui_ui-button {
-            background: linear-gradient(to right, #6366f1, #a855f7) !important;
-            border: none !important;
-            border-radius: 12px !important;
-            font-weight: 500 !important;
-            transition: all 0.2s !important;
-            padding: 12px !important;
-          }
-          .auth-container .supabase-auth-ui_ui-button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3) !important;
-          }
-          .auth-container input {
-            background: white !important;
-            border: 1px solid #e5e7eb !important;
-            border-radius: 12px !important;
-            padding: 12px !important;
-            font-size: 16px !important;
-          }
-          .auth-container input:focus {
-            border-color: #6366f1 !important;
-            outline: none !important;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
-          }
-          .auth-container label {
-            color: #374151 !important;
-            font-weight: 500 !important;
-            margin-bottom: 6px !important;
-          }
-        `}</style>
-        
-        <Auth
-          supabaseClient={createClient()}
-          appearance={{
-            theme: ThemeSupa,
-            variables: {
-              default: {
-                colors: {
-                  brand: '#6366f1',
-                  brandAccent: '#4f46e5',
+      {successMessage && (
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+          <div className="flex items-center">
+            <div className="text-green-500 mr-3">✅</div>
+            <div className="text-green-700 text-sm">{successMessage}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Show custom form when Auth component is hidden due to errors */}
+      {hideAuthComponent ? (
+        <div className="space-y-4">
+          <form onSubmit={handleSendMagicLink} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="Your email address"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Sending...' : 'Send Magic Link'}
+            </button>
+          </form>
+          <button
+            onClick={() => {
+              setHideAuthComponent(false);
+              setErrorMessage(null);
+              setShowResendHint(false);
+            }}
+            className="w-full text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            ← Back to sign in
+          </button>
+        </div>
+      ) : (
+        <div className="auth-container">
+          <style jsx global>{`
+            .auth-container .supabase-auth-ui_ui-button {
+              background: linear-gradient(to right, #6366f1, #a855f7) !important;
+              border: none !important;
+              border-radius: 12px !important;
+              font-weight: 500 !important;
+              transition: all 0.2s !important;
+              padding: 12px !important;
+            }
+            .auth-container .supabase-auth-ui_ui-button:hover {
+              transform: translateY(-2px) !important;
+              box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3) !important;
+            }
+            .auth-container input {
+              background: white !important;
+              border: 1px solid #e5e7eb !important;
+              border-radius: 12px !important;
+              padding: 12px !important;
+              font-size: 16px !important;
+            }
+            .auth-container input:focus {
+              border-color: #6366f1 !important;
+              outline: none !important;
+              box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+            }
+            .auth-container label {
+              color: #374151 !important;
+              font-weight: 500 !important;
+              margin-bottom: 6px !important;
+            }
+          `}</style>
+          
+          <Auth
+            supabaseClient={createClient()}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: '#6366f1',
+                    brandAccent: '#4f46e5',
+                  }
                 }
               }
-            }
-          }}
-          theme="light"
-          providers={[]}
-          view="magic_link"
-          redirectTo={`${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`}
-        />
-      </div>
+            }}
+            theme="light"
+            providers={[]}
+            view="magic_link"
+            redirectTo={`${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`}
+          />
+        </div>
+      )}
       
       <div className="mt-8 pt-6 border-t border-gray-200">
         <p className="text-center text-sm text-gray-600">
