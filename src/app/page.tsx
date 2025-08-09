@@ -46,13 +46,13 @@ export default async function LandingPage() {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Transform Your Content with{' '}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Emerlya AI
             </span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
             Intelligent content generation that captures your brand&apos;s unique voice. 
             Powered by advanced AI to deliver consistent, high-quality content at scale.
           </p>
