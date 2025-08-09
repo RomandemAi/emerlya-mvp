@@ -54,10 +54,10 @@ export default function AuthCallback() {
           setState('error')
           setMsg('No session was created. Please try signing in again.')
         }
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error('Unexpected error during auth callback:', e)
         setState('error')
-        setMsg(e?.message || 'An unexpected error occurred. Please try again.')
+        setMsg((e as Error)?.message || 'An unexpected error occurred. Please try again.')
       }
     }
 
@@ -91,9 +91,9 @@ export default function AuthCallback() {
         // Save the email again for potential future resends
         localStorage.setItem('emerlya_pending_email', email)
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       setState('error')
-      setMsg(`Error: ${e?.message || 'Failed to send magic link'}`)
+      setMsg(`Error: ${(e as Error)?.message || 'Failed to send magic link'}`)
     } finally {
       setIsResending(false)
     }
@@ -192,7 +192,7 @@ export default function AuthCallback() {
             <ul className="mt-2 space-y-1 text-xs text-gray-600">
               <li>• Click the magic link as soon as you receive it</li>
               <li>• Avoid email preview features that might consume the link</li>
-              <li>• Check your spam folder if you don't see the email</li>
+              <li>• Check your spam folder if you don&apos;t see the email</li>
               <li>• Contact support if issues persist</li>
             </ul>
           </div>

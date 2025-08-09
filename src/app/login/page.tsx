@@ -112,7 +112,7 @@ function LoginForm() {
           setSuccessMessage(null);
         }, 5000);
       }
-    } catch (err) {
+    } catch {
       setErrorMessage('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
