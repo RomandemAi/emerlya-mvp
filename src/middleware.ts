@@ -34,8 +34,20 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // This line is crucial. It refreshes the session cookie on every request.
-  await supabase.auth.getSession()
+  // Gracefully handle session refresh - don't crash for anonymous users
+  try {
+    await supabase.auth.getSession()
+  } catch (error: any) {
+    // Log the error for debugging but don't crash the request
+    console.warn('Auth session refresh failed:', error?.message || error)
+    
+    // For refresh token errors, just continue - user will need to log in again
+    if (error?.code === 'refresh_token_not_found' || error?.name === 'AuthApiError') {
+      // Clear any invalid cookies
+      response.cookies.delete('sb-access-token')
+      response.cookies.delete('sb-refresh-token')
+    }
+  }
 
   return response
 }
@@ -47,7 +59,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - api routes that don't need auth
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/webhooks).*)',
   ],
 }
