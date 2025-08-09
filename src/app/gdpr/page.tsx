@@ -143,7 +143,7 @@ export default function GDPRPage() {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Rights Related to Automated Decision-Making (Article 22)</h2>
                 <p className="text-gray-600 leading-relaxed">
                   You have the right not to be subject to decisions based solely on automated processing, including profiling, 
-                  which produces legal or similarly significant effects. Our AI generates content but doesn't make automated 
+                  which produces legal or similarly significant effects. Our AI generates content but doesn&#39;t make automated 
                   decisions about you personally.
                 </p>
               </section>
