@@ -84,7 +84,7 @@ export default function GDPRPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Right to Erasure - &quot;Right to be Forgotten&quot; (Article 17)</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Right to Erasure - &#34;Right to be Forgotten&#34; (Article 17)</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
                   You can request deletion of your personal data when:
                 </p>
@@ -135,7 +135,7 @@ export default function GDPRPage() {
                   <li>You contest data accuracy</li>
                   <li>Processing is unlawful but you oppose erasure</li>
                   <li>We no longer need the data but you need it for legal claims</li>
-                  <li>You&apos;ve objected pending verification of legitimate grounds</li>
+                  <li>You&#39;ve objected pending verification of legitimate grounds</li>
                 </ul>
               </section>
 
@@ -214,7 +214,7 @@ export default function GDPRPage() {
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">Lodge a Complaint</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
-                  If you&apos;re unsatisfied with how we handle your data or requests, you have the right to lodge a complaint with:
+                  If you&#39;re unsatisfied with how we handle your data or requests, you have the right to lodge a complaint with:
                 </p>
                 <div className="bg-orange-50 rounded-xl p-6">
                   <p className="text-gray-700 font-medium mb-2">Dutch Data Protection Authority</p>
