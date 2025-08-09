@@ -10,6 +10,7 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showResendHint, setShowResendHint] = useState(false);
+  const [cleanUrl, setCleanUrl] = useState(false);
 
   useEffect(() => {
     const error = searchParams.get('error');
@@ -17,7 +18,7 @@ function LoginForm() {
     const message = searchParams.get('message');
     const errorDescription = searchParams.get('error_description');
     
-    if (error) {
+    if (error && !cleanUrl) {
       // Check for OTP expired error specifically
       if (errorCode === 'otp_expired' || error === 'access_denied') {
         setErrorMessage(message ? decodeURIComponent(message) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.');
@@ -42,17 +43,19 @@ function LoginForm() {
         }
       }
 
+      // Immediately clear URL parameters to prevent Supabase Auth UI from reading them
+      window.history.replaceState({}, '', '/login');
+      setCleanUrl(true);
+
       // Clear error message after 15 seconds
       const timeout = setTimeout(() => {
         setErrorMessage(null);
         setShowResendHint(false);
-        // Clear URL parameters
-        window.history.replaceState({}, '', '/login');
       }, 15000);
 
       return () => clearTimeout(timeout);
     }
-  }, [searchParams]);
+  }, [searchParams, cleanUrl]);
 
   return (
     <div className="w-full max-w-md p-10 backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50">
