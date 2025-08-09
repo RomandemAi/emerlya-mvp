@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '../../../../lib/supabase/server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
 // Initialize Stripe with the secret key
@@ -54,8 +55,8 @@ export async function POST(req: NextRequest) {
     
     let supabase;
     if (supabaseUrl && supabaseServiceKey) {
-      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
-      supabase = createServiceClient(supabaseUrl, supabaseServiceKey);
+      // Use service role client to bypass RLS
+      supabase = createSupabaseClient(supabaseUrl, supabaseServiceKey);
       console.log('Using service role client for webhook updates');
     } else {
       // Fallback to regular client if service key not available

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '../../../lib/stripe';
 import { createClient } from '../../../lib/supabase/server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
   try {
@@ -63,9 +64,8 @@ export async function POST(request: NextRequest) {
     let supabase;
     
     if (supabaseUrl && supabaseServiceKey) {
-      // Import at top of file if needed
-      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
-      supabase = createServiceClient(supabaseUrl, supabaseServiceKey);
+      // Use service role client to bypass RLS
+      supabase = createSupabaseClient(supabaseUrl, supabaseServiceKey);
       console.log('Using service role client for subscription update');
     } else {
       // Fallback to regular client
