@@ -44,83 +44,38 @@ export default async function LandingPage() {
       </nav>
 
       {/* Hero Section with 3D Effects */}
-      <style jsx>{`
-        .hero-3d-text {
-          text-shadow: 
-            0 1px 0 #ccc,
-            0 2px 0 #c9c9c9,
-            0 3px 0 #bbb,
-            0 4px 0 #b9b9b9,
-            0 5px 0 #aaa,
-            0 6px 1px rgba(0,0,0,.1),
-            0 0 5px rgba(0,0,0,.1),
-            0 1px 3px rgba(0,0,0,.3),
-            0 3px 5px rgba(0,0,0,.2),
-            0 5px 10px rgba(0,0,0,.25),
-            0 10px 10px rgba(0,0,0,.2),
-            0 20px 20px rgba(0,0,0,.15);
-          transform: perspective(1000px) rotateY(-2deg);
-          transition: all 0.3s ease;
-        }
-        
-        .hero-3d-text:hover {
-          transform: perspective(1000px) rotateY(0deg) scale(1.02);
-          text-shadow: 
-            0 1px 0 #ccc,
-            0 2px 0 #c9c9c9,
-            0 3px 0 #bbb,
-            0 4px 0 #b9b9b9,
-            0 5px 0 #aaa,
-            0 6px 1px rgba(0,0,0,.1),
-            0 0 5px rgba(0,0,0,.1),
-            0 1px 3px rgba(0,0,0,.3),
-            0 3px 5px rgba(0,0,0,.2),
-            0 7px 15px rgba(0,0,0,.3),
-            0 15px 15px rgba(0,0,0,.25),
-            0 25px 25px rgba(0,0,0,.2);
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) perspective(1000px) rotateY(-2deg); }
-          50% { transform: translateY(-10px) perspective(1000px) rotateY(-2deg); }
-        }
-        
-        .floating-3d {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .gradient-3d {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-shadow: none;
-          position: relative;
-        }
-        
-        .gradient-3d::before {
-          content: attr(data-text);
-          position: absolute;
-          left: 0;
-          top: 0;
-          z-index: -1;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-shadow: 
-            2px 2px 0px rgba(102, 126, 234, 0.2),
-            4px 4px 0px rgba(118, 75, 162, 0.1),
-            6px 6px 12px rgba(0, 0, 0, 0.1);
-        }
-      `}</style>
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 hero-3d-text floating-3d">
+          <h1 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 transition-all duration-300 hover:scale-105"
+            style={{
+              textShadow: `
+                0 1px 0 #ccc,
+                0 2px 0 #c9c9c9,
+                0 3px 0 #bbb,
+                0 4px 0 #b9b9b9,
+                0 5px 0 #aaa,
+                0 6px 1px rgba(0,0,0,.1),
+                0 0 5px rgba(0,0,0,.1),
+                0 1px 3px rgba(0,0,0,.3),
+                0 3px 5px rgba(0,0,0,.2),
+                0 5px 10px rgba(0,0,0,.25),
+                0 10px 10px rgba(0,0,0,.2),
+                0 20px 20px rgba(0,0,0,.15)
+              `,
+              transform: 'perspective(1000px) rotateY(-2deg)',
+              animation: 'float 6s ease-in-out infinite'
+            }}
+          >
             Welcome to the Future of Content
           </h1>
           <div className="mb-6">
-            <span className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-3d inline-block" data-text="Emerlya AI">
+            <span 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent inline-block relative"
+              style={{
+                filter: 'drop-shadow(2px 2px 4px rgba(102, 126, 234, 0.3))'
+              }}
+            >
               Emerlya AI
             </span>
           </div>
