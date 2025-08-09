@@ -4,6 +4,10 @@ import Link from 'next/link';
 import Generator from '../../../components/Generator';
 import DashboardLayout from '../../../components/DashboardLayout';
 
+// Force dynamic rendering and disable caching to always get fresh subscription status
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function BrandPage({ params }: { params: Promise<{ brandId: string }> }) {
   const resolvedParams = await params;
   const supabase = await createClient();

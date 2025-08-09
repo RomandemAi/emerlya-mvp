@@ -27,8 +27,15 @@ export default function CheckoutSuccessHandler() {
             const data = await response.json();
             console.log('Checkout success processed:', data);
             
-            // Reload the page to show updated subscription status
-            window.location.href = '/';
+            // Force a hard refresh to clear Next.js cache and show updated subscription
+            // Add timestamp to force bypass cache
+            const timestamp = new Date().getTime();
+            window.location.href = `/?refreshed=${timestamp}`;
+            
+            // Also try to reload after a short delay to ensure database is updated
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           } else {
             console.error('Failed to process checkout success');
           }
