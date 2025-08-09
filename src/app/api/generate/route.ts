@@ -93,10 +93,12 @@ export async function POST(req: Request) {
         input: user_prompt,
       });
       promptVector = embeddingResponse.data[0].embedding;
-    } catch (embedError: any) {
+    } catch (embedError: unknown) {
       console.error('OpenAI Embedding Error:', embedError);
-      console.error('Error details:', embedError.message);
-      if (embedError.status === 401) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = embedError as any;
+      console.error('Error details:', error.message);
+      if (error.status === 401) {
         return new Response(
           JSON.stringify({ error: 'Invalid OpenAI API key. Please check your configuration.' }),
           { status: 500, headers: { 'Content-Type': 'application/json' } }
@@ -118,9 +120,11 @@ export async function POST(req: Request) {
       });
       context = queryResponse.matches.map(match => match.metadata?.text).join('\n---\n');
       console.log(`Found ${queryResponse.matches.length} relevant documents`);
-    } catch (pineconeError: any) {
+    } catch (pineconeError: unknown) {
       console.error('Pinecone Query Error:', pineconeError);
-      console.error('Error details:', pineconeError.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = pineconeError as any;
+      console.error('Error details:', error.message);
       // Continue without context if Pinecone fails
       context = 'No additional context available.';
     }
@@ -188,18 +192,20 @@ export async function POST(req: Request) {
       },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('=== GENERATE API ERROR ===');
     console.error('Error in generate route:', error);
-    console.error('Error message:', error.message);
-    console.error('Error stack:', error.stack);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const err = error as any;
+    console.error('Error message:', err.message);
+    console.error('Error stack:', err.stack);
     
     // Return more detailed error for debugging
     return new Response(
       JSON.stringify({ 
         error: 'Failed to generate content',
-        details: error.message || 'Unknown error',
-        type: error.constructor.name
+        details: err.message || 'Unknown error',
+        type: err.constructor?.name || 'Unknown'
       }),
       { 
         status: 500,
