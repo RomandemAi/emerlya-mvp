@@ -13,7 +13,26 @@ export async function POST(request: NextRequest) {
     
     const supabase = await createClient();
 
-    // Get the current user
+    // CRITICAL: First refresh the session from cookies (required for Netlify serverless)
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    
+    if (sessionError) {
+      console.error('Session refresh error:', sessionError);
+      return NextResponse.json(
+        { error: 'Session refresh failed', requiresAuth: true },
+        { status: 401 }
+      );
+    }
+
+    if (!session) {
+      console.error('No session found in cookies');
+      return NextResponse.json(
+        { error: 'No active session', requiresAuth: true },
+        { status: 401 }
+      );
+    }
+
+    // Now get the user from the refreshed session
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError) {
