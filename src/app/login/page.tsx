@@ -44,7 +44,8 @@ function LoginForm() {
         email,
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: undefined
+          emailRedirectTo: undefined,
+          data: {}
         }
       });
 
