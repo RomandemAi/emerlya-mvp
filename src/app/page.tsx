@@ -43,54 +43,29 @@ export default async function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section with 3D Effects */}
-      <section className="pt-32 pb-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 transition-all duration-300 hover:scale-105"
-            style={{
-              textShadow: `
-                0 1px 0 #ccc,
-                0 2px 0 #c9c9c9,
-                0 3px 0 #bbb,
-                0 4px 0 #b9b9b9,
-                0 5px 0 #aaa,
-                0 6px 1px rgba(0,0,0,.1),
-                0 0 5px rgba(0,0,0,.1),
-                0 1px 3px rgba(0,0,0,.3),
-                0 3px 5px rgba(0,0,0,.2),
-                0 5px 10px rgba(0,0,0,.25),
-                0 10px 10px rgba(0,0,0,.2),
-                0 20px 20px rgba(0,0,0,.15)
-              `,
-              transform: 'perspective(1000px) rotateY(-2deg)',
-              animation: 'float 6s ease-in-out infinite'
-            }}
-          >
-            Welcome to the Future of Content
+      {/* Hero Section */}
+      <section className="pt-24 pb-8 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+            Enterprise AI Content Platform
           </h1>
-          <div className="mb-4">
-            <span 
-              className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent inline-block relative"
-              style={{
-                filter: 'drop-shadow(2px 2px 4px rgba(102, 126, 234, 0.3))'
-              }}
-            >
+          <div className="mb-3">
+            <span className="text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Emerlya AI
             </span>
           </div>
-          <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+          <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto mb-6 leading-relaxed">
             Create compelling, on-brand content in seconds. Our AI understands your unique voice 
             and delivers professional results that resonate with your audience.
           </p>
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-3">
             <Link href="/login">
-              <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
+              <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                 Start Free Trial
               </button>
             </Link>
             <Link href="/demo">
-              <button className="px-6 py-3 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-2xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <button className="px-5 py-2.5 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                 Watch Demo
               </button>
             </Link>
@@ -98,26 +73,26 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Glass Cards Section */}
-      <section className="py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8">
+      {/* Feature Cards Section */}
+      <section className="py-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-lg md:text-xl font-bold text-center text-gray-900 mb-6">
             Why Choose Emerlya AI?
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Card 1 */}
             <div className="group">
-              <div className="h-full p-6 rounded-3xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-full p-4 rounded-2xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mb-3">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   AI-Powered Generation
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   Leverage cutting-edge AI models to create compelling content that resonates with your audience.
                 </p>
               </div>
@@ -125,16 +100,16 @@ export default async function LandingPage() {
 
             {/* Card 2 */}
             <div className="group">
-              <div className="h-full p-6 rounded-3xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-full p-4 rounded-2xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-3">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Brand Voice Control
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   Maintain perfect consistency across all content with customizable brand voice profiles.
                 </p>
               </div>
@@ -142,16 +117,16 @@ export default async function LandingPage() {
 
             {/* Card 3 */}
             <div className="group">
-              <div className="h-full p-6 rounded-3xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-full p-4 rounded-2xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center mb-3">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Smart Document Analysis
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   Upload your documents and let AI extract insights to enhance content generation.
                 </p>
               </div>
@@ -159,16 +134,16 @@ export default async function LandingPage() {
 
             {/* Card 4 */}
             <div className="group">
-              <div className="h-full p-6 rounded-3xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-full p-4 rounded-2xl backdrop-blur-xl bg-white/40 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-3">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 mb-2">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Enterprise Security
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   GDPR compliant with bank-level encryption. Your data is always secure and private.
                 </p>
               </div>
@@ -178,40 +153,40 @@ export default async function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-10 shadow-2xl border border-white/50">
-            <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8">
+      <section className="py-8 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
+        <div className="max-w-6xl mx-auto">
+          <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-xl border border-white/50">
+            <h2 className="text-lg md:text-xl font-bold text-center text-gray-900 mb-6">
               Built for Modern Teams
             </h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center mb-3 mx-auto">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold mb-2">Lightning Fast</h3>
-                <p className="text-sm text-gray-600">Generate content in seconds, not hours</p>
+                <h3 className="text-sm font-semibold mb-2">Lightning Fast</h3>
+                <p className="text-xs text-gray-600">Generate content in seconds, not hours</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mb-3 mx-auto">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                     <circle cx="12" cy="12" r="3" strokeWidth={2} />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold mb-2">Always On-Brand</h3>
-                <p className="text-sm text-gray-600">Maintain consistency across all channels</p>
+                <h3 className="text-sm font-semibold mb-2">Always On-Brand</h3>
+                <p className="text-xs text-gray-600">Maintain consistency across all channels</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mb-3 mx-auto">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold mb-2">Scale Effortlessly</h3>
-                <p className="text-sm text-gray-600">From startup to enterprise, we grow with you</p>
+                <h3 className="text-sm font-semibold mb-2">Scale Effortlessly</h3>
+                <p className="text-xs text-gray-600">From startup to enterprise, we grow with you</p>
               </div>
             </div>
           </div>
@@ -219,16 +194,16 @@ export default async function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 px-6">
+      <section className="py-8 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-3">
             Ready to Transform Your Content Strategy?
           </h2>
-          <p className="text-base md:text-lg text-gray-600 mb-6">
+          <p className="text-sm md:text-base text-gray-600 mb-4">
             Join thousands of teams already using Emerlya AI to create amazing content.
           </p>
           <Link href="/login">
-            <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
+            <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
               Get Started Free
             </button>
           </Link>

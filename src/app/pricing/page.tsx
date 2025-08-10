@@ -34,31 +34,31 @@ export default function PricingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 px-6">
+      <section className="pt-24 pb-8 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
             Simple, Transparent
             <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Pricing for Everyone
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+          <p className="text-sm md:text-base text-gray-600 mb-6 leading-relaxed">
             Choose the perfect plan for your content needs. Start free, upgrade anytime.
             No hidden fees, no long-term contracts.
           </p>
           
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center mb-8">
-            <span className="text-gray-600 mr-3">Monthly</span>
+          <div className="flex items-center justify-center mb-6">
+            <span className="text-gray-600 mr-3 text-sm">Monthly</span>
             <div className="relative">
               <input type="checkbox" id="billing-toggle" className="sr-only" />
               <label htmlFor="billing-toggle" className="flex items-center cursor-pointer">
-                <div className="w-14 h-8 bg-gray-200 rounded-full p-1 transition-colors duration-300">
-                  <div className="w-6 h-6 bg-white rounded-full transition-transform duration-300 transform"></div>
+                <div className="w-12 h-6 bg-gray-200 rounded-full p-1 transition-colors duration-300">
+                  <div className="w-4 h-4 bg-white rounded-full transition-transform duration-300 transform"></div>
                 </div>
               </label>
             </div>
-            <span className="text-gray-600 ml-3">
+            <span className="text-gray-600 ml-3 text-sm">
               Annual 
               <span className="inline-block ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                 Save 20%
@@ -69,26 +69,26 @@ export default function PricingPage() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-8 px-6">
+      <section className="py-6 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4">
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-sm">30-day money-back guarantee</span>
+              <span className="text-xs">30-day money-back guarantee</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <span className="text-sm">GDPR compliant & secure</span>
+              <span className="text-xs">GDPR compliant & secure</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              <span className="text-sm">No setup fees or contracts</span>
+              <span className="text-xs">No setup fees or contracts</span>
             </div>
           </div>
         </div>
@@ -288,69 +288,69 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
+      <section className="py-12 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
         <div className="max-w-4xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+          <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-xl border border-white/50">
+            <h2 className="text-lg md:text-xl font-bold text-center text-gray-900 mb-8">
               Frequently Asked Questions
             </h2>
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   What happens when I reach my word limit?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   When you approach your monthly word limit, we'll notify you with plenty of time to upgrade. 
                   Your account won't be suspended - you'll simply need to upgrade to continue generating content.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Can I change plans anytime?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect immediately, 
                   and we'll prorate any billing adjustments.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Do you offer refunds?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, 
                   contact us within 30 days for a full refund.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   What payment methods do you accept?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. 
                   Enterprise customers can also pay by bank transfer.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Is my data secure?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   Yes! We use bank-level encryption and are fully GDPR compliant. Your content and data 
                   are never used to train our models or shared with third parties.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   Do you offer custom enterprise solutions?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs text-gray-600">
                   Yes! Our Enterprise plan includes custom AI models, on-premise deployment options, 
                   and dedicated support. Contact our sales team to discuss your specific requirements.
                 </p>
@@ -361,23 +361,23 @@ export default function PricingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6">
+      <section className="py-10 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-sm md:text-base text-gray-600 mb-6">
             Join thousands of teams already creating amazing content with Emerlya AI. 
             Start your free trial today - no credit card required.
           </p>
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-3">
             <Link href="/login">
-              <button className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
+              <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                 Start Free Trial
               </button>
             </Link>
             <Link href="/contact">
-              <button className="px-8 py-4 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-2xl font-medium text-lg hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <button className="px-6 py-3 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                 Contact Sales
               </button>
             </Link>
