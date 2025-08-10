@@ -37,7 +37,7 @@ export default function FeaturesPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Powerful AI Features for
@@ -45,7 +45,7 @@ export default function FeaturesPage() {
               Modern Content Creation
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Discover how Emerlya AI transforms your content workflow with cutting-edge artificial intelligence,
             advanced document analysis, and brand-perfect generation capabilities.
           </p>
@@ -57,8 +57,32 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      {/* Technology Overview */}
+      <section className="py-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-4 shadow-lg border border-white/50">
+              <div className="text-2xl font-bold text-indigo-600 mb-1">OpenAI</div>
+              <div className="text-sm text-gray-600">GPT-4 Powered</div>
+            </div>
+            <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-4 shadow-lg border border-white/50">
+              <div className="text-2xl font-bold text-purple-600 mb-1">40+</div>
+              <div className="text-sm text-gray-600">Languages</div>
+            </div>
+            <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-4 shadow-lg border border-white/50">
+              <div className="text-2xl font-bold text-emerald-600 mb-1">GDPR</div>
+              <div className="text-sm text-gray-600">Compliant</div>
+            </div>
+            <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-4 shadow-lg border border-white/50">
+              <div className="text-2xl font-bold text-blue-600 mb-1">99.9%</div>
+              <div className="text-sm text-gray-600">Uptime</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Core Features */}
-      <section className="py-20 px-6">
+      <section className="py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Core AI Capabilities

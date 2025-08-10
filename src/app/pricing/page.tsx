@@ -34,7 +34,7 @@ export default function PricingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Simple, Transparent
@@ -42,13 +42,13 @@ export default function PricingPage() {
               Pricing for Everyone
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Choose the perfect plan for your content needs. Start free, upgrade anytime.
             No hidden fees, no long-term contracts.
           </p>
           
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center mb-12">
+          <div className="flex items-center justify-center mb-8">
             <span className="text-gray-600 mr-3">Monthly</span>
             <div className="relative">
               <input type="checkbox" id="billing-toggle" className="sr-only" />
@@ -68,8 +68,34 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Trust Indicators */}
+      <section className="py-8 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="flex items-center justify-center space-x-2 text-gray-600">
+              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm">30-day money-back guarantee</span>
+            </div>
+            <div className="flex items-center justify-center space-x-2 text-gray-600">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span className="text-sm">GDPR compliant & secure</span>
+            </div>
+            <div className="flex items-center justify-center space-x-2 text-gray-600">
+              <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span className="text-sm">No setup fees or contracts</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Cards */}
-      <section className="py-20 px-6">
+      <section className="py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-6">
             

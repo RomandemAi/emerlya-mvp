@@ -37,20 +37,40 @@ export default function AboutPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             About Emerlya AI
           </h1>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             We're building the future of intelligent content creation, helping teams 
             craft compelling stories with the power of artificial intelligence.
           </p>
         </div>
       </section>
 
+      {/* Key Stats */}
+      <section className="py-12 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-lg border border-white/50">
+              <div className="text-3xl font-bold text-indigo-600 mb-2">40+</div>
+              <div className="text-gray-600">Languages Supported</div>
+            </div>
+            <div className="text-center backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-lg border border-white/50">
+              <div className="text-3xl font-bold text-purple-600 mb-2">99.9%</div>
+              <div className="text-gray-600">Uptime Guarantee</div>
+            </div>
+            <div className="text-center backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-lg border border-white/50">
+              <div className="text-3xl font-bold text-emerald-600 mb-2">GDPR</div>
+              <div className="text-gray-600">Compliant & Secure</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Content */}
-      <section className="py-20 px-6">
+      <section className="py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-12 shadow-2xl border border-white/50">
             <div className="prose prose-lg max-w-none space-y-8">
