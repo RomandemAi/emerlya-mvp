@@ -1,32 +1,28 @@
 // src/app/api/generate/route.ts
 
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '../../../lib/supabase/server';
-import { Pinecone } from '@pinecone-database/pinecone';
-import OpenAI from 'openai';
+import { 
+  getProfile, 
+  getMemory, 
+  getSettings, 
+  retrieveChunks 
+} from '../../../lib/brand';
+import { styleSystemPrompt } from '../../../lib/prompts';
+import { callOpenAI } from '../../../lib/openai';
 
 // Force dynamic rendering to use Node.js runtime instead of edge
 export const dynamic = 'force-dynamic';
 
-const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY! });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
-
 export async function POST(req: Request) {
   try {
-    console.log('=== GENERATE API ROUTE START ===');
+    console.log('=== ENHANCED GENERATE API START ===');
     
-    // Check if environment variables are set
+    // Check OpenAI API key
     if (!process.env.OPENAI_API_KEY) {
       console.error('CRITICAL: OPENAI_API_KEY is not set!');
       return new Response(
         JSON.stringify({ error: 'OpenAI API key not configured' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-    
-    if (!process.env.PINECONE_API_KEY) {
-      console.error('CRITICAL: PINECONE_API_KEY is not set!');
-      return new Response(
-        JSON.stringify({ error: 'Pinecone API key not configured' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -39,7 +35,7 @@ export async function POST(req: Request) {
       return new Response('Unauthorized', { status: 401 });
     }
 
-    // CRITICAL: Check subscription status before processing
+    // Check subscription status
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('subscription_status')
@@ -66,184 +62,148 @@ export async function POST(req: Request) {
       );
     }
 
-    const { brand_id, user_prompt } = await req.json();
+    // Parse request body
+    const { 
+      brand_id, 
+      user_prompt, 
+      type = 'post', 
+      wordCount = 120,
+      tone 
+    } = await req.json();
 
     if (!brand_id || !user_prompt) {
       return new Response('Missing brand_id or user_prompt', { status: 400 });
     }
 
-    // 1. Fetch the brand's persona config from Supabase
-    const { data: brandData, error: brandError } = await supabase
-      .from('brands')
-      .select('persona_config_json')
-      .eq('id', brand_id)
-      .single();
+    console.log(`🚀 Generating ${type} content for brand: ${brand_id}`);
+    console.log(`📝 Prompt: "${user_prompt.substring(0, 100)}..."`);
 
-    if (brandError || !brandData) {
-      throw new Error(`Could not fetch brand persona: ${brandError?.message}`);
-    }
-    const personaRules = brandData.persona_config_json;
+    // Gather all brand intelligence data in parallel
+    const [brandProfile, brandMemory, brandSettings, relevantChunks] = await Promise.all([
+      getProfile(brand_id),
+      getMemory(brand_id),
+      getSettings(brand_id),
+      retrieveChunks(brand_id, user_prompt, 8) // Get more context
+    ]);
 
-    // 2. Vectorize the user's prompt
-    console.log('Creating embeddings for prompt...');
-    let promptVector;
-    try {
-      const embeddingResponse = await openai.embeddings.create({
-        model: 'text-embedding-ada-002',
-        input: user_prompt,
-      });
-      promptVector = embeddingResponse.data[0].embedding;
-    } catch (embedError: unknown) {
-      console.error('OpenAI Embedding Error:', embedError);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const error = embedError as any;
-      console.error('Error details:', error.message);
-      if (error.status === 401) {
-        return new Response(
-          JSON.stringify({ error: 'Invalid OpenAI API key. Please check your configuration.' }),
-          { status: 500, headers: { 'Content-Type': 'application/json' } }
-        );
+    console.log('📊 Brand data loaded:', {
+      hasProfile: !!brandProfile,
+      memoryFacts: brandMemory.length,
+      chunks: relevantChunks.length,
+      settings: !!brandSettings
+    });
+
+    // Fall back to legacy persona if new profile doesn't exist
+    let systemPrompt;
+    if (brandProfile && brandMemory.length > 0) {
+      // Use new enhanced system prompt
+      console.log('✨ Using enhanced brand intelligence system');
+      systemPrompt = styleSystemPrompt(brandProfile, brandMemory, brandSettings);
+    } else {
+      // Fall back to legacy system
+      console.log('⚠️ Falling back to legacy persona system');
+      const { data: brandData, error: brandError } = await supabase
+        .from('brands')
+        .select('persona_config_json')
+        .eq('id', brand_id)
+        .single();
+
+      if (brandError || !brandData?.persona_config_json) {
+        throw new Error(`Could not fetch brand data: ${brandError?.message}`);
       }
-      throw embedError;
+
+      systemPrompt = `You are an AI content generator for a brand.
+Your personality and writing style are defined by the following JSON rules:
+${JSON.stringify(brandData.persona_config_json, null, 2)}
+
+You will be given a user's prompt and generate content that perfectly matches the brand's voice.
+Adhere strictly to the persona rules. Do not break character.`;
     }
 
-    // 3. Query Pinecone for relevant context
-    console.log('Querying Pinecone for context...');
-    let context = '';
-    try {
-      const indexName = 'cora-mvp-index';
-      const index = pinecone.index(indexName).namespace(brand_id);
-      const queryResponse = await index.query({
-        topK: 5,
-        vector: promptVector,
-        includeMetadata: true,
-      });
-      context = queryResponse.matches.map(match => match.metadata?.text).join('\n---\n');
-      console.log(`Found ${queryResponse.matches.length} relevant documents`);
-    } catch (pineconeError: unknown) {
-      console.error('Pinecone Query Error:', pineconeError);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const error = pineconeError as any;
-      console.error('Error details:', error.message);
-      // Continue without context if Pinecone fails
-      context = 'No additional context available.';
+    // Build user prompt with context
+    const contextParts = [];
+    if (relevantChunks.length > 0) {
+      contextParts.push('BRAND CONTEXT:');
+      contextParts.push(relevantChunks.map(c => `- ${c.chunk}`).join('\n'));
+      contextParts.push('');
     }
 
-    // 4. Construct the final prompt for GPT-4o
-    const systemPrompt = `You are an AI content generator for a brand.
-    Your personality and writing style are defined by the following JSON rules:
-    ${JSON.stringify(personaRules, null, 2)}
-    
-    You will be given a user's prompt and some relevant context from the brand's documents.
-    Your task is to synthesize the information and generate a response that is helpful, accurate, and perfectly matches the brand's voice.
-    Adhere strictly to the persona rules. Do not break character.`;
+    contextParts.push(`CONTENT TYPE: ${type}`);
+    contextParts.push(`TARGET LENGTH: ${wordCount} words`);
+    if (tone) {
+      contextParts.push(`TONE PREFERENCE: ${tone}`);
+    }
+    contextParts.push('');
+    contextParts.push(`USER REQUEST:\n${user_prompt}`);
 
-    const finalUserPrompt = `CONTEXT:
-    ${context}
-    
-    USER PROMPT:
-    ${user_prompt}`;
+    const finalUserPrompt = contextParts.join('\n');
 
-    // 5. Call OpenAI and stream the response
-    console.log(`Generating content for brand: ${brand_id} with prompt: "${user_prompt.substring(0, 100)}..."`);
+    // Generate content with streaming
+    console.log('🤖 Calling OpenAI for generation...');
     
-    let response;
-    try {
-      // Try gpt-4o-mini first (more widely available)
-      console.log('Attempting to use gpt-4o-mini model...');
-      response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        stream: true,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: finalUserPrompt },
-        ],
+    const response = await callOpenAI(
+      [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: finalUserPrompt }
+      ],
+      {
         temperature: 0.7,
-        max_tokens: 2000,
-      });
-      console.log('✅ Successfully created chat completion with gpt-4o-mini');
-    } catch (modelError: unknown) {
-      console.error('❌ gpt-4o-mini failed, trying gpt-4o...', modelError);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const error = modelError as any;
-      
-      try {
-        console.log('Attempting to use gpt-4o model...');
-        response = await openai.chat.completions.create({
-          model: 'gpt-4o',
-          stream: true,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: finalUserPrompt },
-          ],
-          temperature: 0.7,
-          max_tokens: 2000,
-        });
-        console.log('✅ Successfully created chat completion with gpt-4o');
-      } catch (fallbackError: unknown) {
-        console.error('❌ Both gpt-4o-mini and gpt-4o failed');
-        console.error('Original error:', error.message);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const fbError = fallbackError as any;
-        console.error('Fallback error:', fbError.message);
-        
-        return new Response(
-          JSON.stringify({ 
-            error: 'Model access error',
-            details: `Both gpt-4o-mini and gpt-4o failed. Original: ${error.message}, Fallback: ${fbError.message}`,
-            type: 'OpenAI_Model_Error'
-          }),
-          { 
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
+        maxTokens: Math.min(2000, wordCount * 4), // Rough token estimate
+        stream: true
       }
-    }
+    );
 
-    // Create a robust ReadableStream for streaming the response
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of response) {
-            const content = chunk.choices[0]?.delta?.content || '';
-            if (content) {
-              controller.enqueue(encoder.encode(content));
+    // Handle streaming response
+    if ('choices' in response) {
+      // Non-streaming response (fallback)
+      const content = response.choices[0]?.message?.content || '';
+      return new Response(content, {
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+        },
+      });
+    } else {
+      // Streaming response
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            for await (const chunk of response) {
+              const content = chunk.choices[0]?.delta?.content || '';
+              if (content) {
+                controller.enqueue(encoder.encode(content));
+              }
+              
+              if (chunk.choices[0]?.finish_reason === 'stop') {
+                break;
+              }
             }
-            
-            // Handle completion
-            if (chunk.choices[0]?.finish_reason === 'stop') {
-              break;
-            }
+          } catch (streamError) {
+            console.error('Streaming error:', streamError);
+            controller.error(streamError);
+          } finally {
+            controller.close();
           }
-        } catch (streamError) {
-          console.error('Streaming error:', streamError);
-          controller.error(streamError);
-        } finally {
-          controller.close();
-        }
-      },
-    });
+        },
+      });
 
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Connection': 'keep-alive',
-        'X-Accel-Buffering': 'no', // Disable Nginx buffering
-      },
-    });
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Connection': 'keep-alive',
+          'X-Accel-Buffering': 'no',
+        },
+      });
+    }
 
   } catch (error: unknown) {
-    console.error('=== GENERATE API ERROR ===');
+    console.error('=== ENHANCED GENERATE API ERROR ===');
     console.error('Error in generate route:', error);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = error as any;
     console.error('Error message:', err.message);
     console.error('Error stack:', err.stack);
     
-    // Return more detailed error for debugging
     return new Response(
       JSON.stringify({ 
         error: 'Failed to generate content',
