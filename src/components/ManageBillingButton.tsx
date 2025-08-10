@@ -24,14 +24,14 @@ export default function ManageBillingButton() {
     <button
       onClick={handleManageBilling}
       disabled={isLoading}
-      className="flex items-center gap-3 w-full p-3 text-left text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full px-4 py-3 text-gray-600 hover:text-gray-900 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 font-medium flex items-center justify-center space-x-2"
     >
-      <span className="text-lg">💳</span>
-      <span className="font-medium">
+      <span>💳</span>
+      <span>
         {isLoading ? 'Loading...' : 'Manage Billing'}
       </span>
       {isLoading && (
-        <div className="ml-auto animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600"></div>
       )}
     </button>
   );

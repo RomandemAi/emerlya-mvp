@@ -74,14 +74,14 @@ export default function UpgradeButton() {
     <button
       onClick={handleUpgrade}
       disabled={isLoading}
-      className="flex items-center gap-3 w-full p-3 text-left text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-medium rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center space-x-2"
     >
-      <span className="text-lg">⭐</span>
-      <span className="font-medium">
+      <span>⭐</span>
+      <span>
         {isLoading ? 'Loading...' : 'Upgrade to Pro'}
       </span>
       {isLoading && (
-        <div className="ml-auto animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
       )}
     </button>
   );

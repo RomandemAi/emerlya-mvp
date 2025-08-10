@@ -156,6 +156,114 @@ export async function createStripePortalSession() {
   return portalSession.url;
 }
 
+export async function updateBrand(formData: FormData) {
+  const supabase = await createClient();
+
+  // Get the current user using safe auth check
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    throw new Error('You must be logged in to update a brand');
+  }
+
+  // Extract form data
+  const brandId = formData.get('brand_id') as string;
+  const brandName = formData.get('brand_name') as string;
+  const tone = formData.get('tone') as string;
+  const style = formData.get('style') as string;
+  const targetAudience = formData.get('target_audience') as string;
+  const wordsToAvoid = formData.get('words_to_avoid') as string;
+
+  if (!brandId || !brandName || !tone || !style || !targetAudience) {
+    throw new Error('All required fields must be filled');
+  }
+
+  // Create persona configuration object from individual fields
+  const personaConfig = {
+    tone,
+    style,
+    target_audience: targetAudience,
+    words_to_avoid: wordsToAvoid || '', // Optional field
+  };
+
+  try {
+    // Ensure the user has a profile record
+    await ensureUserProfile(user.id);
+
+    // Update the brand (ensure user owns the brand)
+    const { error: brandError } = await supabase
+      .from('brands')
+      .update({
+        name: brandName,
+        persona_config_json: personaConfig,
+      })
+      .eq('id', brandId)
+      .eq('profile_id', user.id); // Ensure user owns this brand
+
+    if (brandError) {
+      console.error('Brand update error:', brandError);
+      throw new Error(`Failed to update brand: ${brandError.message}`);
+    }
+
+    // Revalidate the dashboard to show the updated brand
+    revalidatePath('/');
+
+  } catch (error) {
+    console.error('Error updating brand:', error);
+    throw new Error(error instanceof Error ? error.message : 'Failed to update brand');
+  }
+}
+
+export async function deleteBrand(brandId: string) {
+  const supabase = await createClient();
+
+  // Get the current user using safe auth check
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    throw new Error('You must be logged in to delete a brand');
+  }
+
+  if (!brandId) {
+    throw new Error('Brand ID is required');
+  }
+
+  try {
+    // Ensure the user has a profile record
+    await ensureUserProfile(user.id);
+
+    // Delete documents first (due to foreign key constraint)
+    const { error: documentsError } = await supabase
+      .from('documents')
+      .delete()
+      .eq('brand_id', brandId);
+
+    if (documentsError) {
+      console.error('Documents deletion error:', documentsError);
+      throw new Error(`Failed to delete brand documents: ${documentsError.message}`);
+    }
+
+    // Delete the brand (ensure user owns the brand)
+    const { error: brandError } = await supabase
+      .from('brands')
+      .delete()
+      .eq('id', brandId)
+      .eq('profile_id', user.id); // Ensure user owns this brand
+
+    if (brandError) {
+      console.error('Brand deletion error:', brandError);
+      throw new Error(`Failed to delete brand: ${brandError.message}`);
+    }
+
+    // Revalidate the dashboard to remove the deleted brand
+    revalidatePath('/');
+
+  } catch (error) {
+    console.error('Error deleting brand:', error);
+    throw new Error(error instanceof Error ? error.message : 'Failed to delete brand');
+  }
+}
+
 export async function createCheckoutSession() {
   try {
     console.log('=== CHECKOUT SESSION START ===');
