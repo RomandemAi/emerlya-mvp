@@ -1,70 +1,113 @@
 import Link from 'next/link';
 
-export default function BlogPage() {
-  const blogPosts = [
+interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  tags: string[];
+  status: 'draft' | 'published';
+  author_type: 'manual' | 'ai-generated';
+  topic?: string;
+  seo_title?: string;
+  word_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/blog/public`, {
+      cache: 'no-store', // Always fetch fresh data
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to fetch blog posts:', response.statusText);
+      return [];
+    }
+
+    const data = await response.json();
+    return data.posts || [];
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    return [];
+  }
+}
+
+export default async function BlogPage() {
+  const blogPosts = await getBlogPosts();
+
+  // Helper functions
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const getReadingTime = (wordCount: number) => {
+    return Math.ceil(wordCount / 250); // 250 words per minute
+  };
+
+  const getCategory = (tags: string[]) => {
+    return tags.length > 0 ? tags[0] : 'General';
+  };
+
+  const getEmoji = (tags: string[]) => {
+    const tag = tags[0]?.toLowerCase() || '';
+    if (tag.includes('ai') || tag.includes('tech')) return '🤖';
+    if (tag.includes('brand')) return '🎯';
+    if (tag.includes('privacy') || tag.includes('security')) return '🔒';
+    if (tag.includes('business') || tag.includes('growth')) return '📈';
+    if (tag.includes('science') || tag.includes('analysis')) return '⚡';
+    if (tag.includes('content') || tag.includes('marketing')) return '📊';
+    return '✨';
+  };
+
+  // Fallback data when no posts exist
+  const fallbackPosts = [
     {
-      id: 1,
-      title: "The Future of AI-Powered Content Creation",
-      excerpt: "Explore how artificial intelligence is revolutionizing content marketing and what it means for modern businesses.",
-      author: "Sarah Chen",
-      date: "January 15, 2025",
-      readTime: "5 min read",
-      category: "AI Insights",
-      image: "🤖",
+      id: 'sample-1',
+      title: 'The Silent Architecture of AI',
+      excerpt: 'In the quantum realm between human thought and machine learning, there exists a silent architecture that shapes our digital consciousness.',
+      tags: ['AI', 'Technology', 'Philosophy'],
+      word_count: 1250,
+      created_at: new Date().toISOString(),
+      content: 'Sample content...',
+      status: 'published' as const,
+      author_type: 'manual' as const,
+      updated_at: new Date().toISOString(),
     },
     {
-      id: 2,
-      title: "Building Consistent Brand Voice with AI",
-      excerpt: "Learn how to maintain your unique brand personality across all content channels using AI-powered tools.",
-      author: "Marcus Johnson",
-      date: "January 10, 2025",
-      readTime: "7 min read",
-      category: "Brand Strategy",
-      image: "🎯",
+      id: 'sample-2',
+      title: 'When the Universe Writes Back',
+      excerpt: 'Somewhere between the cosmic dance of data and the intimate whisper of personalized content, brands discover their voice in the vast echo chamber of digital space.',
+      tags: ['Brand Voice', 'Content', 'Strategy'],
+      word_count: 980,
+      created_at: new Date(Date.now() - 24*60*60*1000).toISOString(),
+      content: 'Sample content...',
+      status: 'published' as const,
+      author_type: 'ai-generated' as const,
+      updated_at: new Date().toISOString(),
     },
     {
-      id: 3,
-      title: "GDPR and AI: Privacy-First Content Generation",
-      excerpt: "Understanding how European privacy regulations shape the development of AI content tools and protect user data.",
-      author: "Dr. Elena Müller",
-      date: "January 8, 2025",
-      readTime: "6 min read",
-      category: "Privacy & Compliance",
-      image: "🔒",
-    },
-    {
-      id: 4,
-      title: "From Startup to Scale: AI Content Strategies",
-      excerpt: "How growing companies can leverage AI to scale their content operations without losing quality or authenticity.",
-      author: "Tom Williams",
-      date: "January 5, 2025",
-      readTime: "8 min read",
-      category: "Business Growth",
-      image: "📈",
-    },
-    {
-      id: 5,
-      title: "The Science Behind Brand Voice Analysis",
-      excerpt: "Deep dive into the AI algorithms that analyze and replicate your unique brand voice across different content types.",
-      author: "Dr. Ana Rodriguez",
-      date: "January 3, 2025",
-      readTime: "10 min read",
-      category: "Technology",
-      image: "⚡",
-    },
-    {
-      id: 6,
-      title: "Content ROI: Measuring AI-Generated Impact",
-      excerpt: "How to track and measure the effectiveness of AI-generated content to maximize your return on investment.",
-      author: "David Park",
-      date: "December 28, 2024",
-      readTime: "6 min read",
-      category: "Analytics",
-      image: "📊",
+      id: 'sample-3',
+      title: 'The Brand Voice Revolution',
+      excerpt: 'How AI is transforming the way businesses communicate, creating authentic connections at scale while maintaining the human touch that makes brands memorable.',
+      tags: ['Marketing', 'Business', 'Innovation'],
+      word_count: 1180,
+      created_at: new Date(Date.now() - 2*24*60*60*1000).toISOString(),
+      content: 'Sample content...',
+      status: 'published' as const,
+      author_type: 'manual' as const,
+      updated_at: new Date().toISOString(),
     },
   ];
 
-  const categories = ["All", "AI Insights", "Brand Strategy", "Privacy & Compliance", "Business Growth", "Technology", "Analytics"];
+  const displayPosts = blogPosts.length > 0 ? blogPosts : fallbackPosts;
+  const categories = ["All", "AI", "Technology", "Brand Voice", "Content", "Strategy", "Marketing", "Business"];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
@@ -153,100 +196,117 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="py-10 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-12 shadow-2xl border border-white/50 mb-16">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="flex items-center mb-4">
-                  <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    Featured
-                  </span>
-                  <span className="ml-3 text-sm text-gray-600">
-                    {blogPosts[0].category}
-                  </span>
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  {blogPosts[0].title}
-                </h2>
-                <p className="text-lg text-gray-600 mb-6">
-                  {blogPosts[0].excerpt}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-semibold text-sm">SC</span>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{blogPosts[0].author}</p>
-                      <p className="text-sm text-gray-600">{blogPosts[0].date} • {blogPosts[0].readTime}</p>
-                    </div>
+      {displayPosts.length > 0 && (
+        <section className="py-10 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-12 shadow-2xl border border-white/50 mb-16">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <div className="flex items-center mb-4">
+                    <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      Featured
+                    </span>
+                    <span className="ml-3 text-sm text-gray-600">
+                      {getCategory(displayPosts[0].tags)}
+                    </span>
                   </div>
-                  <Link href={`/blog/${blogPosts[0].id}`}>
-                    <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-                      Read More
-                    </button>
-                  </Link>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {displayPosts[0].title}
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-6">
+                    {displayPosts[0].excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-semibold text-sm">EA</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">Emerlya AI Team</p>
+                        <p className="text-sm text-gray-600">
+                          {formatDate(displayPosts[0].created_at)} • {getReadingTime(displayPosts[0].word_count)} min read
+                        </p>
+                      </div>
+                    </div>
+                    <Link href={`/blog/${displayPosts[0].id}`}>
+                      <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                        Read More
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="w-64 h-64 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl flex items-center justify-center">
-                  <span className="text-8xl">{blogPosts[0].image}</span>
+                <div className="flex items-center justify-center">
+                  <div className="w-64 h-64 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl flex items-center justify-center">
+                    <span className="text-8xl">{getEmoji(displayPosts[0].tags)}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Blog Grid */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Latest Articles</h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.slice(1).map((post) => (
-              <article key={post.id} className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4">
-                    <span className="text-2xl">{post.image}</span>
-                  </div>
-                  <div className="flex items-center mb-3">
-                    <span className="text-xs text-indigo-600 font-medium bg-indigo-50 px-2 py-1 rounded-full">
-                      {post.category}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-semibold text-xs">
-                        {post.author.split(' ').map(n => n[0]).join('')}
+          {displayPosts.length > 1 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayPosts.slice(1).map((post) => (
+                <article key={post.id} className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4">
+                      <span className="text-2xl">{getEmoji(post.tags)}</span>
+                    </div>
+                    <div className="flex items-center mb-3">
+                      <span className="text-xs text-indigo-600 font-medium bg-indigo-50 px-2 py-1 rounded-full">
+                        {getCategory(post.tags)}
                       </span>
                     </div>
-                    <div>
-                      <p className="text-xs font-medium text-gray-900">{post.author}</p>
-                      <p className="text-xs text-gray-600">{post.date}</p>
-                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
                   </div>
-                  <span className="text-xs text-gray-500">{post.readTime}</span>
-                </div>
-                
-                <Link href={`/blog/${post.id}`}>
-                  <button className="w-full mt-6 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-medium transition-colors">
-                    Read Article
-                  </button>
-                </Link>
-              </article>
-            ))}
-          </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-semibold text-xs">EA</span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-900">Emerlya AI Team</p>
+                        <p className="text-xs text-gray-600">{formatDate(post.created_at)}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs text-gray-500">{getReadingTime(post.word_count)} min</span>
+                  </div>
+                  
+                  <Link href={`/blog/${post.id}`}>
+                    <button className="w-full mt-6 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-medium transition-colors">
+                      Read Article
+                    </button>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="w-24 h-24 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-4xl">📝</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">No Additional Posts Yet</h3>
+              <p className="text-gray-600 mb-6">We're working on creating more amazing content for you!</p>
+              <Link href="/login">
+                <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                  Start Creating
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

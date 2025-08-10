@@ -88,3 +88,48 @@ export interface GenerationContext {
   chunks: BrandChunk[];
   settings: BrandSettings;
 }
+
+export interface BlogPost {
+  id: string;
+  brand_id: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  tags: string[];
+  status: 'draft' | 'published';
+  author_type: 'manual' | 'ai-generated';
+  topic?: string;
+  seo_title?: string;
+  word_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BlogPostCreate {
+  brand_id: string;
+  title: string;
+  content?: string; // Optional for AI generation
+  topic?: string; // Required for AI generation if no content
+  tags?: string[];
+  status?: 'draft' | 'published';
+  author_type?: 'manual' | 'ai-generated';
+  seo_title?: string;
+  excerpt?: string;
+}
+
+export interface BlogPostUpdate {
+  title?: string;
+  content?: string;
+  tags?: string[];
+  status?: 'draft' | 'published';
+  seo_title?: string;
+  excerpt?: string;
+}
+
+export interface BlogGenerationRequest {
+  brand_id: string;
+  topic: string;
+  tags?: string[];
+  target_word_count?: number;
+  custom_prompt?: string;
+}
