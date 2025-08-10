@@ -186,17 +186,30 @@ export default async function LandingPage() {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-3xl mb-3">🚀</div>
+                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-semibold mb-2">Lightning Fast</h3>
                 <p className="text-sm text-gray-600">Generate content in seconds, not hours</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-3">🎯</div>
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                    <circle cx="12" cy="12" r="3" strokeWidth={2} />
+                  </svg>
+                </div>
                 <h3 className="text-base font-semibold mb-2">Always On-Brand</h3>
                 <p className="text-sm text-gray-600">Maintain consistency across all channels</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-3">📈</div>
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-semibold mb-2">Scale Effortlessly</h3>
                 <p className="text-sm text-gray-600">From startup to enterprise, we grow with you</p>
               </div>
