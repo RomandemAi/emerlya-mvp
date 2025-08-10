@@ -136,11 +136,8 @@ export default function AboutPage() {
                   <p className="text-gray-700 mb-4">
                     Have questions or want to learn more about Emerlya AI?
                   </p>
-                  <p className="text-gray-700 mb-2">
-                    <strong>Email:</strong> <a href="mailto:hello@emerlya.com" className="text-indigo-600 hover:text-indigo-700">hello@emerlya.com</a>
-                  </p>
                   <p className="text-gray-700">
-                    <strong>Address:</strong> Amsterdam, Netherlands 🇳🇱
+                    <strong>Email:</strong> <a href="mailto:hello@emerlya.com" className="text-indigo-600 hover:text-indigo-700">hello@emerlya.com</a>
                   </p>
                 </div>
               </section>

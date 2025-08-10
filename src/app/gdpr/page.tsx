@@ -201,12 +201,6 @@ export default function GDPRPage() {
                       <strong>Privacy Team:</strong><br />
                       Email: <a href="mailto:privacy@emerlya.com" className="text-indigo-600 hover:text-indigo-700">privacy@emerlya.com</a>
                     </p>
-                    <p className="text-gray-700">
-                      <strong>Postal Address:</strong><br />
-                      Emerlya AI B.V.<br />
-                      Data Protection Department<br />
-                      Amsterdam, Netherlands
-                    </p>
                   </div>
                 </div>
               </section>
