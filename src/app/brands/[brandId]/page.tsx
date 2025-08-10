@@ -97,9 +97,9 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
 
       {/* Display Brand Persona Info */}
       {brand.persona_config_json && (
-        <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 mb-12">
-          <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <span className="text-2xl">🎭</span>
+        <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 mb-8">
+          <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-3">
+            <span className="text-xl">🎭</span>
             <span>Brand Persona Active</span>
           </h3>
           <div className="text-gray-600 leading-relaxed">

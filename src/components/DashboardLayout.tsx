@@ -2,6 +2,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from './Sidebar';
+import TopNavBar from './TopNavBar';
 import CheckoutSuccessHandler from './CheckoutSuccessHandler';
 import BrandSelectorModal from './BrandSelectorModal';
 import GlobalDocumentsModal from './GlobalDocumentsModal';
@@ -43,7 +44,15 @@ export default function DashboardLayout({
       <Suspense fallback={null}>
         <CheckoutSuccessHandler />
       </Suspense>
-      <div className="w-80 fixed h-full z-50">
+      
+      {/* Top Navigation Bar */}
+      <TopNavBar 
+        userEmail={userEmail}
+        subscriptionStatus={subscriptionStatus}
+      />
+      
+      {/* Sidebar */}
+      <div className="w-80 fixed h-full z-40 pt-16">
         <Sidebar 
           userEmail={userEmail} 
           subscriptionStatus={subscriptionStatus}
@@ -52,7 +61,9 @@ export default function DashboardLayout({
           onSettingsClick={() => setIsSettingsOpen(true)}
         />
       </div>
-      <main className="flex-1 ml-80 p-8 min-h-screen">
+      
+      {/* Main Content */}
+      <main className="flex-1 ml-80 pt-16 p-8 min-h-screen">
         {children}
       </main>
 

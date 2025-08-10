@@ -37,41 +37,105 @@ export default function Sidebar({
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 p-6">
-        <nav className="space-y-2">
-          <Link 
-            href="/dashboard" 
-            className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 text-indigo-700 font-medium transition-all duration-200 hover:shadow-md"
-          >
-            <span>🎭</span>
-            <span>My Brands</span>
-          </Link>
+      <div className="flex-1 p-6 overflow-y-auto">
+        <nav className="space-y-4">
+          {/* Dashboard Section */}
+          <div>
+            <Link 
+              href="/dashboard" 
+              className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 text-indigo-700 font-medium transition-all duration-200 hover:shadow-md"
+            >
+              <span>🎭</span>
+              <span>My Brands</span>
+            </Link>
+          </div>
+
+          {/* Website Section */}
+          <div>
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">
+              Website
+            </div>
+            <div className="space-y-1">
+              <Link 
+                href="/"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>🏠</span>
+                <span>Home</span>
+              </Link>
+              <Link 
+                href="/about"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>📖</span>
+                <span>About</span>
+              </Link>
+              <Link 
+                href="/pricing"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>💰</span>
+                <span>Pricing</span>
+              </Link>
+              <Link 
+                href="/features"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>⭐</span>
+                <span>Features</span>
+              </Link>
+              <Link 
+                href="/blog"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>📝</span>
+                <span>Blog</span>
+              </Link>
+              <Link 
+                href="/contact"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>📞</span>
+                <span>Contact</span>
+              </Link>
+              <Link 
+                href="/api-docs"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+              >
+                <span>🔧</span>
+                <span>API Docs</span>
+              </Link>
+            </div>
+          </div>
           
-          <div className="pt-4">
+          {/* Quick Actions Section */}
+          <div>
             <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">
               Quick Actions
             </div>
-            <button 
-              onClick={onGenerateClick}
-              className="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
-            >
-              <span>✨</span>
-              <span>Generate Content</span>
-            </button>
-            <button 
-              onClick={onDocumentsClick}
-              className="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
-            >
-              <span>📄</span>
-              <span>Documents</span>
-            </button>
-            <button 
-              onClick={onSettingsClick}
-              className="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
-            >
-              <span>⚙️</span>
-              <span>Settings</span>
-            </button>
+            <div className="space-y-1">
+              <button 
+                onClick={onGenerateClick}
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+              >
+                <span>✨</span>
+                <span>Generate Content</span>
+              </button>
+              <button 
+                onClick={onDocumentsClick}
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+              >
+                <span>📄</span>
+                <span>Documents</span>
+              </button>
+              <button 
+                onClick={onSettingsClick}
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+              >
+                <span>⚙️</span>
+                <span>Settings</span>
+              </button>
+            </div>
           </div>
         </nav>
       </div>
