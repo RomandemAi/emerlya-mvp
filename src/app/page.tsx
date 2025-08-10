@@ -241,9 +241,9 @@ export default async function LandingPage() {
             <div>
               <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
-                <li><Link href="#" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
-                <li><Link href="#" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
+                <li><Link href="/features" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
+                <li><Link href="/pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
+                <li><Link href="/api-docs" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
               </ul>
             </div>
             
@@ -251,8 +251,8 @@ export default async function LandingPage() {
               <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
               <ul className="space-y-2">
                 <li><Link href="/about" className="text-gray-600 hover:text-gray-900 text-sm">About</Link></li>
-                <li><Link href="#" className="text-gray-600 hover:text-gray-900 text-sm">Blog</Link></li>
-                <li><Link href="#" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
+                <li><Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm">Blog</Link></li>
+                <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
               </ul>
             </div>
             
