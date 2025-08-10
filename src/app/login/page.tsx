@@ -1,88 +1,37 @@
 'use client';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { createClient } from '../../lib/supabase/client';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 
 function LoginForm() {
-  const searchParams = useSearchParams();
-  
-  // Check for error parameters immediately on component initialization
-  const hasError = searchParams.get('error') !== null;
-  const initialErrorCode = searchParams.get('error_code');
-  const initialError = searchParams.get('error');
-  const initialMessage = searchParams.get('message');
-  const initialErrorDescription = searchParams.get('error_description');
-  
-  // Determine initial error message and whether to hide Auth component
-  const getInitialErrorState = () => {
-    if (!hasError) return { message: null, showHint: false };
-    
-    if (initialErrorCode === 'otp_expired' || initialError === 'access_denied') {
-      return {
-        message: initialMessage ? decodeURIComponent(initialMessage) : 'Your magic link has expired or was already used. This can happen if your email client previewed the link. Please request a new one below.',
-        showHint: true
-      };
-    }
-    
-    switch (initialError) {
-      case 'no_code':
-        return {
-          message: initialMessage ? decodeURIComponent(initialMessage) : 'Authentication link is invalid or expired.',
-          showHint: true
-        };
-      case 'auth_failed':
-        return {
-          message: initialMessage ? decodeURIComponent(initialMessage) : 'Authentication failed. Please try again.',
-          showHint: false
-        };
-      case 'no_session':
-        return {
-          message: 'Session could not be created. Please try signing in again.',
-          showHint: false
-        };
-      case 'unexpected':
-        return {
-          message: 'An unexpected error occurred. Please try again.',
-          showHint: false
-        };
-      default:
-        return {
-          message: initialErrorDescription ? decodeURIComponent(initialErrorDescription) : 'Authentication error. Please try again.',
-          showHint: false
-        };
-    }
-  };
-  
-  const initialErrorState = getInitialErrorState();
-  
-  const [errorMessage, setErrorMessage] = useState<string | null>(initialErrorState.message);
-  const [showResendHint, setShowResendHint] = useState(initialErrorState.showHint);
-  const [hideAuthComponent, setHideAuthComponent] = useState(hasError);
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const [step, setStep] = useState<'email' | 'otp'>('email');
   const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
+  // Load email from localStorage on mount
   useEffect(() => {
-    if (hasError) {
-      // Clear URL parameters immediately
-      window.history.replaceState({}, '', '/login');
-
-      // Clear error message and show Auth component again after 20 seconds
-      const timeout = setTimeout(() => {
-        setErrorMessage(null);
-        setShowResendHint(false);
-        setHideAuthComponent(false);
-      }, 20000);
-
-      return () => clearTimeout(timeout);
+    const savedEmail = localStorage.getItem('emerlya_otp_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setStep('otp');
     }
-  }, [hasError]);
+  }, []);
 
-  const handleSendMagicLink = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Resend cooldown timer
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
+
+  const sendOTP = async (isResend = false) => {
     if (!email) return;
 
     setIsLoading(true);
@@ -90,33 +39,172 @@ function LoginForm() {
     setSuccessMessage(null);
 
     try {
-      // Save email for callback resend if link expires
-      localStorage.setItem('emerlya_pending_email', email);
-      
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-        },
+          shouldCreateUser: true,
+          emailRedirectTo: undefined
+        }
       });
 
       if (error) {
         setErrorMessage(error.message);
       } else {
-        setSuccessMessage('Check your email for the magic link!');
-        setEmail('');
-        // After success, show the Auth component again after a delay
-        setTimeout(() => {
-          setHideAuthComponent(false);
-          setSuccessMessage(null);
-        }, 5000);
+        // Save email to localStorage
+        localStorage.setItem('emerlya_otp_email', email);
+        setSuccessMessage(isResend ? 'New code sent to your email!' : 'Check your email for the 6-digit code!');
+        setStep('otp');
+        setResendCooldown(60); // 60 second cooldown
+        // Clear OTP input
+        setOtp(['', '', '', '', '', '']);
       }
-    } catch {
+    } catch (error) {
       setErrorMessage('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const verifyOTP = async () => {
+    const code = otp.join('');
+    if (code.length !== 6) {
+      setErrorMessage('Please enter all 6 digits');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token: code,
+        type: 'email'
+      });
+
+      if (error) {
+        if (error.message.toLowerCase().includes('expired')) {
+          setErrorMessage('Code has expired. Please request a new one.');
+        } else if (error.message.toLowerCase().includes('invalid')) {
+          setErrorMessage('Invalid code. Please check and try again.');
+        } else {
+          setErrorMessage(error.message);
+        }
+        // Clear the OTP input on error
+        setOtp(['', '', '', '', '', '']);
+      } else if (data?.session) {
+        setSuccessMessage('Successfully signed in! Redirecting...');
+        // Clear localStorage
+        localStorage.removeItem('emerlya_otp_email');
+        // Redirect to dashboard
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1000);
+      } else {
+        setErrorMessage('Authentication failed. Please try again.');
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+      setOtp(['', '', '', '', '', '']);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOtpChange = (index: number, value: string) => {
+    // Only allow digits
+    if (value && !/^\d$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    // Auto-advance to next input
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+
+    // Auto-submit when all digits are entered
+    if (newOtp.every(digit => digit !== '') && newOtp.join('').length === 6) {
+      setTimeout(() => {
+        const code = newOtp.join('');
+        setOtp(newOtp);
+        // Trigger verification after state update
+        handleVerifyOTP(code);
+      }, 100);
+    }
+  };
+
+  const handleVerifyOTP = async (code?: string) => {
+    const otpCode = code || otp.join('');
+    if (otpCode.length !== 6) {
+      setErrorMessage('Please enter all 6 digits');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token: otpCode,
+        type: 'email'
+      });
+
+      if (error) {
+        if (error.message.toLowerCase().includes('expired')) {
+          setErrorMessage('Code has expired. Please request a new one.');
+        } else if (error.message.toLowerCase().includes('invalid')) {
+          setErrorMessage('Invalid code. Please check and try again.');
+        } else {
+          setErrorMessage(error.message);
+        }
+        setOtp(['', '', '', '', '', '']);
+      } else if (data?.session) {
+        setSuccessMessage('Successfully signed in! Redirecting...');
+        localStorage.removeItem('emerlya_otp_email');
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1000);
+      } else {
+        setErrorMessage('Authentication failed. Please try again.');
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+      setOtp(['', '', '', '', '', '']);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
+    // Handle backspace
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
+    }
+    // Handle enter
+    if (e.key === 'Enter') {
+      verifyOTP();
+    }
+  };
+
+  const resetToEmailStep = () => {
+    setStep('email');
+    setOtp(['', '', '', '', '', '']);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    localStorage.removeItem('emerlya_otp_email');
+  };
+
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendOTP();
   };
 
   return (
@@ -133,21 +221,25 @@ function LoginForm() {
       <p className="text-lg text-gray-600 text-center mb-8">
         Sign in to access your intelligent content platform
       </p>
-      
+
+      {/* Progress indicator */}
+      <div className="flex items-center justify-center mb-6">
+        <div className="flex items-center space-x-2">
+          <div className={`w-3 h-3 rounded-full ${step === 'email' ? 'bg-indigo-600' : 'bg-green-500'}`}></div>
+          <div className="w-8 h-0.5 bg-gray-300"></div>
+          <div className={`w-3 h-3 rounded-full ${step === 'otp' ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
+        </div>
+        <span className="ml-3 text-sm text-gray-600">
+          Step {step === 'email' ? '1' : '2'} of 2
+        </span>
+      </div>
+
       {errorMessage && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
           <div className="flex items-center">
             <div className="text-red-500 mr-3">⚠️</div>
             <div className="text-red-700 text-sm">{errorMessage}</div>
           </div>
-          {showResendHint && (
-            <div className="mt-3 pt-3 border-t border-red-200">
-              <p className="text-xs text-red-600">
-                💡 <strong>Tip:</strong> Enter your email below to get a new login link. 
-                Make sure to click the link quickly and avoid email preview features that might consume it.
-              </p>
-            </div>
-          )}
         </div>
       )}
 
@@ -160,10 +252,9 @@ function LoginForm() {
         </div>
       )}
 
-      {/* Show custom form when Auth component is hidden due to errors */}
-      {hideAuthComponent ? (
-        <div className="space-y-4">
-          <form onSubmit={handleSendMagicLink} className="space-y-4">
+      {step === 'email' ? (
+        <div className="space-y-6">
+          <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
@@ -174,84 +265,96 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="Your email address"
+                placeholder="your@email.com"
                 required
                 disabled={isLoading}
+                autoFocus
               />
             </div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !email}
               className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Sending...' : 'Send Magic Link'}
+              {isLoading ? 'Sending...' : 'Send 6-Digit Code'}
             </button>
           </form>
-          <button
-            onClick={() => {
-              setHideAuthComponent(false);
-              setErrorMessage(null);
-              setShowResendHint(false);
-            }}
-            className="w-full text-sm text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            ← Back to sign in
-          </button>
         </div>
       ) : (
-        <div className="auth-container">
-          <style jsx global>{`
-            .auth-container .supabase-auth-ui_ui-button {
-              background: linear-gradient(to right, #6366f1, #a855f7) !important;
-              border: none !important;
-              border-radius: 12px !important;
-              font-weight: 500 !important;
-              transition: all 0.2s !important;
-              padding: 12px !important;
-            }
-            .auth-container .supabase-auth-ui_ui-button:hover {
-              transform: translateY(-2px) !important;
-              box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3) !important;
-            }
-            .auth-container input {
-              background: white !important;
-              border: 1px solid #e5e7eb !important;
-              border-radius: 12px !important;
-              padding: 12px !important;
-              font-size: 16px !important;
-            }
-            .auth-container input:focus {
-              border-color: #6366f1 !important;
-              outline: none !important;
-              box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
-            }
-            .auth-container label {
-              color: #374151 !important;
-              font-weight: 500 !important;
-              margin-bottom: 6px !important;
-            }
-          `}</style>
-          
-          <Auth
-            supabaseClient={createClient()}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#6366f1',
-                    brandAccent: '#4f46e5',
-                  }
-                }
-              }
-            }}
-            theme="light"
-            providers={[]}
-            view="magic_link"
-            redirectTo={`${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`}
-          />
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Enter the 6-digit code sent to {email}
+            </label>
+            <div className="flex space-x-2 justify-center">
+              {otp.map((digit, index) => (
+                <input
+                  key={index}
+                  id={`otp-${index}`}
+                  type="text"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleOtpChange(index, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                  className="w-12 h-12 text-center border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg font-semibold"
+                  disabled={isLoading}
+                  autoFocus={index === 0}
+                />
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => verifyOTP()}
+            disabled={isLoading || otp.some(digit => !digit)}
+            className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? 'Verifying...' : 'Verify Code'}
+          </button>
+
+          <div className="flex flex-col space-y-2">
+            <button
+              onClick={() => sendOTP(true)}
+              disabled={isLoading || resendCooldown > 0}
+              className="text-sm text-indigo-600 hover:text-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {resendCooldown > 0 ? `Resend code in ${resendCooldown}s` : 'Resend code'}
+            </button>
+            
+            <button
+              onClick={resetToEmailStep}
+              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              ← Use different email
+            </button>
+          </div>
         </div>
       )}
+
+      {/* Google OAuth Option */}
+      <div className="mt-8 pt-6 border-t border-gray-200">
+        <p className="text-center text-sm text-gray-600 mb-4">Or continue with</p>
+        <button
+          onClick={async () => {
+            const supabase = createClient();
+            await supabase.auth.signInWithOAuth({
+              provider: 'google',
+              options: {
+                redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+              }
+            });
+          }}
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+      </div>
       
       <div className="mt-8 pt-6 border-t border-gray-200">
         <p className="text-center text-sm text-gray-600">
