@@ -147,16 +147,59 @@ export async function POST(req: Request) {
     // 5. Call OpenAI and stream the response
     console.log(`Generating content for brand: ${brand_id} with prompt: "${user_prompt.substring(0, 100)}..."`);
     
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      stream: true,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: finalUserPrompt },
-      ],
-      temperature: 0.7,
-      max_tokens: 2000,
-    });
+    let response;
+    try {
+      // Try gpt-4o-mini first (more widely available)
+      console.log('Attempting to use gpt-4o-mini model...');
+      response = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        stream: true,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: finalUserPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      });
+      console.log('✅ Successfully created chat completion with gpt-4o-mini');
+    } catch (modelError: unknown) {
+      console.error('❌ gpt-4o-mini failed, trying gpt-4o...', modelError);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = modelError as any;
+      
+      try {
+        console.log('Attempting to use gpt-4o model...');
+        response = await openai.chat.completions.create({
+          model: 'gpt-4o',
+          stream: true,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: finalUserPrompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 2000,
+        });
+        console.log('✅ Successfully created chat completion with gpt-4o');
+      } catch (fallbackError: unknown) {
+        console.error('❌ Both gpt-4o-mini and gpt-4o failed');
+        console.error('Original error:', error.message);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const fbError = fallbackError as any;
+        console.error('Fallback error:', fbError.message);
+        
+        return new Response(
+          JSON.stringify({ 
+            error: 'Model access error',
+            details: `Both gpt-4o-mini and gpt-4o failed. Original: ${error.message}, Fallback: ${fbError.message}`,
+            type: 'OpenAI_Model_Error'
+          }),
+          { 
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+      }
+    }
 
     // Create a robust ReadableStream for streaming the response
     const encoder = new TextEncoder();
