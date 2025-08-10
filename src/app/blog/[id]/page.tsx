@@ -196,16 +196,56 @@ export default async function BlogPostPage({ params }: PageProps) {
       <section className="px-6 pb-20">
         <div className="max-w-4xl mx-auto">
           <div className="backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-            <article className="prose prose-lg prose-gray max-w-none p-12">
+            <article className="max-w-none p-12">
               <div 
-                className="text-gray-700 leading-relaxed"
+                className="prose prose-xl prose-gray max-w-none"
                 style={{
-                  whiteSpace: 'pre-wrap',
+                  fontSize: '1.125rem',
                   lineHeight: '1.8',
-                  fontSize: '1.125rem'
+                  color: '#374151'
                 }}
               >
-                {post.content}
+                <div 
+                  className="text-gray-700 leading-relaxed space-y-6"
+                  style={{
+                    whiteSpace: 'pre-wrap',
+                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: post.content
+                      .split('\n\n')
+                      .map(paragraph => {
+                        if (paragraph.trim().startsWith('#')) {
+                          const level = paragraph.match(/^#+/)?.[0].length || 1;
+                          const text = paragraph.replace(/^#+\s*/, '');
+                          const headingClass = {
+                            1: 'text-3xl font-bold text-gray-900 mt-12 mb-6',
+                            2: 'text-2xl font-semibold text-gray-900 mt-10 mb-5',
+                            3: 'text-xl font-semibold text-gray-900 mt-8 mb-4',
+                            4: 'text-lg font-semibold text-gray-900 mt-6 mb-3',
+                          }[level] || 'text-lg font-semibold text-gray-900 mt-6 mb-3';
+                          return `<h${level} class="${headingClass}">${text}</h${level}>`;
+                        }
+                        if (paragraph.trim().startsWith('- ')) {
+                          const items = paragraph.split('\n').filter(line => line.trim().startsWith('- '));
+                          const listItems = items.map(item => 
+                            `<li class="mb-2 text-gray-700">${item.replace(/^- /, '')}</li>`
+                          ).join('');
+                          return `<ul class="list-disc list-inside space-y-2 my-6 ml-4">${listItems}</ul>`;
+                        }
+                        if (paragraph.trim().startsWith('1. ') || /^\d+\.\s/.test(paragraph.trim())) {
+                          const items = paragraph.split('\n').filter(line => /^\d+\.\s/.test(line.trim()));
+                          const listItems = items.map(item => 
+                            `<li class="mb-2 text-gray-700">${item.replace(/^\d+\.\s/, '')}</li>`
+                          ).join('');
+                          return `<ol class="list-decimal list-inside space-y-2 my-6 ml-4">${listItems}</ol>`;
+                        }
+                        if (paragraph.trim() === '') return '';
+                        return `<p class="mb-6 text-gray-700 leading-relaxed">${paragraph}</p>`;
+                      })
+                      .join('')
+                  }}
+                />
               </div>
             </article>
           </div>

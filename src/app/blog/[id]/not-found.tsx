@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NotFoundIcon } from '@/components/BlogIcons';
 
 export default function BlogPostNotFound() {
   return (
@@ -41,7 +42,7 @@ export default function BlogPostNotFound() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-16 shadow-2xl border border-white/50">
             <div className="w-24 h-24 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-8">
-              <span className="text-4xl">📝</span>
+              <NotFoundIcon className="w-12 h-12" />
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

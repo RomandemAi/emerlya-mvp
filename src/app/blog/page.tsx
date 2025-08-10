@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getIconForTags } from '@/components/BlogIcons';
 
 interface BlogPost {
   id: string;
@@ -55,58 +56,11 @@ export default async function BlogPage() {
     return tags.length > 0 ? tags[0] : 'General';
   };
 
-  const getEmoji = (tags: string[]) => {
-    const tag = tags[0]?.toLowerCase() || '';
-    if (tag.includes('ai') || tag.includes('tech')) return '🤖';
-    if (tag.includes('brand')) return '🎯';
-    if (tag.includes('privacy') || tag.includes('security')) return '🔒';
-    if (tag.includes('business') || tag.includes('growth')) return '📈';
-    if (tag.includes('science') || tag.includes('analysis')) return '⚡';
-    if (tag.includes('content') || tag.includes('marketing')) return '📊';
-    return '✨';
-  };
 
-  // Fallback data when no posts exist
-  const fallbackPosts = [
-    {
-      id: 'sample-1',
-      title: 'The Silent Architecture of AI',
-      excerpt: 'In the quantum realm between human thought and machine learning, there exists a silent architecture that shapes our digital consciousness.',
-      tags: ['AI', 'Technology', 'Philosophy'],
-      word_count: 1250,
-      created_at: new Date().toISOString(),
-      content: 'Sample content...',
-      status: 'published' as const,
-      author_type: 'manual' as const,
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: 'sample-2',
-      title: 'When the Universe Writes Back',
-      excerpt: 'Somewhere between the cosmic dance of data and the intimate whisper of personalized content, brands discover their voice in the vast echo chamber of digital space.',
-      tags: ['Brand Voice', 'Content', 'Strategy'],
-      word_count: 980,
-      created_at: new Date(Date.now() - 24*60*60*1000).toISOString(),
-      content: 'Sample content...',
-      status: 'published' as const,
-      author_type: 'ai-generated' as const,
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: 'sample-3',
-      title: 'The Brand Voice Revolution',
-      excerpt: 'How AI is transforming the way businesses communicate, creating authentic connections at scale while maintaining the human touch that makes brands memorable.',
-      tags: ['Marketing', 'Business', 'Innovation'],
-      word_count: 1180,
-      created_at: new Date(Date.now() - 2*24*60*60*1000).toISOString(),
-      content: 'Sample content...',
-      status: 'published' as const,
-      author_type: 'manual' as const,
-      updated_at: new Date().toISOString(),
-    },
-  ];
+  // Show sample content only when there are no real posts
+  const showFallbackContent = blogPosts.length === 0;
 
-  const displayPosts = blogPosts.length > 0 ? blogPosts : fallbackPosts;
+  const displayPosts = blogPosts;
   const categories = ["All", "AI", "Technology", "Brand Voice", "Content", "Strategy", "Marketing", "Business"];
 
   return (
@@ -237,7 +191,7 @@ export default async function BlogPage() {
                 </div>
                 <div className="flex items-center justify-center">
                   <div className="w-64 h-64 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl flex items-center justify-center">
-                    <span className="text-8xl">{getEmoji(displayPosts[0].tags)}</span>
+                    {getIconForTags(displayPosts[0].tags, "w-32 h-32")}
                   </div>
                 </div>
               </div>
@@ -257,7 +211,7 @@ export default async function BlogPage() {
                 <article key={post.id} className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
                   <div className="mb-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">{getEmoji(post.tags)}</span>
+                      {getIconForTags(post.tags, "w-8 h-8")}
                     </div>
                     <div className="flex items-center mb-3">
                       <span className="text-xs text-indigo-600 font-medium bg-indigo-50 px-2 py-1 rounded-full">
@@ -293,20 +247,45 @@ export default async function BlogPage() {
                 </article>
               ))}
             </div>
-          ) : (
+          ) : showFallbackContent ? (
             <div className="text-center py-12">
               <div className="w-24 h-24 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-4xl">📝</span>
+                {getIconForTags(['content'], "w-12 h-12")}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">No Additional Posts Yet</h3>
-              <p className="text-gray-600 mb-6">We're working on creating more amazing content for you!</p>
-              <Link href="/login">
-                <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-                  Start Creating
-                </button>
-              </Link>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Coming Soon: Amazing Content</h3>
+              <p className="text-gray-600 mb-6">We're working on creating insightful articles about AI content generation, brand strategy, and digital marketing innovations.</p>
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
+                <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/50">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    {getIconForTags(['ai'], "w-6 h-6")}
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">AI & Technology</h4>
+                  <p className="text-sm text-gray-600">Deep dives into AI content generation and machine learning trends</p>
+                </div>
+                <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/50">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    {getIconForTags(['brand'], "w-6 h-6")}
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Brand Strategy</h4>
+                  <p className="text-sm text-gray-600">Expert insights on brand voice and content strategy</p>
+                </div>
+                <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/50">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    {getIconForTags(['business'], "w-6 h-6")}
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Business Growth</h4>
+                  <p className="text-sm text-gray-600">Practical tips for scaling content operations and ROI</p>
+                </div>
+              </div>
+              <div className="mt-8">
+                <Link href="/login">
+                  <button className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                    Start Creating Content
+                  </button>
+                </Link>
+              </div>
             </div>
-          )}
+          ) : null}
         </div>
       </section>
 
