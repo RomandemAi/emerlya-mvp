@@ -71,25 +71,25 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6">
             
             {/* Free Plan */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
-                <p className="text-gray-600 mb-6">Perfect for individuals getting started</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-gray-900">€0</span>
+            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Starter</h3>
+                <p className="text-gray-600 mb-4">Perfect for individuals getting started</p>
+                <div className="mb-4">
+                  <span className="text-3xl font-bold text-gray-900">€0</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
                 <Link href="/login">
-                  <button className="w-full px-6 py-3 bg-gray-100 text-gray-900 rounded-xl font-medium hover:bg-gray-200 transition-colors">
+                  <button className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-xl font-medium hover:bg-gray-200 transition-colors">
                     Get Started Free
                   </button>
                 </Link>
               </div>
               
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 <li className="flex items-center">
                   <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -130,28 +130,28 @@ export default function PricingPage() {
             </div>
 
             {/* Pro Plan - Most Popular */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border-2 border-indigo-200 hover:shadow-3xl transition-all duration-300 relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-medium">
+            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border-2 border-indigo-200 hover:shadow-3xl transition-all duration-300 relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-medium">
                   Most Popular
                 </span>
               </div>
               
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
-                <p className="text-gray-600 mb-6">For growing businesses and teams</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-gray-900">€29</span>
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Professional</h3>
+                <p className="text-gray-600 mb-4">For growing businesses and teams</p>
+                <div className="mb-4">
+                  <span className="text-3xl font-bold text-gray-900">€29</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
                 <Link href="/login">
-                  <button className="w-full px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
                     Start Free Trial
                   </button>
                 </Link>
               </div>
               
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 <li className="flex items-center">
                   <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -198,21 +198,21 @@ export default function PricingPage() {
             </div>
 
             {/* Enterprise Plan */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
-                <p className="text-gray-600 mb-6">For large organizations with custom needs</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-gray-900">Custom</span>
+            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                <p className="text-gray-600 mb-4">For large organizations with custom needs</p>
+                <div className="mb-4">
+                  <span className="text-3xl font-bold text-gray-900">Custom</span>
                 </div>
                 <Link href="/contact">
-                  <button className="w-full px-6 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
+                  <button className="w-full px-5 py-2.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
                     Contact Sales
                   </button>
                 </Link>
               </div>
               
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 <li className="flex items-center">
                   <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -264,12 +264,12 @@ export default function PricingPage() {
       {/* FAQ Section */}
       <section className="py-20 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
         <div className="max-w-4xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-12 shadow-2xl border border-white/50">
+          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
               Frequently Asked Questions
             </h2>
             
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   What happens when I reach my word limit?
@@ -380,7 +380,7 @@ export default function PricingPage() {
               <ul className="space-y-2">
                 <li><Link href="/features" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
                 <li><Link href="/pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
-                <li><Link href="/api" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
+                <li><Link href="/api-docs" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
               </ul>
             </div>
             

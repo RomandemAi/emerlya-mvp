@@ -21,8 +21,8 @@ export default function APIPage() {
             <Link href="/pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
               Pricing
             </Link>
-            <Link href="/api-docs" className="text-gray-900 font-medium">
-              API
+            <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Blog
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
               About

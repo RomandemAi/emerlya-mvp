@@ -21,6 +21,9 @@ export default function FeaturesPage() {
             <Link href="/pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
               Pricing
             </Link>
+            <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Blog
+            </Link>
             <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
               About
             </Link>
@@ -57,7 +60,7 @@ export default function FeaturesPage() {
       {/* Core Features */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Core AI Capabilities
           </h2>
           
@@ -128,8 +131,8 @@ export default function FeaturesPage() {
       {/* Advanced Features */}
       <section className="py-20 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
         <div className="max-w-7xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-16 shadow-2xl border border-white/50">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-12 shadow-2xl border border-white/50">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
               Advanced AI Features
             </h2>
             
@@ -231,7 +234,7 @@ export default function FeaturesPage() {
       {/* Enterprise Features */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Enterprise-Grade Security & Compliance
           </h2>
           
@@ -320,7 +323,7 @@ export default function FeaturesPage() {
               <ul className="space-y-2">
                 <li><Link href="/features" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
                 <li><Link href="/pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
-                <li><Link href="/api" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
+                <li><Link href="/api-docs" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
               </ul>
             </div>
             
