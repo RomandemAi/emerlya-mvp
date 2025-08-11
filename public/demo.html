@@ -31,7 +31,7 @@
             width: 100%;
             z-index: 50;
             padding: 0.75rem 1.5rem;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
             background: rgba(37, 99, 235, 0.9);
             border-bottom: 1px solid rgba(37, 99, 235, 0.2);
         }
@@ -170,23 +170,38 @@
         }
         
         .hero-container {
-            max-width: 1000px;
+            max-width: 5xl;
             margin: 0 auto;
         }
         
         .hero-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: white;
             margin-bottom: 1rem;
         }
         
+        .hero-title-accent {
+            display: block;
+            color: var(--accent);
+        }
+        
         .hero-subtitle {
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
+            max-width: 32rem;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
         }
         
         /* Demo Container */
@@ -552,9 +567,12 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <h1 class="hero-title">See Emerlya AI in Action</h1>
+            <h1 class="hero-title">
+                Watch how AI adapts content to match your brand's unique voice across different 
+                <span class="hero-title-accent">platforms and content types</span>
+            </h1>
             <p class="hero-subtitle">
-                Watch how AI adapts content to match your brand's unique voice across different platforms and content types
+                See Emerlya AI in action as it generates authentic, brand-consistent content in real-time
             </p>
         </div>
     </section>
