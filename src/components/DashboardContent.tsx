@@ -28,9 +28,9 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
     <>
       <div className="flex justify-between items-center mb-12">
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-gray-900 mb-4">
             My
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent block">
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent block">
               Brand Portfolio
             </span>
           </h1>
@@ -40,7 +40,7 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
         </div>
         <button 
           onClick={() => setIsCreateModalOpen(true)}
-          className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 flex items-center space-x-2"
+          className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 flex items-center space-x-2"
         >
           <span>✨</span>
           <span>Create New Brand</span>
@@ -58,7 +58,7 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
               </p>
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
+                className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
               >
                 Get Started Now
               </button>
@@ -70,7 +70,7 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
               <div key={brand.id} className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 truncate pr-2">
+                    <h3 className="text-lg font-bold text-gray-900 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 truncate pr-2">
                       {brand.name}
                     </h3>
                     <div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full shadow-sm flex-shrink-0"></div>
@@ -86,7 +86,7 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
                 <div className="space-y-3">
                   <Link 
                     href={`/brands/${brand.id}`}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center text-sm font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center space-x-2"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-primary to-accent text-white text-center text-sm font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center space-x-2"
                   >
                     <span>✨</span>
                     <span>Create Amazing Content</span>

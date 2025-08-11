@@ -216,7 +216,7 @@ function LoginForm() {
         </div>
       </div>
       
-      <h1 className="text-3xl font-bold font-heading text-primary text-center mb-3">
+      <h1 className="text-xl md:text-2xl font-bold font-heading text-primary text-center mb-3">
         Welcome to Emerlya AI
       </h1>
       <p className="text-base text-gray-600 text-center mb-6">

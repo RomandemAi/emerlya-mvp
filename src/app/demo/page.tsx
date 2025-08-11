@@ -38,6 +38,20 @@ const demoExamples: DemoExample[] = [
     contentType: "Product Description",
     prompt: "Describe a new seasonal craft beer",
     result: "Autumn Harvest Amber Ale - Our Latest Labor of Love\n\nWe've been tinkering in the brewhouse again, and boy, do we have something special for you. This isn't just another seasonal—it's autumn in a glass.\n\nPour yourself a pint and you'll catch notes of caramelized apple, a hint of cinnamon that doesn't overpower, and that smooth, malty backbone we're known for. At 5.8% ABV, it's the perfect companion for crisp evenings and good conversations.\n\nLocally sourced ingredients. Small-batch crafted. Ridiculously drinkable.\n\nAvailable on tap and in limited 4-packs while the leaves are still falling."
+  },
+  {
+    brand: "FinanceForward",
+    voice: "Trustworthy, Expert, Accessible",
+    contentType: "LinkedIn Post",
+    prompt: "Share insights about market trends",
+    result: "📊 Market Update: What This Week's Economic Data Means for Your Portfolio\n\nThe latest inflation figures came in lower than expected, but here's what you need to know beyond the headlines:\n\n✅ Consumer spending remains resilient\n✅ Tech sector showing renewed strength\n✅ Interest rate environment stabilizing\n\n💡 Key takeaway: Stay focused on your long-term strategy. Market volatility creates opportunities for disciplined investors.\n\nWhat questions do you have about navigating current market conditions? Let's discuss in the comments.\n\n#InvestmentStrategy #MarketAnalysis #FinancialPlanning"
+  },
+  {
+    brand: "Urban Eats",
+    voice: "Vibrant, Food-Loving, Community-Focused",
+    contentType: "Social Media Campaign",
+    prompt: "Promote a new healthy menu item",
+    result: "🥗 NEW ARRIVAL ALERT! 🥗\n\nMeet our Buddha Bowl Bliss – the colorful creation that's about to become your new obsession!\n\n🌈 What's inside?\n• Quinoa power base\n• Roasted sweet potato cubes\n• Crispy chickpeas\n• Fresh avocado slices\n• House-made tahini drizzle\n• Microgreens for that extra pop!\n\nNutrition meets flavor in the most Instagram-worthy way possible. Plus, it's completely plant-based and packed with 22g of protein!\n\n🎉 Available now at all locations. Tag a friend who needs to try this!\n\n#BuddhaBlowl #PlantBased #HealthyEats #FreshFlavors"
   }
 ];
 
@@ -56,6 +70,10 @@ export default function DemoPage() {
       let index = 0;
       const text = example.result;
       
+      // Faster typing on mobile devices
+      const isMobile = window.innerWidth < 768;
+      const typingSpeed = isMobile ? 20 : 30;
+      
       const typeInterval = setInterval(() => {
         if (index < text.length) {
           setTypedText(text.substring(0, index + 1));
@@ -64,7 +82,7 @@ export default function DemoPage() {
           clearInterval(typeInterval);
           setIsTyping(false);
         }
-      }, 30);
+      }, typingSpeed);
 
       return () => clearInterval(typeInterval);
     }
@@ -90,7 +108,7 @@ export default function DemoPage() {
   }, [stage, currentExample]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -140,43 +158,45 @@ export default function DemoPage() {
         </div>
       </nav>
 
-      {/* Demo Container */}
-      <div className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              See Emerlya AI in Action
-            </h1>
-            <p className="text-xl text-gray-600">
-              Watch how AI adapts content to match your brand&apos;s unique voice
-            </p>
-          </div>
+      {/* Hero Section */}
+      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
+            See Emerlya AI in Action
+          </h1>
+          <p className="text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
+            Watch how AI adapts content to match your brand's unique voice across different platforms and content types
+          </p>
+        </div>
+      </section>
 
+      {/* Demo Container */}
+      <div className="py-12 px-6">
+        <div className="max-w-6xl mx-auto">
           {/* Demo Area */}
-          <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50">
+          <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-8 shadow-xl border border-white/50">
             {/* Progress Indicators */}
             <div className="flex justify-center mb-8">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 md:space-x-4">
                 <div className={`flex items-center ${stage >= 1 ? 'opacity-100' : 'opacity-30'} transition-opacity duration-500`}>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${stage >= 1 ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-gray-300'}`}>
-                    <span className="text-white font-semibold">1</span>
+                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center ${stage >= 1 ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gray-300'}`}>
+                    <span className="text-white font-semibold text-xs md:text-sm">1</span>
                   </div>
-                  <span className="ml-2 text-sm font-medium text-gray-700">Brand</span>
+                  <span className="ml-1 md:ml-2 text-xs md:text-sm font-medium text-gray-700">Brand</span>
                 </div>
-                <div className={`w-16 h-0.5 ${stage >= 2 ? 'bg-indigo-600' : 'bg-gray-300'} transition-colors duration-500`}></div>
+                <div className={`w-8 md:w-16 h-0.5 ${stage >= 2 ? 'bg-primary' : 'bg-gray-300'} transition-colors duration-500`}></div>
                 <div className={`flex items-center ${stage >= 2 ? 'opacity-100' : 'opacity-30'} transition-opacity duration-500`}>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${stage >= 2 ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-gray-300'}`}>
-                    <span className="text-white font-semibold">2</span>
+                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center ${stage >= 2 ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gray-300'}`}>
+                    <span className="text-white font-semibold text-xs md:text-sm">2</span>
                   </div>
-                  <span className="ml-2 text-sm font-medium text-gray-700">Content</span>
+                  <span className="ml-1 md:ml-2 text-xs md:text-sm font-medium text-gray-700">Content</span>
                 </div>
-                <div className={`w-16 h-0.5 ${stage >= 3 ? 'bg-indigo-600' : 'bg-gray-300'} transition-colors duration-500`}></div>
+                <div className={`w-8 md:w-16 h-0.5 ${stage >= 3 ? 'bg-primary' : 'bg-gray-300'} transition-colors duration-500`}></div>
                 <div className={`flex items-center ${stage >= 3 ? 'opacity-100' : 'opacity-30'} transition-opacity duration-500`}>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${stage >= 3 ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-gray-300'}`}>
-                    <span className="text-white font-semibold">3</span>
+                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center ${stage >= 3 ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gray-300'}`}>
+                    <span className="text-white font-semibold text-xs md:text-sm">3</span>
                   </div>
-                  <span className="ml-2 text-sm font-medium text-gray-700">Generate</span>
+                  <span className="ml-1 md:ml-2 text-xs md:text-sm font-medium text-gray-700">Generate</span>
                 </div>
               </div>
             </div>
@@ -187,16 +207,16 @@ export default function DemoPage() {
               <div className="space-y-6">
                 {/* Brand Selection */}
                 <div className={`transform transition-all duration-700 ${stage >= 1 ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-                  <div className="bg-white/80 rounded-2xl p-6 border border-gray-200/50">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Brand Profile</h3>
+                  <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50">
+                    <h3 className="text-base md:text-lg font-semibold text-primary mb-3">Brand Profile</h3>
                     <div className="space-y-3">
                       <div>
                         <label className="text-sm text-gray-600">Brand Name</label>
-                        <p className="text-gray-900 font-medium">{example.brand}</p>
+                        <p className="text-gray-900 font-medium text-sm">{example.brand}</p>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Brand Voice</label>
-                        <p className="text-gray-900">{example.voice}</p>
+                        <p className="text-gray-900 text-sm">{example.voice}</p>
                       </div>
                     </div>
                   </div>
@@ -204,16 +224,16 @@ export default function DemoPage() {
 
                 {/* Content Type Selection */}
                 <div className={`transform transition-all duration-700 delay-100 ${stage >= 2 ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-                  <div className="bg-white/80 rounded-2xl p-6 border border-gray-200/50">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Content Request</h3>
+                  <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50">
+                    <h3 className="text-base md:text-lg font-semibold text-primary mb-3">Content Request</h3>
                     <div className="space-y-3">
                       <div>
                         <label className="text-sm text-gray-600">Content Type</label>
-                        <p className="text-gray-900 font-medium">{example.contentType}</p>
+                        <p className="text-gray-900 font-medium text-sm">{example.contentType}</p>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Prompt</label>
-                        <p className="text-gray-900">{example.prompt}</p>
+                        <p className="text-gray-900 text-sm">{example.prompt}</p>
                       </div>
                     </div>
                   </div>
@@ -222,12 +242,12 @@ export default function DemoPage() {
 
               {/* Right Side - Output */}
               <div className={`transform transition-all duration-700 delay-200 ${stage >= 3 ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 h-full">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">AI Generated Content</h3>
-                  <div className="min-h-[200px]">
+                <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-4 md:p-6 h-full border border-primary/20">
+                  <h3 className="text-base md:text-lg font-semibold text-primary mb-4">AI Generated Content</h3>
+                  <div className="min-h-[200px] max-h-[400px] overflow-y-auto">
                     {stage >= 3 && (
                       <div className="space-y-3">
-                        <p className="text-gray-800 whitespace-pre-wrap">
+                        <p className="text-gray-800 whitespace-pre-wrap text-sm leading-relaxed break-words">
                           {typedText}
                           {isTyping && <span className="animate-pulse">|</span>}
                         </p>
@@ -235,9 +255,9 @@ export default function DemoPage() {
                     )}
                   </div>
                   {!isTyping && stage >= 3 && (
-                    <div className="mt-6 pt-4 border-t border-indigo-200">
-                      <p className="text-sm text-indigo-600 font-medium">
-                        ✨ Content generated with {example.brand}&apos;s unique voice
+                    <div className="mt-4 md:mt-6 pt-4 border-t border-primary/20">
+                      <p className="text-xs md:text-sm text-primary font-medium">
+                        ✨ Content generated with {example.brand}'s unique voice
                       </p>
                     </div>
                   )}
@@ -246,15 +266,15 @@ export default function DemoPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-center mt-8 space-x-4">
+            <div className="flex flex-col sm:flex-row justify-center mt-8 space-y-3 sm:space-y-0 sm:space-x-4">
               <button
                 onClick={nextExample}
-                className="px-6 py-3 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+                className="px-4 md:px-6 py-3 backdrop-blur-xl bg-white/80 border border-gray-200/50 text-gray-700 rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 text-sm md:text-base"
               >
                 Try Another Example
               </button>
               <Link href="/login">
-                <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                <button className="px-4 md:px-6 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1 text-sm md:text-base">
                   Create Your Own
                 </button>
               </Link>
@@ -263,35 +283,175 @@ export default function DemoPage() {
 
           {/* Features Preview */}
           <div className="mt-12 grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🎯</span>
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Brand Consistency</h3>
-              <p className="text-sm text-gray-600">Every piece of content perfectly matches your brand voice</p>
+              <h3 className="text-base font-semibold text-gray-900 mb-2">Brand Consistency</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Every piece of content perfectly matches your brand voice and maintains consistency across all channels
+              </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">⚡</span>
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Lightning Fast</h3>
-              <p className="text-sm text-gray-600">Generate professional content in seconds, not hours</p>
+              <h3 className="text-base font-semibold text-gray-900 mb-2">Lightning Fast</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Generate professional content in seconds, not hours. Scale your content creation effortlessly
+              </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🚀</span>
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Scale Infinitely</h3>
-              <p className="text-sm text-gray-600">Create unlimited content across all channels</p>
+              <h3 className="text-base font-semibold text-gray-900 mb-2">Scale Infinitely</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Create unlimited content across all channels and platforms with intelligent automation
+              </p>
+            </div>
+          </div>
+
+          {/* Content Types Section */}
+          <div className="mt-12">
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-8 shadow-xl border border-white/50">
+              <h2 className="text-lg md:text-xl font-bold font-heading text-primary mb-6 text-center">
+                Supported Content Types
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">📱</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Social Media Posts</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">✉️</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Email Campaigns</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">📝</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Blog Articles</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">🛍️</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Product Descriptions</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">💼</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">LinkedIn Content</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">📢</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Ad Copy</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">📊</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Reports & Articles</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-xl bg-primary/5">
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">🎯</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Custom Content</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="mt-12 text-center">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8 shadow-xl border border-primary/20">
+              <h2 className="text-lg md:text-xl font-bold font-heading text-primary mb-4">
+                Ready to Transform Your Content Creation?
+              </h2>
+              <p className="text-base text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of businesses already using Emerlya AI to create consistent, high-quality content that resonates with their audience.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <Link href="/login">
+                  <button className="px-6 md:px-8 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1 text-sm md:text-base w-full sm:w-auto">
+                    Start Free Trial
+                  </button>
+                </Link>
+                <Link href="/pricing">
+                  <button className="px-6 md:px-8 py-3 backdrop-blur-xl bg-white/80 border border-gray-200/50 text-gray-700 rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 text-sm md:text-base w-full sm:w-auto">
+                    View Pricing
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-gray-200/50 py-8 px-6">
-        <div className="max-w-7xl mx-auto text-center text-sm text-gray-600">
-          <p>© 2025 Emerlya AI. All rights reserved. | Built with ❤️ in the EU 🇪🇺</p>
+      <footer className="bg-primary py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+                  <span className="text-primary font-bold font-heading">E</span>
+                </div>
+                <span className="text-xl font-semibold font-heading text-white">Emerlya AI</span>
+              </div>
+              <p className="text-white/80 text-sm leading-relaxed">
+                Intelligent content generation for modern teams.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold font-heading text-white mb-4">Product</h4>
+              <ul className="space-y-2">
+                <li><Link href="/features" className="text-white/80 hover:text-accent transition-colors text-sm">Features</Link></li>
+                <li><Link href="/pricing" className="text-white/80 hover:text-accent transition-colors text-sm">Pricing</Link></li>
+                <li><Link href="/api-docs" className="text-white/80 hover:text-accent transition-colors text-sm">API</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold font-heading text-white mb-4">Company</h4>
+              <ul className="space-y-2">
+                <li><Link href="/about" className="text-white/80 hover:text-accent transition-colors text-sm">About</Link></li>
+                <li><Link href="/blog" className="text-white/80 hover:text-accent transition-colors text-sm">Blog</Link></li>
+                <li><Link href="/contact" className="text-white/80 hover:text-accent transition-colors text-sm">Contact</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold font-heading text-white mb-4">Legal</h4>
+              <ul className="space-y-2">
+                <li><Link href="/privacy" className="text-white/80 hover:text-accent transition-colors text-sm">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-white/80 hover:text-accent transition-colors text-sm">Terms of Service</Link></li>
+                <li><Link href="/cookies" className="text-white/80 hover:text-accent transition-colors text-sm">Cookie Policy</Link></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-8 pt-8 border-t border-white/20 text-center">
+            <p className="text-white/80 text-sm">
+              © 2025 Emerlya AI. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

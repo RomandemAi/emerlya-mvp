@@ -55,7 +55,7 @@ export default function PricingPage() {
       {/* Hero Section */}
       <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white mb-4">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
             Simple, Transparent
             <span className="block text-accent">
               Pricing for Everyone
@@ -264,7 +264,7 @@ export default function PricingPage() {
       <section className="py-8 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="backdrop-blur-xl bg-primary/5 rounded-2xl p-6 shadow-xl border border-primary/10">
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-center text-primary mb-6">
+            <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-6">
               Frequently Asked Questions
             </h2>
             
@@ -336,7 +336,7 @@ export default function PricingPage() {
       {/* CTA Section */}
       <section className="py-12 px-6 bg-primary">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-white mb-4">
             Ready to Get Started?
           </h2>
           <p className="text-lg text-white/90 mb-6 leading-relaxed">

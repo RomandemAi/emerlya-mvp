@@ -72,11 +72,11 @@ export default async function LandingPage() {
       {/* Hero Section */}
       <section className="pt-20 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-white mb-3">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-3">
             Enterprise AI Content Platform
           </h1>
           <div className="mb-3">
-            <span className="text-lg md:text-xl lg:text-2xl font-bold font-heading text-accent">
+            <span className="text-base md:text-lg font-bold font-heading text-accent">
               - Emerlya AI
             </span>
           </div>
@@ -102,7 +102,7 @@ export default async function LandingPage() {
       {/* Feature Cards Section */}
       <section className="py-8 px-6 bg-neutral">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl md:text-2xl font-bold font-heading text-center text-primary mb-6">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-6">
             Why Choose Emerlya AI?
           </h2>
           
@@ -173,7 +173,7 @@ export default async function LandingPage() {
       {/* Built for Modern Teams Section */}
       <section className="py-8 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl md:text-2xl font-bold font-heading text-center text-primary mb-6">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-6">
             Built for Modern Teams
           </h2>
           <div className="grid md:grid-cols-3 gap-4">
@@ -205,7 +205,7 @@ export default async function LandingPage() {
       {/* CTA Section */}
       <section className="py-8 px-6 bg-primary">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-xl md:text-2xl font-bold font-heading text-white mb-3">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-white mb-3">
             Ready to Transform Your Content Strategy?
           </h2>
           <p className="text-base text-white/90 mb-5 leading-relaxed">

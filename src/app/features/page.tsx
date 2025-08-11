@@ -68,7 +68,7 @@ export default function FeaturesPage() {
       {/* Hero Section */}
       <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white mb-4">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
             Powerful AI Features for
             <span className="block text-accent">
               Modern Content Creation
@@ -113,7 +113,7 @@ export default function FeaturesPage() {
       {/* Core Features */}
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-center text-primary mb-8">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-8">
             Core AI Capabilities
           </h2>
           
@@ -179,7 +179,7 @@ export default function FeaturesPage() {
       <section className="py-12 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="backdrop-blur-xl bg-primary/5 rounded-2xl p-8 shadow-xl border border-primary/10">
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-center text-primary mb-8">
+            <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-8">
               Advanced AI Features
             </h2>
             
@@ -269,7 +269,7 @@ export default function FeaturesPage() {
       {/* Enterprise Features */}
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-center text-primary mb-8">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-8">
             Built for Modern Teams
           </h2>
           
@@ -310,7 +310,7 @@ export default function FeaturesPage() {
       {/* CTA Section */}
       <section className="py-12 px-6 bg-primary">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-white mb-4">
             Ready to Transform Your Content Strategy?
           </h2>
           <p className="text-lg text-white/90 mb-6 leading-relaxed">
