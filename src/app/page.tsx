@@ -25,14 +25,17 @@ export default async function LandingPage() {
             </span>
           </div>
           <div className="flex items-center space-x-8">
+            <Link href="/features" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Features
+            </Link>
+            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Pricing
+            </Link>
+            <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Blog
+            </Link>
             <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
               About
-            </Link>
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Terms
             </Link>
             <Link href="/login">
               <button className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">

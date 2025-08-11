@@ -34,6 +34,7 @@ export default function DashboardLayout({
   const [isDocumentsOpen, setIsDocumentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCreateBrandOpen, setIsCreateBrandOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const handleBrandUpdate = () => {
     router.refresh(); // Refresh to get updated brands data
@@ -49,21 +50,44 @@ export default function DashboardLayout({
       <TopNavBar 
         userEmail={userEmail}
         subscriptionStatus={subscriptionStatus}
+        onMobileMenuClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
       />
       
+      {/* Mobile Sidebar Overlay */}
+      {isMobileSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+      
       {/* Sidebar */}
-      <div className="w-80 fixed h-full z-40 pt-16">
+      <div className={`
+        fixed h-full z-50 pt-16 transition-transform duration-300 ease-in-out
+        lg:translate-x-0 lg:w-80 lg:z-40
+        ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        w-80
+      `}>
         <Sidebar 
           userEmail={userEmail} 
           subscriptionStatus={subscriptionStatus}
-          onGenerateClick={() => setIsBrandSelectorOpen(true)}
-          onDocumentsClick={() => setIsDocumentsOpen(true)}
-          onSettingsClick={() => setIsSettingsOpen(true)}
+          onGenerateClick={() => {
+            setIsBrandSelectorOpen(true);
+            setIsMobileSidebarOpen(false);
+          }}
+          onDocumentsClick={() => {
+            setIsDocumentsOpen(true);
+            setIsMobileSidebarOpen(false);
+          }}
+          onSettingsClick={() => {
+            setIsSettingsOpen(true);
+            setIsMobileSidebarOpen(false);
+          }}
         />
       </div>
       
       {/* Main Content */}
-      <main className="flex-1 ml-80 pt-16 p-8 min-h-screen">
+      <main className="flex-1 lg:ml-80 pt-16 p-4 lg:p-8 min-h-screen">
         {children}
       </main>
 

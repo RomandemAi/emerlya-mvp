@@ -6,14 +6,27 @@ import LogoutButton from './LogoutButton';
 interface TopNavBarProps {
   userEmail: string;
   subscriptionStatus?: string | null;
+  onMobileMenuClick?: () => void;
 }
 
-export default function TopNavBar({ userEmail, subscriptionStatus }: TopNavBarProps) {
+export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuClick }: TopNavBarProps) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-white/70 border-b border-gray-200/50">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Mobile Menu Button */}
+        {onMobileMenuClick && (
+          <button
+            onClick={onMobileMenuClick}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        )}
+        
         {/* Logo and Home Link */}
         <Link href="/" className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
