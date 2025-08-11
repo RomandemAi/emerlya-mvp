@@ -117,11 +117,20 @@ export default function DemoPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span>Back to Home</span>
+              <span className="hidden sm:inline">Back to Home</span>
+              <span className="sm:hidden">Back</span>
             </Link>
-            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
-              About
-            </Link>
+            <div className="hidden md:flex items-center space-x-6">
+              <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
+                About
+              </Link>
+              <Link href="/features" className="text-white/80 hover:text-accent transition-colors">
+                Features
+              </Link>
+              <Link href="/pricing" className="text-white/80 hover:text-accent transition-colors">
+                Pricing
+              </Link>
+            </div>
             <Link href="/login">
               <button className="px-5 py-2 bg-accent text-primary rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
                 Get Started

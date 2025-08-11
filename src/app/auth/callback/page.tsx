@@ -13,7 +13,27 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleOAuthCallback = async () => {
       try {
-        // Handle OAuth callback (Google, etc.)
+        // Get the current URL parameters
+        const urlParams = new URLSearchParams(window.location.search)
+        const code = urlParams.get('code')
+        const error_description = urlParams.get('error_description')
+        
+        // Handle error cases first
+        if (error_description) {
+          console.error('OAuth error from provider:', error_description)
+          setState('error')
+          setMessage('Authentication failed. Please try signing in again.')
+          return
+        }
+
+        if (!code) {
+          console.error('No auth code found in callback URL')
+          setState('error')
+          setMessage('Invalid authentication response. Please try signing in again.')
+          return
+        }
+
+        // Exchange code for session
         const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
         
         if (error) {
@@ -24,14 +44,18 @@ export default function AuthCallback() {
         }
 
         // Success - check if we have a session
-        if (data?.session) {
+        if (data?.session?.user) {
           setState('success')
           setMessage('Successfully signed in! Redirecting to your dashboard...')
           
-          // Redirect to dashboard after a brief moment
+          // Force refresh the session to ensure it's properly set
+          await supabase.auth.getSession()
+          
+          // Use router.replace instead of push to avoid back button issues
+          // Also use a shorter timeout for better mobile experience
           setTimeout(() => {
-            router.push('/dashboard')
-          }, 1500)
+            router.replace('/dashboard')
+          }, 1000)
         } else {
           setState('error')
           setMessage('No session was created. Please try signing in again.')
@@ -43,7 +67,9 @@ export default function AuthCallback() {
       }
     }
 
-    handleOAuthCallback()
+    // Small delay to ensure DOM is ready, especially important on mobile
+    const timer = setTimeout(handleOAuthCallback, 100)
+    return () => clearTimeout(timer)
   }, [router, supabase.auth])
 
   return (
@@ -51,8 +77,19 @@ export default function AuthCallback() {
       <div className="w-full max-w-md p-8 backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-3xl">E</span>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
+            {/* Data Flow E Logo */}
+            <div className="relative">
+              <span className="text-white font-bold text-3xl font-heading relative z-10">E</span>
+              {/* Animated data particles */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute w-1.5 h-1.5 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
+                <div className="absolute w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
+                <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
+                <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
+                <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '45%', left: '40%', animationDelay: '2s'}}></div>
+              </div>
+            </div>
           </div>
         </div>
 
