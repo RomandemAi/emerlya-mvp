@@ -162,10 +162,14 @@ export default function DemoPage() {
       <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
-            See Emerlya AI in Action
+            Watch how AI adapts content to match your brand's unique voice across different 
+            <span className="block text-accent">
+              platforms and content types
+            </span>
           </h1>
-          <p className="text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
-            Watch how AI adapts content to match your brand's unique voice across different platforms and content types
+          <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
+            We're building the future of intelligent content creation, helping teams craft 
+            compelling stories with the power of artificial intelligence.
           </p>
         </div>
       </section>
