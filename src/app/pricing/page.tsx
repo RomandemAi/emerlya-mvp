@@ -1,32 +1,51 @@
 import Link from 'next/link';
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-white/70 border-b border-gray-200/50">
+      <nav className="fixed top-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">E</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
+              {/* Data Flow E Logo */}
+              <div className="relative">
+                <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
+                {/* Animated data particles */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
+                  <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
+                </div>
+              </div>
             </div>
-            <span className="text-2xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
               Emerlya AI
             </span>
           </Link>
-          <div className="flex items-center space-x-8">
-            <Link href="/features" className="text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="flex items-center space-x-6">
+            <Link href="/features" className="text-white/80 hover:text-accent transition-colors">
               Features
             </Link>
-            <Link href="/pricing" className="text-gray-900 font-medium">
+            <Link href="/pricing" className="text-accent font-medium">
               Pricing
             </Link>
-            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/blog" className="text-white/80 hover:text-accent transition-colors">
+              Blog
+            </Link>
+            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
               About
             </Link>
+            <Link href="/demo">
+              <button className="px-5 py-2 bg-accent text-primary rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                Request Demo
+              </button>
+            </Link>
             <Link href="/login">
-              <button className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-                Get Started
+              <button className="px-5 py-2 border border-white/30 text-white rounded-xl font-medium hover:bg-white/10 transition-all duration-200">
+                Login
               </button>
             </Link>
           </div>
@@ -34,33 +53,33 @@ export default function PricingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white mb-4">
             Simple, Transparent
-            <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="block text-accent">
               Pricing for Everyone
             </span>
           </h1>
-          <p className="text-sm md:text-base text-gray-600 mb-6 leading-relaxed">
+          <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
             Choose the perfect plan for your content needs. Start free, upgrade anytime.
             No hidden fees, no long-term contracts.
           </p>
           
           {/* Billing Toggle */}
           <div className="flex items-center justify-center mb-6">
-            <span className="text-gray-600 mr-3 text-sm">Monthly</span>
+            <span className="text-white/80 mr-3 text-sm">Monthly</span>
             <div className="relative">
               <input type="checkbox" id="billing-toggle" className="sr-only" />
               <label htmlFor="billing-toggle" className="flex items-center cursor-pointer">
-                <div className="w-12 h-6 bg-gray-200 rounded-full p-1 transition-colors duration-300">
+                <div className="w-12 h-6 bg-white/30 rounded-full p-1 transition-colors duration-300">
                   <div className="w-4 h-4 bg-white rounded-full transition-transform duration-300 transform"></div>
                 </div>
               </label>
             </div>
-            <span className="text-gray-600 ml-3 text-sm">
+            <span className="text-white/80 ml-3 text-sm">
               Annual 
-              <span className="inline-block ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+              <span className="inline-block ml-2 px-2 py-1 bg-accent text-primary text-xs rounded-full font-medium">
                 Save 20%
               </span>
             </span>
@@ -70,46 +89,40 @@ export default function PricingPage() {
 
       {/* Trust Indicators */}
       <section className="py-6 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="grid md:grid-cols-3 gap-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 text-center">
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-xs">30-day money-back guarantee</span>
+              <CheckIcon className="w-4 h-4 text-accent" />
+              <span className="text-sm">30-day money-back guarantee</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-              <span className="text-xs">GDPR compliant & secure</span>
+              <CheckIcon className="w-4 h-4 text-primary" />
+              <span className="text-sm">GDPR compliant & secure</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-gray-600">
-              <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span className="text-xs">No setup fees or contracts</span>
+              <CheckIcon className="w-4 h-4 text-accent" />
+              <span className="text-sm">No setup fees or contracts</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Cards */}
-      <section className="py-12 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-8 px-6">
+        <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-6">
             
             {/* Free Plan */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Starter</h3>
-                <p className="text-gray-600 mb-4">Perfect for individuals getting started</p>
+                <h3 className="text-lg font-bold font-heading text-primary mb-2">Starter</h3>
+                <p className="text-sm text-gray-600 mb-4">Perfect for individuals getting started</p>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">€0</span>
+                  <span className="text-3xl font-bold text-primary">€0</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
                 <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-xl font-medium hover:bg-gray-200 transition-colors">
+                  <button className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors">
                     Get Started Free
                   </button>
                 </Link>
@@ -117,61 +130,49 @@ export default function PricingPage() {
               
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">5,000 words/month</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">5,000 words/month</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">1 brand profile</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">1 brand profile</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Basic content types</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Basic content types</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Email support</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Email support</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <span className="text-gray-400">Document analysis</span>
+                  <XMarkIcon className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-400">Document analysis</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <span className="text-gray-400">Team collaboration</span>
+                  <XMarkIcon className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-400">Team collaboration</span>
                 </li>
               </ul>
             </div>
 
             {/* Pro Plan - Most Popular */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border-2 border-indigo-200 hover:shadow-3xl transition-all duration-300 relative">
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border-2 border-accent hover:shadow-2xl transition-all duration-300 relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                <span className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-sm font-medium">
                   Most Popular
                 </span>
               </div>
               
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Professional</h3>
-                <p className="text-gray-600 mb-4">For growing businesses and teams</p>
+                <h3 className="text-lg font-bold font-heading text-primary mb-2">Professional</h3>
+                <p className="text-sm text-gray-600 mb-4">For growing businesses and teams</p>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">€29</span>
+                  <span className="text-3xl font-bold text-primary">€29</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
                 <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                     Start Free Trial
                   </button>
                 </Link>
@@ -179,60 +180,46 @@ export default function PricingPage() {
               
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">50,000 words/month</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">50,000 words/month</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">5 brand profiles</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">5 brand profiles</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">All content types</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">All content types</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Document analysis</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Document analysis</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Priority support</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Priority support</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Team collaboration (5 users)</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Team collaboration (5 users)</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">API access</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">API access</span>
                 </li>
               </ul>
             </div>
 
             {/* Enterprise Plan */}
-            <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-300">
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
-                <p className="text-gray-600 mb-4">For large organizations with custom needs</p>
+                <h3 className="text-lg font-bold font-heading text-primary mb-2">Enterprise</h3>
+                <p className="text-sm text-gray-600 mb-4">For large organizations with custom needs</p>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">Custom</span>
+                  <span className="text-3xl font-bold text-primary">Custom</span>
                 </div>
                 <Link href="/contact">
-                  <button className="w-full px-5 py-2.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
+                  <button className="w-full px-5 py-2.5 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors">
                     Contact Sales
                   </button>
                 </Link>
@@ -240,46 +227,32 @@ export default function PricingPage() {
               
               <ul className="space-y-3">
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Unlimited words</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Unlimited words</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Unlimited brand profiles</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Unlimited brand profiles</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Custom AI models</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Custom AI models</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Advanced analytics</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Advanced analytics</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Dedicated support</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Dedicated support</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">Unlimited team members</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Unlimited team members</span>
                 </li>
                 <li className="flex items-center">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-600">On-premise deployment</span>
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">On-premise deployment</span>
                 </li>
               </ul>
             </div>
@@ -288,69 +261,69 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-12 px-6 bg-gradient-to-b from-transparent to-slate-50/50">
+      <section className="py-8 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-xl border border-white/50">
-            <h2 className="text-lg md:text-xl font-bold text-center text-gray-900 mb-8">
+          <div className="backdrop-blur-xl bg-primary/5 rounded-2xl p-6 shadow-xl border border-primary/10">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-center text-primary mb-6">
               Frequently Asked Questions
             </h2>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   What happens when I reach my word limit?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   When you approach your monthly word limit, we'll notify you with plenty of time to upgrade. 
                   Your account won't be suspended - you'll simply need to upgrade to continue generating content.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   Can I change plans anytime?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect immediately, 
                   and we'll prorate any billing adjustments.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   Do you offer refunds?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, 
                   contact us within 30 days for a full refund.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   What payment methods do you accept?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. 
                   Enterprise customers can also pay by bank transfer.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   Is my data secure?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Yes! We use bank-level encryption and are fully GDPR compliant. Your content and data 
                   are never used to train our models or shared with third parties.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                <h3 className="text-base font-semibold font-heading text-primary mb-2">
                   Do you offer custom enterprise solutions?
                 </h3>
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Yes! Our Enterprise plan includes custom AI models, on-premise deployment options, 
                   and dedicated support. Contact our sales team to discuss your specific requirements.
                 </p>
@@ -361,23 +334,23 @@ export default function PricingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-10 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
+      <section className="py-12 px-6 bg-primary">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-sm md:text-base text-gray-600 mb-6">
+          <p className="text-lg text-white/90 mb-6 leading-relaxed">
             Join thousands of teams already creating amazing content with Emerlya AI. 
             Start your free trial today - no credit card required.
           </p>
-          <div className="flex justify-center space-x-3">
+          <div className="flex justify-center space-x-4">
             <Link href="/login">
-              <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
+              <button className="px-6 py-3 bg-accent text-primary rounded-lg font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
                 Start Free Trial
               </button>
             </Link>
             <Link href="/contact">
-              <button className="px-6 py-3 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
+              <button className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-lg font-medium hover:bg-white/20 transition-all duration-200">
                 Contact Sales
               </button>
             </Link>
@@ -386,52 +359,52 @@ export default function PricingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-gray-200/50 py-12 px-6">
+      <footer className="bg-primary py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">E</span>
+                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+                  <span className="text-primary font-bold font-heading">E</span>
                 </div>
-                <span className="text-xl font-semibold">Emerlya AI</span>
+                <span className="text-xl font-semibold font-heading text-white">Emerlya AI</span>
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-white/80 text-sm leading-relaxed">
                 Intelligent content generation for modern teams.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
+              <h4 className="font-semibold font-heading text-white mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><Link href="/features" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
-                <li><Link href="/pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
-                <li><Link href="/api-docs" className="text-gray-600 hover:text-gray-900 text-sm">API</Link></li>
+                <li><Link href="/features" className="text-white/80 hover:text-accent transition-colors text-sm">Features</Link></li>
+                <li><Link href="/pricing" className="text-white/80 hover:text-accent transition-colors text-sm">Pricing</Link></li>
+                <li><Link href="/api-docs" className="text-white/80 hover:text-accent transition-colors text-sm">API</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
+              <h4 className="font-semibold font-heading text-white mb-4">Company</h4>
               <ul className="space-y-2">
-                <li><Link href="/about" className="text-gray-600 hover:text-gray-900 text-sm">About</Link></li>
-                <li><Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm">Blog</Link></li>
-                <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
+                <li><Link href="/about" className="text-white/80 hover:text-accent transition-colors text-sm">About</Link></li>
+                <li><Link href="/blog" className="text-white/80 hover:text-accent transition-colors text-sm">Blog</Link></li>
+                <li><Link href="/contact" className="text-white/80 hover:text-accent transition-colors text-sm">Contact</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Legal</h4>
+              <h4 className="font-semibold font-heading text-white mb-4">Legal</h4>
               <ul className="space-y-2">
-                <li><Link href="/privacy" className="text-gray-600 hover:text-gray-900 text-sm">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-gray-600 hover:text-gray-900 text-sm">Terms of Service</Link></li>
-                <li><Link href="/gdpr" className="text-gray-600 hover:text-gray-900 text-sm">GDPR</Link></li>
-                <li><Link href="/cookies" className="text-gray-600 hover:text-gray-900 text-sm">Cookie Policy</Link></li>
+                <li><Link href="/privacy" className="text-white/80 hover:text-accent transition-colors text-sm">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-white/80 hover:text-accent transition-colors text-sm">Terms of Service</Link></li>
+                <li><Link href="/gdpr" className="text-white/80 hover:text-accent transition-colors text-sm">GDPR</Link></li>
+                <li><Link href="/cookies" className="text-white/80 hover:text-accent transition-colors text-sm">Cookie Policy</Link></li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-gray-200/50 text-center text-sm text-gray-600">
-            <p>© 2025 Emerlya AI. All rights reserved. | Built with ❤️ in the EU 🇪🇺</p>
+          <div className="mt-12 pt-8 border-t border-white/20 text-center text-sm text-white/60">
+            <p>© 2025 Emerlya AI. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -209,26 +209,26 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md p-10 backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50">
+    <div className="w-full max-w-md p-8 backdrop-blur-xl bg-white/90 rounded-2xl shadow-2xl border border-white/50">
       <div className="flex justify-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-          <span className="text-white font-bold text-3xl">E</span>
+        <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+          <span className="text-white font-bold text-3xl font-heading">E</span>
         </div>
       </div>
       
-      <h1 className="text-4xl font-bold text-gray-900 text-center mb-3">
+      <h1 className="text-3xl font-bold font-heading text-primary text-center mb-3">
         Welcome to Emerlya AI
       </h1>
-      <p className="text-lg text-gray-600 text-center mb-8">
+      <p className="text-base text-gray-600 text-center mb-6">
         Sign in to access your intelligent content platform
       </p>
 
       {/* Progress indicator */}
       <div className="flex items-center justify-center mb-6">
         <div className="flex items-center space-x-2">
-          <div className={`w-3 h-3 rounded-full ${step === 'email' ? 'bg-indigo-600' : 'bg-green-500'}`}></div>
+          <div className={`w-3 h-3 rounded-full ${step === 'email' ? 'bg-accent' : 'bg-accent'}`}></div>
           <div className="w-8 h-0.5 bg-gray-300"></div>
-          <div className={`w-3 h-3 rounded-full ${step === 'otp' ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
+          <div className={`w-3 h-3 rounded-full ${step === 'otp' ? 'bg-accent' : 'bg-gray-300'}`}></div>
         </div>
         <span className="ml-3 text-sm text-gray-600">
           Step {step === 'email' ? '1' : '2'} of 2
@@ -257,7 +257,7 @@ function LoginForm() {
         <div className="space-y-6">
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
                 Email address
               </label>
               <input
@@ -265,7 +265,7 @@ function LoginForm() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent text-primary placeholder:text-gray-500"
                 placeholder="your@email.com"
                 required
                 disabled={isLoading}
@@ -275,7 +275,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={isLoading || !email}
-              className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Sending...' : 'Send 6-Digit Code'}
             </button>
@@ -284,7 +284,7 @@ function LoginForm() {
       ) : (
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-primary mb-2">
               Enter the 6-digit code sent to {email}
             </label>
             <div className="flex space-x-2 justify-center">
@@ -297,7 +297,7 @@ function LoginForm() {
                   value={digit}
                   onChange={(e) => handleOtpChange(index, e.target.value)}
                   onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                  className="w-12 h-12 text-center border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg font-semibold text-gray-900"
+                  className="w-12 h-12 text-center border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent text-lg font-semibold text-primary"
                   disabled={isLoading}
                   autoFocus={index === 0}
                 />
@@ -308,7 +308,7 @@ function LoginForm() {
           <button
             onClick={() => verifyOTP()}
             disabled={isLoading || otp.some(digit => !digit)}
-            className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Verifying...' : 'Verify Code'}
           </button>
@@ -317,14 +317,14 @@ function LoginForm() {
             <button
               onClick={() => sendOTP(true)}
               disabled={isLoading || resendCooldown > 0}
-              className="text-sm text-indigo-600 hover:text-indigo-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-sm text-accent hover:text-primary font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {resendCooldown > 0 ? `Resend code in ${resendCooldown}s` : 'Resend code'}
             </button>
             
             <button
               onClick={resetToEmailStep}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm text-gray-600 hover:text-primary transition-colors"
             >
               ← Use different email
             </button>
@@ -360,11 +360,11 @@ function LoginForm() {
       <div className="mt-8 pt-6 border-t border-gray-200">
         <p className="text-center text-sm text-gray-600">
           By signing in, you agree to our{' '}
-          <Link href="/terms" className="text-indigo-600 hover:text-indigo-700 font-medium">
+          <Link href="/terms" className="text-accent hover:text-primary font-medium">
             Terms of Service
           </Link>
           {' '}and{' '}
-          <Link href="/privacy" className="text-indigo-600 hover:text-indigo-700 font-medium">
+          <Link href="/privacy" className="text-accent hover:text-primary font-medium">
             Privacy Policy
           </Link>
         </p>
@@ -375,26 +375,36 @@ function LoginForm() {
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-white/70 border-b border-gray-200/50">
+      <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">E</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
+              {/* Data Flow E Logo */}
+              <div className="relative">
+                <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
+                {/* Animated data particles */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
+                  <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
+                </div>
+              </div>
             </div>
-            <span className="text-2xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
               Emerlya AI
             </span>
           </Link>
-          <div className="flex items-center space-x-8">
-            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="flex items-center space-x-6">
+            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
               About
             </Link>
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/privacy" className="text-white/80 hover:text-accent transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/terms" className="text-white/80 hover:text-accent transition-colors">
               Terms
             </Link>
           </div>
@@ -404,7 +414,7 @@ export default function Login() {
       {/* Login Form Container */}
       <div className="flex flex-col justify-center items-center min-h-screen pt-20">
         <Suspense fallback={
-          <div className="w-full max-w-md p-10 backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl border border-white/50">
+          <div className="w-full max-w-md p-8 backdrop-blur-xl bg-white/90 rounded-2xl shadow-2xl border border-white/50">
             <div className="text-gray-600 text-center">Loading...</div>
           </div>
         }>
@@ -415,7 +425,7 @@ export default function Login() {
       {/* Footer */}
       <footer className="fixed bottom-0 w-full bg-white/80 backdrop-blur-md border-t border-gray-200/50 py-4 px-6">
         <div className="max-w-7xl mx-auto text-center text-sm text-gray-600">
-          <p>© 2025 Emerlya AI. All rights reserved. | Built with ❤️ in the EU 🇪🇺</p>
+          <p>© 2025 Emerlya AI. All rights reserved.</p>
         </div>
       </footer>
     </div>

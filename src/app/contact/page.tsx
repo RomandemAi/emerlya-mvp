@@ -4,31 +4,41 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-white/70 border-b border-gray-200/50">
+      <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">E</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
+              {/* Data Flow E Logo */}
+              <div className="relative">
+                <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
+                {/* Animated data particles */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
+                  <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
+                  <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
+                </div>
+              </div>
             </div>
-            <span className="text-2xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
               Emerlya AI
             </span>
           </Link>
-          <div className="flex items-center space-x-8">
-            <Link href="/features" className="text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="flex items-center space-x-6">
+            <Link href="/features" className="text-white/80 hover:text-accent transition-colors">
               Features
             </Link>
-            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/pricing" className="text-white/80 hover:text-accent transition-colors">
               Pricing
             </Link>
-            <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/blog" className="text-white/80 hover:text-accent transition-colors">
               Blog
             </Link>
-            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
               About
             </Link>
             <Link href="/login">
-              <button className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <button className="px-5 py-2 bg-accent text-primary rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
                 Get Started
               </button>
             </Link>

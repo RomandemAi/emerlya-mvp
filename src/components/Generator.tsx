@@ -98,8 +98,8 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 mb-8">
           <div className="text-center">
             <span className="text-6xl mb-4 block">🔒</span>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold text-primary mb-4">
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Premium Feature
               </span>
             </h2>
@@ -109,7 +109,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
             <div className="space-y-3">
               <button 
                 onClick={() => window.location.href = '/dashboard'}
-                className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-2xl transition-all duration-200 hover:shadow-xl hover:-translate-y-1"
+                className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-2xl transition-all duration-200 hover:shadow-xl hover:-translate-y-1"
               >
                 🚀 Upgrade to Premium
               </button>
@@ -126,12 +126,12 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 mb-6">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="prompt" className="block font-semibold text-gray-900 mb-3">
+              <label htmlFor="prompt" className="block font-semibold text-primary mb-3">
                 Content Prompt
               </label>
               <textarea
                 id="prompt"
-                className="w-full p-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none leading-relaxed transition-all duration-200"
+                className="w-full p-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent resize-none leading-relaxed transition-all duration-200"
                 rows={4}
                 value={input}
                 onChange={handleInputChange}
@@ -143,7 +143,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-medium rounded-2xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-3"
+              className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-medium rounded-2xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-3"
             >
               {isLoading ? (
                 <>
@@ -165,13 +165,13 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {(completion || isLoading) && (
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-3">
+            <h3 className="text-xl font-bold text-primary flex items-center gap-3">
               <span>🤖</span>
               <span>Generated Content</span>
             </h3>
             {isLoading && (
               <div className="text-sm text-gray-600 flex items-center gap-2">
-                <div className="animate-pulse w-3 h-3 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full"></div>
+                <div className="animate-pulse w-3 h-3 bg-gradient-to-r from-accent to-accent/80 rounded-full"></div>
                 Streaming...
               </div>
             )}
@@ -202,21 +202,21 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {/* Instructions */}
       {!completion && !isLoading && hasActiveSubscription && (
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+          <h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-3">
             <span>💡</span>
             <span>How it Works</span>
           </h3>
           <ul className="space-y-3 text-gray-700">
             <li className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">1</span>
+              <span className="w-6 h-6 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">1</span>
               <span className="leading-relaxed">Enter your content prompt above (be specific for best results)</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">2</span>
+              <span className="w-6 h-6 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">2</span>
               <span className="leading-relaxed">The AI will use your brand&apos;s persona and uploaded documents for context</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">3</span>
+              <span className="w-6 h-6 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">3</span>
               <span className="leading-relaxed">Watch as content streams in real-time with your brand&apos;s unique voice</span>
             </li>
           </ul>

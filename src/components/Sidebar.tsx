@@ -20,15 +20,26 @@ export default function Sidebar({
   onSettingsClick
 }: SidebarProps) {
   return (
-    <div className="h-full backdrop-blur-xl bg-white/80 border-r border-gray-200/50 flex flex-col">
+    <div className="h-full backdrop-blur-xl bg-white/90 border-r border-white/50 flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-gray-200/50">
+      <div className="p-6 border-b border-white/50">
         <Link href="/" className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-xl">E</span>
+          <div className="relative w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
+            {/* Data Flow E Logo - Larger version for sidebar */}
+            <div className="relative">
+              <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
+              {/* Animated data particles - adjusted for larger logo */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute w-1.5 h-1.5 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
+                <div className="absolute w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
+                <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
+                <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
+                <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '45%', left: '40%', animationDelay: '2s'}}></div>
+              </div>
+            </div>
           </div>
           <div>
-            <span className="text-xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-semibold font-heading text-primary hover:text-accent transition-colors">
               Emerlya AI
             </span>
             <div className="text-xs text-gray-500">Dashboard</div>
@@ -43,7 +54,7 @@ export default function Sidebar({
           <div>
             <Link 
               href="/dashboard" 
-              className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 text-indigo-700 font-medium transition-all duration-200 hover:shadow-md"
+              className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 text-primary font-medium transition-all duration-200 hover:shadow-md"
             >
               <span>🎭</span>
               <span>My Brands</span>
@@ -58,49 +69,49 @@ export default function Sidebar({
             <div className="space-y-1">
               <Link 
                 href="/"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>🏠</span>
                 <span>Home</span>
               </Link>
               <Link 
                 href="/about"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>📖</span>
                 <span>About</span>
               </Link>
               <Link 
                 href="/pricing"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>💰</span>
                 <span>Pricing</span>
               </Link>
               <Link 
                 href="/features"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>⭐</span>
                 <span>Features</span>
               </Link>
               <Link 
                 href="/blog"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>📝</span>
                 <span>Blog</span>
               </Link>
               <Link 
                 href="/contact"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>📞</span>
                 <span>Contact</span>
               </Link>
               <Link 
                 href="/api-docs"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
                 <span>🔧</span>
                 <span>API Docs</span>
@@ -116,21 +127,21 @@ export default function Sidebar({
             <div className="space-y-1">
               <button 
                 onClick={onGenerateClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
                 <span>✨</span>
                 <span>Generate Content</span>
               </button>
               <button 
                 onClick={onDocumentsClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
                 <span>📄</span>
                 <span>Documents</span>
               </button>
               <button 
                 onClick={onSettingsClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200 hover:text-gray-900 w-full text-left"
+                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
                 <span>⚙️</span>
                 <span>Settings</span>
@@ -141,14 +152,14 @@ export default function Sidebar({
       </div>
 
       {/* User Profile & Actions */}
-      <div className="p-6 border-t border-gray-200/50 space-y-4">
-        <div className="px-4 py-3 rounded-xl bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200">
-          <div className="text-sm font-medium text-gray-900 mb-1">Account</div>
+      <div className="p-6 border-t border-white/50 space-y-4">
+        <div className="px-4 py-3 rounded-xl bg-gradient-to-r from-neutral/50 to-neutral/30 border border-white/50">
+          <div className="text-sm font-medium font-heading text-primary mb-1">Account</div>
           <div className="text-xs text-gray-600 truncate">{userEmail}</div>
           <div className="mt-2">
             {subscriptionStatus === 'active' ? (
-              <div className="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 text-xs font-medium">
-                <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+              <div className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-medium">
+                <span className="w-2 h-2 bg-accent rounded-full mr-2"></span>
                 Pro Plan
               </div>
             ) : (

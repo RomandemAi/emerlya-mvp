@@ -82,7 +82,7 @@ export default function BrandDocumentsModal({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-white/50">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
             <span className="text-2xl">📄</span>
             <span>Documents for {brandName}</span>
           </h2>
@@ -96,17 +96,17 @@ export default function BrandDocumentsModal({
 
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
             <p className="text-gray-600">Loading documents...</p>
           </div>
         ) : error ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">😓</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Error Loading Documents</h3>
+            <h3 className="text-xl font-bold text-primary mb-2">Error Loading Documents</h3>
             <p className="text-gray-600 mb-6">{error}</p>
             <button
               onClick={fetchDocuments}
-              className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+              className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
             >
               Try Again
             </button>
@@ -114,7 +114,7 @@ export default function BrandDocumentsModal({
         ) : documents.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">📄</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No Documents Found</h3>
+            <h3 className="text-xl font-bold text-primary mb-2">No Documents Found</h3>
             <p className="text-gray-600">This brand doesn't have any documents yet. Add some content when creating or editing the brand.</p>
           </div>
         ) : (
@@ -127,7 +127,7 @@ export default function BrandDocumentsModal({
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{getStatusIcon(doc.status)}</span>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-lg font-semibold text-primary">
                           Document #{index + 1}
                         </h3>
                         <p className="text-sm text-gray-600">
@@ -168,7 +168,7 @@ export default function BrandDocumentsModal({
                         }
                         setExpandedDocs(newExpanded);
                       }}
-                      className="mt-3 text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors duration-200"
+                      className="mt-3 text-primary hover:text-primary/80 text-sm font-medium transition-colors duration-200"
                     >
                       {isExpanded ? 'Show less' : 'View full content'}
                     </button>
@@ -182,7 +182,7 @@ export default function BrandDocumentsModal({
         <div className="mt-8 flex justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-3 text-gray-600 hover:text-gray-900 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
+            className="px-6 py-3 text-primary hover:text-primary/80 bg-white/60 backdrop-blur-md border border-white/50 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
           >
             Close
           </button>

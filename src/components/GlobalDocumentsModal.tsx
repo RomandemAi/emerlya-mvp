@@ -102,7 +102,7 @@ export default function GlobalDocumentsModal({
       <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 w-full max-w-6xl max-h-[90vh] overflow-y-auto shadow-2xl border border-white/50">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+            <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
               <span className="text-2xl">📚</span>
               <span>All Documents</span>
             </h2>
@@ -120,17 +120,17 @@ export default function GlobalDocumentsModal({
 
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
             <p className="text-gray-600">Loading all documents...</p>
           </div>
         ) : error ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">😓</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Error Loading Documents</h3>
+            <h3 className="text-xl font-bold text-primary mb-2">Error Loading Documents</h3>
             <p className="text-gray-600 mb-6">{error}</p>
             <button
               onClick={fetchAllDocuments}
-              className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+              className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
             >
               Try Again
             </button>
@@ -138,7 +138,7 @@ export default function GlobalDocumentsModal({
         ) : totalDocuments === 0 ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-6">📄</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">No Documents Yet</h3>
+            <h3 className="text-2xl font-bold text-primary mb-4">No Documents Yet</h3>
             <p className="text-gray-600 text-lg leading-relaxed">
               Start by creating brands and adding source documents to train your AI content generation.
             </p>
@@ -149,8 +149,8 @@ export default function GlobalDocumentsModal({
               <div key={brand.id} className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50 shadow-lg">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
-                    <h3 className="text-xl font-bold text-gray-900">{brand.name}</h3>
+                    <div className="w-3 h-3 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                    <h3 className="text-xl font-bold text-primary">{brand.name}</h3>
                     <span className="px-3 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">
                       {brand.documents.length} documents
                     </span>
@@ -171,7 +171,7 @@ export default function GlobalDocumentsModal({
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <span className="text-lg">{getStatusIcon(doc.status)}</span>
-                              <span className="font-medium text-gray-900">
+                              <span className="font-medium text-primary">
                                 Document #{index + 1}
                               </span>
                             </div>
@@ -212,7 +212,7 @@ export default function GlobalDocumentsModal({
                                 }
                                 setExpandedDocs(newExpanded);
                               }}
-                              className="mt-2 text-indigo-600 hover:text-indigo-800 text-xs font-medium transition-colors duration-200"
+                              className="mt-2 text-primary hover:text-primary/80 text-xs font-medium transition-colors duration-200"
                             >
                               {isExpanded ? 'Show less' : 'Read more'}
                             </button>
@@ -230,7 +230,7 @@ export default function GlobalDocumentsModal({
         <div className="mt-8 flex justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-3 text-gray-600 hover:text-gray-900 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
+            className="px-6 py-3 text-primary hover:text-primary/80 bg-white/60 backdrop-blur-md border border-white/50 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
           >
             Close
           </button>

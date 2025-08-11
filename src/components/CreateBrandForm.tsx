@@ -31,7 +31,7 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border border-white/50">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
             <span className="text-2xl">✨</span>
             <span>Create New Brand</span>
           </h2>
@@ -47,7 +47,7 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
           <div className="space-y-6">
             {/* Brand Name */}
             <div>
-              <label htmlFor="brand_name" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="brand_name" className="block text-lg font-semibold text-primary mb-3">
                 Brand Name
               </label>
               <input
@@ -55,14 +55,14 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
                 id="brand_name"
                 name="brand_name"
                 required
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-lg"
                 placeholder="Enter brand name"
               />
             </div>
 
             {/* Brand Tone */}
             <div>
-              <label htmlFor="tone" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="tone" className="block text-lg font-semibold text-primary mb-3">
                 Brand&apos;s Tone
               </label>
               <input
@@ -70,14 +70,14 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
                 id="tone"
                 name="tone"
                 required
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-lg"
                 placeholder="e.g., Witty and informal, Professional and authoritative"
               />
             </div>
 
             {/* Writing Style */}
             <div>
-              <label htmlFor="style" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="style" className="block text-lg font-semibold text-primary mb-3">
                 Writing Style
               </label>
               <input
@@ -85,14 +85,14 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
                 id="style"
                 name="style"
                 required
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-lg"
                 placeholder="e.g., Uses emojis and short sentences, Formal with complex vocabulary"
               />
             </div>
 
             {/* Target Audience */}
             <div>
-              <label htmlFor="target_audience" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="target_audience" className="block text-lg font-semibold text-primary mb-3">
                 Target Audience
               </label>
               <input
@@ -100,28 +100,28 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
                 id="target_audience"
                 name="target_audience"
                 required
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-lg"
                 placeholder="e.g., Gen Z tech enthusiasts, C-suite executives"
               />
             </div>
 
             {/* Words to Avoid */}
             <div>
-              <label htmlFor="words_to_avoid" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="words_to_avoid" className="block text-lg font-semibold text-primary mb-3">
                 Words to Avoid
               </label>
               <textarea
                 id="words_to_avoid"
                 name="words_to_avoid"
                 rows={3}
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent resize-none transition-all duration-200 text-lg"
                 placeholder="e.g., synergy, leverage, basically"
               />
             </div>
 
             {/* Documents Content */}
             <div>
-              <label htmlFor="documents" className="block text-lg font-semibold text-gray-900 mb-3">
+              <label htmlFor="documents" className="block text-lg font-semibold text-primary mb-3">
                 Source Documents
               </label>
               <textarea
@@ -129,7 +129,7 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
                 name="documents"
                 required
                 rows={8}
-                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition-all duration-200 text-lg"
+                className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent resize-none transition-all duration-200 text-lg"
                 placeholder="Paste your source documents content here..."
               />
             </div>
@@ -146,14 +146,14 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-6 py-3 text-gray-600 hover:text-gray-900 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 font-medium"
+              className="px-6 py-3 text-primary hover:text-primary/80 bg-white/60 backdrop-blur-md border border-white/50 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 font-medium"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center gap-2"
+              className="px-8 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

@@ -63,7 +63,7 @@ export default function SettingsModal({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-white/50">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
             <span className="text-2xl">⚙️</span>
             <span>Settings</span>
           </h2>
@@ -104,7 +104,7 @@ export default function SettingsModal({
           <div className="space-y-6">
             {/* Account Information */}
             <div className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Account Information</h3>
+              <h3 className="text-xl font-bold text-primary mb-4">Account Information</h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
@@ -133,14 +133,14 @@ export default function SettingsModal({
 
             {/* Preferences */}
             <div className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Preferences</h3>
+              <h3 className="text-xl font-bold text-primary mb-4">Preferences</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-sm font-medium text-gray-900">Email Notifications</label>
                     <p className="text-sm text-gray-600">Receive updates about your content generation</p>
                   </div>
-                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2">
                     <span className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1" />
                   </button>
                 </div>
@@ -149,7 +149,7 @@ export default function SettingsModal({
                     <label className="text-sm font-medium text-gray-900">Content Analytics</label>
                     <p className="text-sm text-gray-600">Track performance metrics for generated content</p>
                   </div>
-                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2">
                     <span className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6" />
                   </button>
                 </div>
@@ -158,7 +158,7 @@ export default function SettingsModal({
 
             {/* Account Actions */}
             <div className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Account Actions</h3>
+              <h3 className="text-xl font-bold text-primary mb-4">Account Actions</h3>
               <div className="space-y-3">
                 <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 rounded-xl transition-all duration-200 text-left font-medium">
                   📧 Change Email Address
@@ -177,8 +177,8 @@ export default function SettingsModal({
             {/* Brand Overview */}
             <div className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Your Brands</h3>
-                <span className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full">
+                <h3 className="text-xl font-bold text-primary">Your Brands</h3>
+                <span className="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full">
                   {brands.length} brands
                 </span>
               </div>
@@ -193,7 +193,7 @@ export default function SettingsModal({
                   {brands.map((brand) => (
                     <div key={brand.id} className="bg-white/80 rounded-xl p-4 border border-gray-200 flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium text-gray-900">{brand.name}</h4>
+                        <h4 className="font-medium text-primary">{brand.name}</h4>
                         <p className="text-sm text-gray-600">
                           Created {new Date(brand.created_at).toLocaleDateString('en-US', {
                             month: 'short',
@@ -205,7 +205,7 @@ export default function SettingsModal({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleBrandEdit(brand)}
-                          className="px-3 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 hover:text-indigo-800 rounded-lg text-sm font-medium transition-all duration-200"
+                          className="px-3 py-2 bg-accent/10 hover:bg-accent/20 text-accent hover:text-accent/80 rounded-lg text-sm font-medium transition-all duration-200"
                         >
                           ✏️ Edit
                         </button>
@@ -224,14 +224,14 @@ export default function SettingsModal({
 
             {/* Brand Settings Actions */}
             <div className="backdrop-blur-md bg-white/60 rounded-2xl p-6 border border-white/50">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Brand Management</h3>
+              <h3 className="text-xl font-bold text-primary mb-4">Brand Management</h3>
               <div className="space-y-3">
                 <button 
                   onClick={() => {
                     onClose();
                     // This would trigger the create brand modal
                   }}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 text-left font-medium flex items-center gap-3"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-xl transition-all duration-200 text-left font-medium flex items-center gap-3"
                 >
                   <span>✨</span>
                   Create New Brand
@@ -252,7 +252,7 @@ export default function SettingsModal({
         <div className="mt-8 flex justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-3 text-gray-600 hover:text-gray-900 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
+            className="px-6 py-3 text-primary hover:text-primary/80 bg-white/60 backdrop-blur-md border border-white/50 rounded-xl transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 font-medium"
           >
             Close
           </button>
