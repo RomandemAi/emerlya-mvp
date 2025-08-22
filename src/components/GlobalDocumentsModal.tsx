@@ -89,7 +89,7 @@ export default function GlobalDocumentsModal({
       case 'failed':
         return '❌';
       default:
-        return '📄';
+        return 'document';
     }
   };
 
@@ -137,7 +137,11 @@ export default function GlobalDocumentsModal({
           </div>
         ) : totalDocuments === 0 ? (
           <div className="text-center py-12">
-            <div className="text-6xl mb-6">📄</div>
+            <div className="mb-6 flex justify-center">
+              <svg className="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
             <h3 className="text-2xl font-bold text-primary mb-4">No Documents Yet</h3>
             <p className="text-gray-600 text-lg leading-relaxed">
               Start by creating brands and adding source documents to train your AI content generation.
@@ -159,7 +163,11 @@ export default function GlobalDocumentsModal({
 
                 {brand.documents.length === 0 ? (
                   <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-xl">
-                    <div className="text-4xl mb-3">📄</div>
+                    <div className="mb-3 flex justify-center">
+                      <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
                     <p className="text-gray-500">No documents for this brand yet</p>
                   </div>
                 ) : (

@@ -2,6 +2,15 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import LogoutButton from './LogoutButton';
+import {
+  UserIcon,
+  InformationCircleIcon,
+  CurrencyDollarIcon,
+  StarIcon,
+  PencilIcon,
+  PhoneIcon,
+  WrenchScrewdriverIcon
+} from '@heroicons/react/24/outline';
 
 interface TopNavBarProps {
   userEmail: string;
@@ -127,7 +136,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                   className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                   onClick={() => setIsUserMenuOpen(false)}
                 >
-                  <span className="mr-3">🎭</span>
+                  <UserIcon className="w-4 h-4 mr-3 text-gray-600" />
                   My Dashboard
                 </Link>
                 
@@ -138,7 +147,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">📖</span>
+                    <InformationCircleIcon className="w-4 h-4 mr-3 text-gray-600" />
                     About
                   </Link>
                   <Link 
@@ -146,7 +155,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">💰</span>
+                    <CurrencyDollarIcon className="w-4 h-4 mr-3 text-gray-600" />
                     Pricing
                   </Link>
                   <Link 
@@ -154,7 +163,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">⭐</span>
+                    <StarIcon className="w-4 h-4 mr-3 text-gray-600" />
                     Features
                   </Link>
                   <Link 
@@ -162,7 +171,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">📝</span>
+                    <PencilIcon className="w-4 h-4 mr-3 text-gray-600" />
                     Blog
                   </Link>
                   <Link 
@@ -170,7 +179,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">📞</span>
+                    <PhoneIcon className="w-4 h-4 mr-3 text-gray-600" />
                     Contact
                   </Link>
                   <Link 
@@ -178,7 +187,7 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
                     className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <span className="mr-3">🔧</span>
+                    <WrenchScrewdriverIcon className="w-4 h-4 mr-3 text-gray-600" />
                     API Docs
                   </Link>
                 </div>

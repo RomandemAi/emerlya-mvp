@@ -1,6 +1,19 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {
+  CogIcon,
+  XMarkIcon,
+  UserIcon,
+  UserCircleIcon,
+  EnvelopeIcon,
+  LockClosedIcon,
+  TrashIcon,
+  PencilIcon,
+  SparklesIcon,
+  ChartBarIcon,
+  FolderIcon
+} from '@heroicons/react/24/outline';
 
 interface Brand {
   id: string;
@@ -64,14 +77,14 @@ export default function SettingsModal({
       <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-white/50">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
-            <span className="text-2xl">⚙️</span>
+            <CogIcon className="w-8 h-8 text-primary" />
             <span>Settings</span>
           </h2>
           <button
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-all duration-200"
           >
-            ✕
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
 
@@ -85,7 +98,8 @@ export default function SettingsModal({
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            👤 Account Settings
+            <UserIcon className="w-5 h-5 mr-2" />
+            Account Settings
           </button>
           <button
             onClick={() => setActiveTab('brands')}
@@ -95,7 +109,8 @@ export default function SettingsModal({
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            🎭 Brand Settings
+            <UserCircleIcon className="w-5 h-5 mr-2" />
+            Brand Settings
           </button>
         </div>
 
@@ -161,13 +176,16 @@ export default function SettingsModal({
               <h3 className="text-xl font-bold text-primary mb-4">Account Actions</h3>
               <div className="space-y-3">
                 <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 rounded-xl transition-all duration-200 text-left font-medium">
-                  📧 Change Email Address
+                  <EnvelopeIcon className="w-4 h-4 mr-2 inline" />
+                  Change Email Address
                 </button>
                 <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 rounded-xl transition-all duration-200 text-left font-medium">
-                  🔒 Update Password
+                  <LockClosedIcon className="w-4 h-4 mr-2 inline" />
+                  Update Password
                 </button>
                 <button className="w-full px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 hover:text-red-800 border border-red-200 rounded-xl transition-all duration-200 text-left font-medium">
-                  🗑️ Delete Account
+                  <TrashIcon className="w-4 h-4 mr-2 inline" />
+                  Delete Account
                 </button>
               </div>
             </div>
@@ -185,7 +203,9 @@ export default function SettingsModal({
               
               {brands.length === 0 ? (
                 <div className="text-center py-8">
-                  <div className="text-4xl mb-3">🎭</div>
+                  <div className="mb-3 flex justify-center">
+                    <UserCircleIcon className="w-16 h-16 text-gray-400" />
+                  </div>
                   <p className="text-gray-600">No brands created yet</p>
                 </div>
               ) : (
@@ -207,13 +227,15 @@ export default function SettingsModal({
                           onClick={() => handleBrandEdit(brand)}
                           className="px-3 py-2 bg-accent/10 hover:bg-accent/20 text-accent hover:text-accent/80 rounded-lg text-sm font-medium transition-all duration-200"
                         >
-                          ✏️ Edit
+                          <PencilIcon className="w-4 h-4 mr-1 inline" />
+                          Edit
                         </button>
                         <button
                           onClick={() => handleBrandDelete(brand.id)}
                           className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 hover:text-red-800 rounded-lg text-sm font-medium transition-all duration-200"
                         >
-                          🗑️ Delete
+                          <TrashIcon className="w-4 h-4 mr-1 inline" />
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -233,15 +255,15 @@ export default function SettingsModal({
                   }}
                   className="w-full px-4 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-xl transition-all duration-200 text-left font-medium flex items-center gap-3"
                 >
-                  <span>✨</span>
+                  <SparklesIcon className="w-4 h-4" />
                   Create New Brand
                 </button>
                 <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 rounded-xl transition-all duration-200 text-left font-medium flex items-center gap-3">
-                  <span>📊</span>
+                  <ChartBarIcon className="w-4 h-4" />
                   Export Brand Data
                 </button>
                 <button className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 rounded-xl transition-all duration-200 text-left font-medium flex items-center gap-3">
-                  <span>📁</span>
+                  <FolderIcon className="w-4 h-4" />
                   Import Brand Configuration
                 </button>
               </div>

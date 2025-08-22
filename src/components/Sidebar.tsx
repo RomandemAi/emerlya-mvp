@@ -3,6 +3,19 @@ import Link from 'next/link';
 import LogoutButton from './LogoutButton';
 import ManageBillingButton from './ManageBillingButton';
 import UpgradeButton from './UpgradeButton';
+import {
+  UserIcon,
+  HomeIcon,
+  InformationCircleIcon,
+  CurrencyDollarIcon,
+  StarIcon,
+  PencilIcon,
+  PhoneIcon,
+  WrenchScrewdriverIcon,
+  SparklesIcon,
+  DocumentIcon,
+  CogIcon
+} from '@heroicons/react/24/outline';
 
 interface SidebarProps {
   userEmail: string;
@@ -56,7 +69,7 @@ export default function Sidebar({
               href="/dashboard" 
               className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 text-primary font-medium transition-all duration-200 hover:shadow-md"
             >
-              <span>🎭</span>
+              <UserIcon className="w-5 h-5 text-primary" />
               <span>My Brands</span>
             </Link>
           </div>
@@ -71,49 +84,49 @@ export default function Sidebar({
                 href="/"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>🏠</span>
+                <HomeIcon className="w-4 h-4 text-gray-600" />
                 <span>Home</span>
               </Link>
               <Link 
                 href="/about"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>📖</span>
+                <InformationCircleIcon className="w-4 h-4 text-gray-600" />
                 <span>About</span>
               </Link>
               <Link 
                 href="/pricing"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>💰</span>
+                <CurrencyDollarIcon className="w-4 h-4 text-gray-600" />
                 <span>Pricing</span>
               </Link>
               <Link 
                 href="/features"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>⭐</span>
+                <StarIcon className="w-4 h-4 text-gray-600" />
                 <span>Features</span>
               </Link>
               <Link 
                 href="/blog"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>📝</span>
+                <PencilIcon className="w-4 h-4 text-gray-600" />
                 <span>Blog</span>
               </Link>
               <Link 
                 href="/contact"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>📞</span>
+                <PhoneIcon className="w-4 h-4 text-gray-600" />
                 <span>Contact</span>
               </Link>
               <Link 
                 href="/api-docs"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <span>🔧</span>
+                <WrenchScrewdriverIcon className="w-4 h-4 text-gray-600" />
                 <span>API Docs</span>
               </Link>
             </div>
@@ -129,21 +142,21 @@ export default function Sidebar({
                 onClick={onGenerateClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <span>✨</span>
+                <SparklesIcon className="w-4 h-4 text-gray-600" />
                 <span>Generate Content</span>
               </button>
               <button 
                 onClick={onDocumentsClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <span>📄</span>
+                <DocumentIcon className="w-4 h-4 text-gray-600" />
                 <span>Documents</span>
               </button>
               <button 
                 onClick={onSettingsClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <span>⚙️</span>
+                <CogIcon className="w-4 h-4 text-gray-600" />
                 <span>Settings</span>
               </button>
             </div>

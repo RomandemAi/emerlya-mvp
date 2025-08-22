@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from 'next/navigation';
+import { StarIcon } from '@heroicons/react/24/outline';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -76,7 +77,7 @@ export default function UpgradeButton() {
       disabled={isLoading}
       className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-medium rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center space-x-2"
     >
-      <span>⭐</span>
+      <StarIcon className="w-4 h-4" />
       <span>
         {isLoading ? 'Loading...' : 'Upgrade to Pro'}
       </span>

@@ -246,9 +246,7 @@ export default function CookiePolicy() {
                 </p>
                 <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-6">
                   <p className="text-gray-700">
-                    <strong>Email:</strong> <a href="mailto:privacy@emerlya.com" className="text-primary hover:text-accent transition-colors">privacy@emerlya.com</a><br />
-                    <strong>Data Protection Officer:</strong> <a href="mailto:dpo@emerlya.com" className="text-primary hover:text-accent transition-colors">dpo@emerlya.com</a><br />
-                    <strong>Address:</strong> Amsterdam, Netherlands
+                    <strong>Email:</strong> <a href="mailto:hello@emerlya.com" className="text-primary hover:text-accent transition-colors">hello@emerlya.com</a>
                   </p>
                 </div>
               </section>

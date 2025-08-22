@@ -77,10 +77,10 @@ export default function ContactPage() {
               <p className="text-gray-600 mb-6">
                 Want to see Emerlya AI in action? Schedule a personalized demo or discuss enterprise solutions.
               </p>
-              <a href="mailto:sales@emerlya.com" className="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <a href="mailto:hello@emerlya.com" className="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
                 Contact Sales
               </a>
-              <p className="text-sm text-gray-500 mt-3">sales@emerlya.com</p>
+              <p className="text-sm text-gray-500 mt-3">hello@emerlya.com</p>
             </div>
 
             {/* Support */}
@@ -94,10 +94,10 @@ export default function ContactPage() {
               <p className="text-gray-600 mb-6">
                 Need help with your account, API integration, or have technical questions? Our support team is here.
               </p>
-              <a href="mailto:support@emerlya.com" className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+              <a href="mailto:hello@emerlya.com" className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
                 Get Support
               </a>
-              <p className="text-sm text-gray-500 mt-3">support@emerlya.com</p>
+              <p className="text-sm text-gray-500 mt-3">hello@emerlya.com</p>
             </div>
 
             {/* General */}

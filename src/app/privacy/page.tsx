@@ -157,7 +157,7 @@ export default function PrivacyPolicy() {
                   <li><strong>Withdraw Consent:</strong> Withdraw consent at any time</li>
                 </ul>
                 <p className="text-gray-600 mt-4">
-                  To exercise these rights, contact us at: <a href="mailto:privacy@emerlya.com" className="text-accent hover:text-primary font-medium">privacy@emerlya.com</a>
+                  To exercise these rights, contact us at: <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a>
                 </p>
               </section>
 
@@ -222,10 +222,7 @@ export default function PrivacyPolicy() {
                 <h2 className="text-lg md:text-xl font-bold font-heading text-primary mb-4">13. Contact Information</h2>
                 <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl p-6 border border-primary/10">
                   <div className="text-gray-700 space-y-2">
-                    <p><strong>Data Controller:</strong> Emerlya AI B.V.</p>
-                    <p><strong>Email:</strong> <a href="mailto:privacy@emerlya.com" className="text-accent hover:text-primary font-medium">privacy@emerlya.com</a></p>
-                    <p><strong>Address:</strong> Amsterdam, Netherlands</p>
-                    <p><strong>Data Protection Officer:</strong> <a href="mailto:dpo@emerlya.com" className="text-accent hover:text-primary font-medium">dpo@emerlya.com</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a></p>
                   </div>
                 </div>
               </section>
@@ -251,7 +248,7 @@ export default function PrivacyPolicy() {
           <p className="text-base text-white/90 mb-6 leading-relaxed">
             We're here to help. Contact us with any privacy-related questions.
           </p>
-          <a href="mailto:privacy@emerlya.com">
+          <a href="mailto:hello@emerlya.com">
             <button className="px-6 py-3 bg-accent text-primary rounded-lg font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
               Contact Us
             </button>

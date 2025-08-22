@@ -105,7 +105,7 @@ export default function GDPRPage() {
                 </ul>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Email us at privacy@emerlya.com with "Data Access Request" in the subject line.
+                    <strong>How to exercise:</strong> Email us at hello@emerlya.com with "Data Access Request" in the subject line.
                   </p>
                 </div>
               </section>
@@ -136,7 +136,7 @@ export default function GDPRPage() {
                 </ul>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Submit a deletion request at privacy@emerlya.com. We'll process it within 30 days.
+                    <strong>How to exercise:</strong> Submit a deletion request at hello@emerlya.com. We'll process it within 30 days.
                   </p>
                 </div>
               </section>
@@ -148,7 +148,7 @@ export default function GDPRPage() {
                 </p>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Request data export via privacy@emerlya.com. We'll provide JSON or CSV format.
+                    <strong>How to exercise:</strong> Request data export via hello@emerlya.com. We'll provide JSON or CSV format.
                   </p>
                 </div>
               </section>
@@ -160,7 +160,7 @@ export default function GDPRPage() {
                 </p>
                 <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                   <p className="text-sm text-blue-800">
-                    <strong>How to exercise:</strong> Use the unsubscribe link in emails or contact privacy@emerlya.com.
+                    <strong>How to exercise:</strong> Use the unsubscribe link in emails or contact hello@emerlya.com.
                   </p>
                 </div>
               </section>
@@ -233,12 +233,16 @@ export default function GDPRPage() {
                 <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl p-6 border border-primary/10">
                   <div className="space-y-3">
                     <p className="text-gray-700">
+                      <strong>General Contact:</strong><br />
+                      Email: <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a>
+                    </p>
+                    <p className="text-gray-700">
                       <strong>Data Protection Officer:</strong><br />
-                      Email: <a href="mailto:dpo@emerlya.com" className="text-accent hover:text-primary font-medium">dpo@emerlya.com</a>
+                      Email: <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a>
                     </p>
                     <p className="text-gray-700">
                       <strong>Privacy Team:</strong><br />
-                      Email: <a href="mailto:privacy@emerlya.com" className="text-accent hover:text-primary font-medium">privacy@emerlya.com</a>
+                      Email: <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a>
                     </p>
                   </div>
                 </div>
@@ -272,7 +276,7 @@ export default function GDPRPage() {
           <p className="text-base text-white/90 mb-6 leading-relaxed">
             We're here to help. Contact us with any questions about your data protection rights.
           </p>
-          <a href="mailto:privacy@emerlya.com">
+          <a href="mailto:hello@emerlya.com">
             <button className="px-6 py-3 bg-accent text-primary rounded-lg font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
               Contact Us
             </button>

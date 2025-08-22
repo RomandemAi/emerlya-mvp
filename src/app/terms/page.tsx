@@ -242,9 +242,7 @@ export default function TermsOfService() {
                 <h2 className="text-lg md:text-xl font-bold font-heading text-primary mb-4">14. Contact Information</h2>
                 <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl p-6 border border-primary/10">
                   <div className="text-gray-700 space-y-2">
-                    <p><strong>Company:</strong> Emerlya AI B.V.</p>
-                    <p><strong>Email:</strong> <a href="mailto:legal@emerlya.com" className="text-accent hover:text-primary font-medium">legal@emerlya.com</a></p>
-                    <p><strong>Address:</strong> Amsterdam, Netherlands</p>
+                    <p><strong>Email:</strong> <a href="mailto:hello@emerlya.com" className="text-accent hover:text-primary font-medium">hello@emerlya.com</a></p>
                   </div>
                 </div>
               </section>
