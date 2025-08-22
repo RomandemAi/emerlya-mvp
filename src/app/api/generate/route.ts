@@ -13,6 +13,7 @@ import { callOpenAI } from '../../../lib/openai';
 
 // Force dynamic rendering to use Node.js runtime instead of edge
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(req: Request) {
   try {

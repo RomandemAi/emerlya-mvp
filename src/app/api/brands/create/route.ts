@@ -13,6 +13,9 @@ import { buildStyleProfile } from '@/lib/style';
 import { extractBrandFacts, generateSeedContent } from '@/lib/facts';
 import { BrandSource } from '@/lib/types';
 
+// Force Node.js runtime for Supabase compatibility
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const { name, sources = [], settings = {} } = await req.json();

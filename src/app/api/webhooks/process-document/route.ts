@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { processDocument } from '../../../lib/document-processor.js';
 
+// Force Node.js runtime for compatibility
+export const runtime = 'nodejs';
+
 export async function POST(request: NextRequest) {
   try {
     // Security: Check for Authorization header
