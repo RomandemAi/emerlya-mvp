@@ -162,30 +162,73 @@ export default function UsageDashboard() {
         )}
       </div>
 
+      {/* Legacy User Message */}
+      {usage.subscription_status === 'active' && (
+        <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl p-6 border border-emerald-200">
+          <div className="flex items-center space-x-2 mb-2">
+            <span className="text-emerald-600">🎉</span>
+            <h3 className="text-lg font-semibold text-gray-900">Grandfathered Legacy Plan</h3>
+          </div>
+          <p className="text-gray-700 mb-3">
+            You're on our legacy Professional plan with unlimited brands and API access - grandfathered at your original pricing!
+          </p>
+          <div className="bg-white rounded-lg p-3 border border-emerald-200">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-600">Your Plan Benefits:</span>
+              <span className="text-sm text-emerald-600 font-semibold">Legacy Pricing Locked</span>
+            </div>
+            <div className="text-sm text-gray-600 mt-1">
+              50,000 words/month • Unlimited brands • API access • Priority support
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Upgrade Options */}
       {(usage.subscription_status === 'free' || !usage.can_generate) && (
         <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-6 border border-primary/20">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Upgrade Your Plan</h3>
           
           <div className="grid gap-4 md:grid-cols-2">
-            {/* Pro Plan */}
+            {/* Essentials Plan */}
             <div className="bg-white rounded-xl p-4 border border-gray-200">
               <div className="flex items-center space-x-2 mb-2">
                 <ModernStarIcon size="sm" />
-                <span className="font-medium text-gray-900">Pro Plan</span>
+                <span className="font-medium text-gray-900">Essentials Plan</span>
               </div>
-              <p className="text-2xl font-bold text-accent mb-2">$29/month</p>
+              <p className="text-2xl font-bold text-accent mb-2">€9/month</p>
               <ul className="text-sm text-gray-600 space-y-1 mb-4">
-                <li>• 50,000 words/month</li>
-                <li>• 500 content pieces</li>
-                <li>• Unlimited brands</li>
-                <li>• Priority support</li>
+                <li>• 20,000 words/month</li>
+                <li>• 3 brands</li>
+                <li>• All content types</li>
+                <li>• Email support</li>
               </ul>
               <Link 
                 href="/pricing"
                 className="w-full bg-accent text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors flex items-center justify-center"
               >
-                Upgrade to Pro
+                Upgrade to Essentials
+              </Link>
+            </div>
+
+            {/* Professional Plan */}
+            <div className="bg-white rounded-xl p-4 border border-gray-200">
+              <div className="flex items-center space-x-2 mb-2">
+                <ModernStarIcon size="sm" />
+                <span className="font-medium text-gray-900">Professional Plan</span>
+              </div>
+              <p className="text-2xl font-bold text-accent mb-2">€19/month</p>
+              <ul className="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• 50,000 words/month</li>
+                <li>• 5 brands</li>
+                <li>• Priority support</li>
+                <li>• Advanced analytics</li>
+              </ul>
+              <Link 
+                href="/pricing"
+                className="w-full bg-accent text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors flex items-center justify-center"
+              >
+                Upgrade to Professional
               </Link>
             </div>
 
