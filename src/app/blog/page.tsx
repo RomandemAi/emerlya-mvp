@@ -79,15 +79,14 @@ export default async function BlogPage() {
               className="w-12 h-12 object-contain filter brightness-0 invert"
             />
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
-            Insights & Updates from
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
+            Blog &
             <span className="block text-accent">
-              The Emerlya AI Team
+              Insights
             </span>
           </h1>
-          <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
-            Stay up-to-date with the latest in AI content generation, brand strategy, 
-            and the future of digital marketing. Expert insights from our team and industry leaders.
+          <p className="text-sm md:text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
+            Latest insights on AI-powered content creation, marketing strategies, and industry trends.
           </p>
           
           {/* Newsletter Signup */}

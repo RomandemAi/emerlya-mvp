@@ -1,69 +1,29 @@
 import Link from 'next/link';
+import UnifiedNavBar from '@/components/UnifiedNavBar';
 
 export default function APIPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
-              {/* Data Flow E Logo */}
-              <div className="relative">
-                <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
-                {/* Animated data particles */}
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
-                  <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
-                  <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
-                  <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
-                </div>
-              </div>
-            </div>
-            <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
-              Emerlya AI
-            </span>
-          </Link>
-          <div className="flex items-center space-x-6">
-            <Link href="/features" className="text-white/80 hover:text-accent transition-colors">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-white/80 hover:text-accent transition-colors">
-              Pricing
-            </Link>
-            <Link href="/blog" className="text-white/80 hover:text-accent transition-colors">
-              Blog
-            </Link>
-            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
-              About
-            </Link>
-            <Link href="/api-docs" className="text-accent font-medium">
-              API
-            </Link>
-            <Link href="/demo">
-              <button className="px-5 py-2 bg-accent text-primary rounded-xl font-medium hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-                Request Demo
-              </button>
-            </Link>
-            <Link href="/login">
-              <button className="px-5 py-2 border border-white/30 text-white rounded-xl font-medium hover:bg-white/10 transition-all duration-200">
-                Login
-              </button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <UnifiedNavBar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
-        <div className="max-w-5xl mx-auto text-center">
+      <section className="pt-20 pb-6 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-12 h-12 object-contain filter brightness-0 invert"
+            />
+          </div>
           <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
-            Powerful AI Content
+            Developer API
             <span className="block text-accent">
-              API for Developers
+              Documentation
             </span>
           </h1>
-          <p className="text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
+          <p className="text-sm md:text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
             Integrate Emerlya AI's advanced content generation capabilities directly into your applications
             with our RESTful API. Scale content creation with enterprise-grade reliability.
           </p>

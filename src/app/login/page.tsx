@@ -1,11 +1,12 @@
 'use client';
 import { createClient } from '../../lib/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 
 function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<'email' | 'otp'>('email');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -169,8 +170,20 @@ function LoginForm() {
       } else if (data?.session) {
         setSuccessMessage('Successfully signed in! Redirecting...');
         localStorage.removeItem('emerlya_otp_email');
+        
+        // Handle redirect after login
+        const redirectTo = searchParams.get('redirect');
+        const plan = searchParams.get('plan');
+        
         setTimeout(() => {
-          router.push('/dashboard');
+          if (redirectTo === 'pricing' && plan) {
+            // If coming from pricing page with a specific plan, redirect back to pricing
+            router.push(`/pricing#${plan}`);
+          } else if (redirectTo) {
+            router.push(`/${redirectTo}`);
+          } else {
+            router.push('/dashboard');
+          }
         }, 1000);
       } else {
         setErrorMessage('Authentication failed. Please try again.');
@@ -211,16 +224,18 @@ function LoginForm() {
   return (
     <div className="w-full max-w-md p-8 backdrop-blur-xl bg-white/90 rounded-2xl shadow-2xl border border-white/50">
       <div className="flex justify-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-          <span className="text-white font-bold text-3xl font-heading">E</span>
-        </div>
+        <img 
+          src="/emerlya-logo.svg" 
+          alt="Emerlya AI Logo" 
+          className="w-16 h-16 object-contain"
+        />
       </div>
       
-      <h1 className="text-xl md:text-2xl font-bold font-heading text-primary text-center mb-3">
-        Welcome to Emerlya AI
+      <h1 className="text-lg md:text-xl font-bold font-heading text-primary text-center mb-3">
+        Welcome Back
       </h1>
-      <p className="text-base text-gray-600 text-center mb-6">
-        Sign in to access your intelligent content platform
+      <p className="text-sm text-gray-600 text-center mb-6">
+        Sign in to access your AI content creation dashboard
       </p>
 
       {/* Progress indicator */}
@@ -376,40 +391,19 @@ function LoginForm() {
 export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
-              {/* Data Flow E Logo */}
-              <div className="relative">
-                <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
-                {/* Animated data particles */}
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
-                  <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
-                  <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
-                  <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
-                </div>
-              </div>
-            </div>
-            <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
-              Emerlya AI
-            </span>
-          </Link>
-          <div className="flex items-center space-x-6">
-            <Link href="/about" className="text-white/80 hover:text-accent transition-colors">
-              About
-            </Link>
-            <Link href="/privacy" className="text-white/80 hover:text-accent transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-white/80 hover:text-accent transition-colors">
-              Terms
-            </Link>
-          </div>
-        </div>
-      </nav>
+      {/* Header with Logo */}
+      <div className="flex justify-center pt-8 pb-4">
+        <Link href="/" className="flex items-center space-x-3">
+          <img 
+            src="/emerlya-logo.svg" 
+            alt="Emerlya AI Logo" 
+            className="w-10 h-10 object-contain"
+          />
+          <span className="text-2xl font-semibold font-heading text-primary">
+            Emerlya AI
+          </span>
+        </Link>
+      </div>
 
       {/* Login Form Container */}
       <div className="flex flex-col justify-center items-center min-h-screen pt-20">

@@ -37,7 +37,7 @@ export default function FeaturesPage() {
               Modern Content Creation
             </span>
           </h1>
-          <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
+          <p className="text-sm md:text-base text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
             Discover how Emerlya AI transforms your content workflow with cutting-edge artificial intelligence,
             advanced document analysis, and brand-perfect generation capabilities.
           </p>

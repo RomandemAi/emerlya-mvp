@@ -53,10 +53,10 @@ export default function PricingCheckoutButton({
       
       // Check if there's an error in the response
       if (result.error) {
-        // If authentication is required, redirect to login
+        // If authentication is required, redirect to login with plan info
         if (result.requiresAuth || response.status === 401) {
           console.log('Authentication required, redirecting to login...');
-          router.push('/login?redirect=pricing');
+          router.push(`/login?redirect=pricing&plan=${planName}`);
           return;
         }
         
