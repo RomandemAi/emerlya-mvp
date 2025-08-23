@@ -13,7 +13,7 @@ const sizeClasses = {
 };
 
 // Modern 3D User Icon
-export const ModernUserIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernUserIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center">
       <div className="w-3/5 h-3/5 bg-gradient-to-b from-white/90 to-white/70 rounded-full relative">
@@ -26,7 +26,7 @@ export const ModernUserIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Home Icon
-export const ModernHomeIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernHomeIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Base/Foundation */}
@@ -45,7 +45,7 @@ export const ModernHomeIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Sparkles Icon
-export const ModernSparklesIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernSparklesIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative animate-pulse">
       {/* Large star */}
@@ -64,7 +64,7 @@ export const ModernSparklesIcon = ({ className = '', size = 'md' }: IconProps) =
 );
 
 // Modern 3D Document Icon
-export const ModernDocumentIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernDocumentIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Main document */}
@@ -85,7 +85,7 @@ export const ModernDocumentIcon = ({ className = '', size = 'md' }: IconProps) =
 );
 
 // Modern 3D Settings/Cog Icon
-export const ModernSettingsIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernSettingsIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative animate-spin-slow">
       {/* Outer gear */}
@@ -115,7 +115,7 @@ export const ModernSettingsIcon = ({ className = '', size = 'md' }: IconProps) =
 );
 
 // Modern 3D Star Icon
-export const ModernStarIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernStarIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 shadow-lg transform hover:scale-110 transition-transform duration-200"
@@ -128,7 +128,7 @@ export const ModernStarIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Phone Icon
-export const ModernPhoneIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernPhoneIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Phone body */}
@@ -146,7 +146,7 @@ export const ModernPhoneIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Pencil Icon
-export const ModernPencilIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernPencilIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative transform rotate-45">
       {/* Pencil body */}
@@ -163,7 +163,7 @@ export const ModernPencilIcon = ({ className = '', size = 'md' }: IconProps) => 
 );
 
 // Modern 3D Information Icon
-export const ModernInfoIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernInfoIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Circle background */}
@@ -180,7 +180,7 @@ export const ModernInfoIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Dollar Icon
-export const ModernDollarIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernDollarIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Circle background */}
@@ -196,7 +196,7 @@ export const ModernDollarIcon = ({ className = '', size = 'md' }: IconProps) => 
 );
 
 // Modern 3D Wrench Icon
-export const ModernWrenchIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernWrenchIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative transform rotate-45">
       {/* Wrench handle */}
@@ -233,7 +233,7 @@ if (typeof document !== 'undefined') {
 }
 
 // Modern 3D Lightning/Bolt Icon
-export const ModernBoltIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernBoltIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-500 shadow-lg transform hover:scale-110 transition-transform duration-200"
@@ -246,7 +246,7 @@ export const ModernBoltIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Shield Icon
-export const ModernShieldIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernShieldIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-green-400 via-green-500 to-green-600 shadow-lg transform hover:scale-105 transition-transform duration-200"
@@ -263,7 +263,7 @@ export const ModernShieldIcon = ({ className = '', size = 'md' }: IconProps) => 
 );
 
 // Modern 3D Globe Icon
-export const ModernGlobeIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernGlobeIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200">
@@ -278,7 +278,7 @@ export const ModernGlobeIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Chart Icon
-export const ModernChartIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernChartIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-end justify-center p-1">
@@ -295,7 +295,7 @@ export const ModernChartIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Users Icon
-export const ModernUsersIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernUsersIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 via-indigo-500 to-indigo-600 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center">
@@ -311,7 +311,7 @@ export const ModernUsersIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Heart Icon
-export const ModernHeartIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernHeartIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-red-400 via-red-500 to-red-600 shadow-lg transform hover:scale-110 transition-transform duration-200"
@@ -324,7 +324,7 @@ export const ModernHeartIcon = ({ className = '', size = 'md' }: IconProps) => (
 );
 
 // Modern 3D Lightbulb Icon
-export const ModernLightbulbIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernLightbulbIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/5 h-3/5 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-lg">
@@ -338,7 +338,7 @@ export const ModernLightbulbIcon = ({ className = '', size = 'md' }: IconProps) 
 );
 
 // Modern 3D Lock Icon
-export const ModernLockIcon = ({ className = '', size = 'md' }: IconProps) => (
+const ModernLockIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
     <div className="w-full h-full relative">
       {/* Lock body */}
