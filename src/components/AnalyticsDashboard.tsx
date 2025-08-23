@@ -30,40 +30,80 @@ export default function AnalyticsDashboard({ userId, timeRange = '30d' }: Analyt
   const [loading, setLoading] = useState(true);
   const [selectedRange, setSelectedRange] = useState(timeRange);
 
-  // Mock data for now - will be replaced with real API calls
+  // Fetch real analytics data
   useEffect(() => {
     const fetchAnalytics = async () => {
       setLoading(true);
       
-      // Simulate API call
-      setTimeout(() => {
-        const mockData: AnalyticsData = {
-          totalWords: 45230,
-          totalContent: 127,
-          brandsCount: 8,
-          recentActivity: 12,
-          topContentTypes: [
-            { type: 'Blog Posts', count: 34, percentage: 27 },
-            { type: 'Social Media', count: 28, percentage: 22 },
-            { type: 'Email Campaigns', count: 25, percentage: 20 },
-            { type: 'Product Descriptions', count: 22, percentage: 17 },
-            { type: 'Ad Copy', count: 18, percentage: 14 }
-          ],
+      try {
+        const response = await fetch('/api/analytics');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success) {
+            const apiData = result.data;
+            
+            const realData: AnalyticsData = {
+              totalWords: apiData.totalWords,
+              totalContent: apiData.totalContent,
+              brandsCount: apiData.brandProfiles,
+              recentActivity: apiData.totalContent,
+              topContentTypes: apiData.contentTypes || [],
+              weeklyStats: apiData.weeklyActivity.map((day: any) => ({
+                day: day.day,
+                words: day.words,
+                content: Math.ceil(day.words / 100) // Estimate content pieces from words
+              })),
+              monthlyGrowth: 0, // Could calculate from historical data later
+              timesSaved: Math.round(apiData.timeSavedHours * 10) / 10
+            };
+            
+            setData(realData);
+          } else {
+            // Fallback to default data if API fails
+            setData({
+              totalWords: 0,
+              totalContent: 0,
+              brandsCount: 0,
+              recentActivity: 0,
+              topContentTypes: [],
+              weeklyStats: [
+                { day: 'Mon', words: 0, content: 0 },
+                { day: 'Tue', words: 0, content: 0 },
+                { day: 'Wed', words: 0, content: 0 },
+                { day: 'Thu', words: 0, content: 0 },
+                { day: 'Fri', words: 0, content: 0 },
+                { day: 'Sat', words: 0, content: 0 },
+                { day: 'Sun', words: 0, content: 0 }
+              ],
+              monthlyGrowth: 0,
+              timesSaved: 0
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch analytics:', error);
+        // Set empty data on error
+        setData({
+          totalWords: 0,
+          totalContent: 0,
+          brandsCount: 0,
+          recentActivity: 0,
+          topContentTypes: [],
           weeklyStats: [
-            { day: 'Mon', words: 2340, content: 6 },
-            { day: 'Tue', words: 1890, content: 4 },
-            { day: 'Wed', words: 3200, content: 8 },
-            { day: 'Thu', words: 2750, content: 7 },
-            { day: 'Fri', words: 2980, content: 9 },
-            { day: 'Sat', words: 1200, content: 3 },
-            { day: 'Sun', words: 890, content: 2 }
+            { day: 'Mon', words: 0, content: 0 },
+            { day: 'Tue', words: 0, content: 0 },
+            { day: 'Wed', words: 0, content: 0 },
+            { day: 'Thu', words: 0, content: 0 },
+            { day: 'Fri', words: 0, content: 0 },
+            { day: 'Sat', words: 0, content: 0 },
+            { day: 'Sun', words: 0, content: 0 }
           ],
-          monthlyGrowth: 23.5,
-          timesSaved: 76.5
-        };
-        setData(mockData);
+          monthlyGrowth: 0,
+          timesSaved: 0
+        });
+      } finally {
         setLoading(false);
-      }, 800);
+      }
     };
 
     fetchAnalytics();

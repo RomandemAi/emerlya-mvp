@@ -10,6 +10,7 @@ import {
 } from '../../../lib/brand';
 import { styleSystemPrompt } from '../../../lib/prompts';
 import { callOpenAI } from '../../../lib/openai';
+import { trackAnalyticsEvent } from '../../../lib/analytics';
 
 // Force dynamic rendering to use Node.js runtime instead of edge
 export const dynamic = 'force-dynamic';
@@ -78,6 +79,19 @@ export async function POST(req: Request) {
 
     console.log(`🚀 Generating ${type} content for brand: ${brand_id}`);
     console.log(`📝 Prompt: "${user_prompt.substring(0, 100)}..."`);
+
+    // Track analytics event
+    await trackAnalyticsEvent({
+      user_id: session.user.id,
+      brand_id,
+      event_type: 'content_generated',
+      content_type: type,
+      word_count: wordCount,
+      metadata: {
+        prompt_length: user_prompt.length,
+        tone: tone || 'default'
+      }
+    });
 
     // Gather all brand intelligence data in parallel
     const [brandProfile, brandMemory, brandSettings, relevantChunks] = await Promise.all([
