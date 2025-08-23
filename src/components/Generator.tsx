@@ -1,5 +1,6 @@
 'use client';
 import { useState, FormEvent, ChangeEvent } from 'react';
+import TopUpModal from './TopUpModal';
 
 interface GeneratorProps {
   brandId: string;
@@ -12,6 +13,8 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
   const [isLoading, setIsLoading] = useState(false);
   const [subscriptionError, setSubscriptionError] = useState('');
   const [usageError, setUsageError] = useState('');
+  const [showTopUpModal, setShowTopUpModal] = useState(false);
+  const [usageData, setUsageData] = useState<any>(null);
 
   // Check if user has an active subscription
   const hasActiveSubscription = subscriptionStatus === 'active';
@@ -53,6 +56,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       if (response.status === 429) {
         const errorData = await response.json();
         setUsageError(errorData.message || 'Usage limit exceeded. Please upgrade your plan.');
+        setUsageData(errorData.usage); // Store usage data for top-up modal
         return;
       }
 
@@ -111,12 +115,20 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
             <div className="flex-1">
               <h3 className="text-yellow-700 font-bold text-lg mb-3">Usage Limit Reached</h3>
               <p className="text-yellow-600 mb-4 leading-relaxed">{usageError}</p>
-              <button 
-                onClick={() => window.location.href = '/pricing'}
-                className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
-              >
-                Upgrade to Continue
-              </button>
+              <div className="flex space-x-3">
+                <button 
+                  onClick={() => setShowTopUpModal(true)}
+                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  💰 Top Up Words
+                </button>
+                <button 
+                  onClick={() => window.location.href = '/pricing'}
+                  className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  Upgrade Plan
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -251,6 +263,13 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
           </ul>
         </div>
       )}
+
+      {/* Top-Up Modal */}
+      <TopUpModal 
+        isOpen={showTopUpModal}
+        onClose={() => setShowTopUpModal(false)}
+        currentUsage={usageData}
+      />
     </div>
   );
 }

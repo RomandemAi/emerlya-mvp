@@ -185,6 +185,33 @@ export async function POST(req: NextRequest) {
         break;
       }
 
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session;
+        
+        // Check if this is a word top-up payment
+        if (session.metadata?.type === 'word_topup') {
+          const userId = session.metadata.user_id;
+          const wordsToAdd = parseInt(session.metadata.words_to_add || '0');
+          
+          if (userId && wordsToAdd > 0) {
+            // Add word credits to user's profile
+            const { error } = await supabase
+              .rpc('add_word_credits', {
+                user_id: userId,
+                credits_to_add: wordsToAdd
+              });
+
+            if (error) {
+              console.error('Error adding word credits:', error);
+              return NextResponse.json({ error: 'Failed to add credits' }, { status: 500 });
+            }
+
+            console.log(`Added ${wordsToAdd} word credits to user ${userId}`);
+          }
+        }
+        break;
+      }
+
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }

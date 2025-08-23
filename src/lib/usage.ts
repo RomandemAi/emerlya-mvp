@@ -7,6 +7,7 @@ export interface UsageStats {
   content_pieces: number;
   words_limit: number;
   content_limit: number;
+  words_credits: number; // Extra words purchased
   subscription_status: string;
   percentage_used: number;
   can_generate: boolean;
@@ -41,10 +42,10 @@ export async function getCurrentUsage(userId: string): Promise<UsageStats | null
   try {
     const supabase = await createClient();
     
-    // Get user's subscription status
+    // Get user's subscription status and word credits
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('subscription_status')
+      .select('subscription_status, word_credits')
       .eq('id', userId)
       .single();
 
@@ -54,6 +55,7 @@ export async function getCurrentUsage(userId: string): Promise<UsageStats | null
     }
 
     const subscriptionStatus = profile.subscription_status || 'free';
+    const wordCredits = profile.word_credits || 0;
     const limits = TIER_LIMITS[subscriptionStatus] || TIER_LIMITS['free'];
 
     // Get current month's usage
@@ -85,14 +87,17 @@ export async function getCurrentUsage(userId: string): Promise<UsageStats | null
     endOfMonth.setDate(0);
     const daysRemaining = Math.ceil((endOfMonth.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
 
-    const percentageUsed = Math.round((wordsUsed / limits.words_per_month) * 100);
-    const canGenerate = wordsUsed < limits.words_per_month && contentPieces < limits.content_per_month;
+    // Calculate available words (base limit + credits)
+    const totalWordsAvailable = limits.words_per_month + wordCredits;
+    const percentageUsed = Math.round((wordsUsed / totalWordsAvailable) * 100);
+    const canGenerate = wordsUsed < totalWordsAvailable && contentPieces < limits.content_per_month;
 
     return {
       words_used: wordsUsed,
       content_pieces: contentPieces,
-      words_limit: limits.words_per_month,
+      words_limit: totalWordsAvailable, // Base limit + credits
       content_limit: limits.content_per_month,
+      words_credits: wordCredits,
       subscription_status: subscriptionStatus,
       percentage_used: percentageUsed,
       can_generate: canGenerate,
