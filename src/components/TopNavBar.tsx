@@ -38,18 +38,12 @@ export default function TopNavBar({ userEmail, subscriptionStatus, onMobileMenuC
         
         {/* Logo and Home Link */}
         <Link href="/" className="flex items-center space-x-3">
-          <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center overflow-hidden">
-            {/* Data Flow E Logo */}
-            <div className="relative">
-              <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
-              {/* Animated data particles */}
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
-                <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
-                <div className="absolute w-0.5 h-0.5 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
-                <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
-              </div>
-            </div>
+          <div className="relative w-10 h-10 flex items-center justify-center">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-10 h-10 object-contain"
+            />
           </div>
           <span className="text-xl font-semibold text-white font-heading hover:text-accent transition-colors">
             Emerlya AI

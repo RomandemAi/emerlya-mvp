@@ -37,19 +37,12 @@ export default function Sidebar({
       {/* Header */}
       <div className="p-6 border-b border-white/50">
         <Link href="/" className="flex items-center space-x-3">
-          <div className="relative w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
-            {/* Data Flow E Logo - Larger version for sidebar */}
-            <div className="relative">
-              <span className="text-white font-bold text-xl font-heading relative z-10">E</span>
-              {/* Animated data particles - adjusted for larger logo */}
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute w-1.5 h-1.5 bg-accent rounded-full animate-pulse" style={{top: '20%', left: '15%', animationDelay: '0s'}}></div>
-                <div className="absolute w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{top: '60%', left: '80%', animationDelay: '0.5s'}}></div>
-                <div className="absolute w-1 h-1 bg-accent rounded-full animate-pulse" style={{top: '80%', left: '25%', animationDelay: '1s'}}></div>
-                <div className="absolute w-1 h-1 bg-white rounded-full animate-pulse" style={{top: '35%', left: '70%', animationDelay: '1.5s'}}></div>
-                <div className="absolute w-0.5 h-0.5 bg-white rounded-full animate-pulse" style={{top: '45%', left: '40%', animationDelay: '2s'}}></div>
-              </div>
-            </div>
+          <div className="relative w-12 h-12 flex items-center justify-center">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-12 h-12 object-contain"
+            />
           </div>
           <div>
             <span className="text-xl font-semibold font-heading text-primary hover:text-accent transition-colors">
