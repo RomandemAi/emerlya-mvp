@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import CreateBrandForm from './CreateBrandForm';
 import BrandSettingsModal from './BrandSettingsModal';
 import BrandDocumentsModal from './BrandDocumentsModal';
+import AnalyticsDashboard from './AnalyticsDashboard';
+import ContentCalendar from './ContentCalendar';
 
 interface Brand {
   id: string;
@@ -23,32 +25,61 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isDocumentsModalOpen, setIsDocumentsModalOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
+  const [activeTab, setActiveTab] = useState<'brands' | 'analytics' | 'calendar'>('brands');
 
   return (
     <>
-      <div className="flex justify-between items-center mb-12">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-xl md:text-2xl font-bold font-heading text-gray-900 mb-4">
-            My
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent block">
-              Brand Portfolio
-            </span>
+            {activeTab === 'brands' ? 'My Brand Portfolio' : 
+             activeTab === 'analytics' ? 'Analytics & Insights' : 
+             'Content Calendar'}
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Manage your brand identities and generate AI-powered content that matches your unique voice.
+            {activeTab === 'brands' ? 'Manage your brand identities and generate AI-powered content that matches your unique voice.' :
+             activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
+             'Plan, schedule, and organize your content creation workflow.'}
           </p>
         </div>
-        <button 
-          onClick={() => setIsCreateModalOpen(true)}
-          className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 flex items-center space-x-2"
-        >
-          <span>✨</span>
-          <span>Create New Brand</span>
-        </button>
+        {activeTab === 'brands' && (
+          <button 
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 flex items-center space-x-2"
+          >
+            <span>✨</span>
+            <span>Create New Brand</span>
+          </button>
+        )}
       </div>
-      
-      <div>
-        {brands.length === 0 ? (
+
+      {/* Tab Navigation */}
+      <div className="flex space-x-1 mb-8 bg-gray-100 rounded-xl p-1">
+        {[
+          { key: 'brands' as const, label: 'Brands', icon: '🎯' },
+          { key: 'analytics' as const, label: 'Analytics', icon: '📊' },
+          { key: 'calendar' as const, label: 'Calendar', icon: '📅' }
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center justify-center space-x-2 ${
+              activeTab === tab.key
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+            }`}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'brands' && (
+        <div>
+          {brands.length === 0 ? (
           <div className="text-center py-20">
             <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-16 shadow-2xl border border-white/50 max-w-2xl mx-auto">
               <div className="text-8xl mb-8">🎭</div>
@@ -119,7 +150,16 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
             ))}
           </div>
         )}
-      </div>
+        </div>
+      )}
+
+      {activeTab === 'analytics' && (
+        <AnalyticsDashboard />
+      )}
+
+      {activeTab === 'calendar' && (
+        <ContentCalendar />
+      )}
 
       <CreateBrandForm 
         isOpen={isCreateModalOpen} 
