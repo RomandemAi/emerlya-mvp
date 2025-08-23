@@ -15,12 +15,60 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
   const [usageError, setUsageError] = useState('');
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [usageData, setUsageData] = useState<any>(null);
+  const [copyFeedback, setCopyFeedback] = useState('');
+  const [saveStatus, setSaveStatus] = useState<'saving' | 'saved' | 'error' | null>(null);
 
   // Check if user has an active subscription
   const hasActiveSubscription = subscriptionStatus === 'active';
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
+  };
+
+  const handleCopy = async () => {
+    if (!completion) return;
+    
+    try {
+      await navigator.clipboard.writeText(completion);
+      setCopyFeedback('Copied!');
+      setTimeout(() => setCopyFeedback(''), 2000);
+    } catch (error) {
+      setCopyFeedback('Failed to copy');
+      setTimeout(() => setCopyFeedback(''), 2000);
+    }
+  };
+
+  const saveContent = async (content: string, prompt: string) => {
+    if (!content || !prompt) return;
+    
+    setSaveStatus('saving');
+    try {
+      // Save content using the brand draft system
+      const response = await fetch('/api/brand/save-content', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          brand_id: brandId,
+          title: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : ''),
+          content: content,
+          type: 'generated'
+        }),
+      });
+
+      if (response.ok) {
+        setSaveStatus('saved');
+        setTimeout(() => setSaveStatus(null), 3000);
+      } else {
+        setSaveStatus('error');
+        setTimeout(() => setSaveStatus(null), 3000);
+      }
+    } catch (error) {
+      console.error('Error saving content:', error);
+      setSaveStatus('error');
+      setTimeout(() => setSaveStatus(null), 3000);
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -71,12 +119,19 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         throw new Error('No response body');
       }
 
+      let fullContent = '';
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value);
+        fullContent += chunk;
         setCompletion(prev => prev + chunk);
+      }
+      
+      // Auto-save the completed content
+      if (fullContent && fullContent.length > 10 && !fullContent.startsWith('Error:')) {
+        setTimeout(() => saveContent(fullContent, input), 1000);
       }
     } catch (error) {
       console.error('Error generating content:', error);
@@ -210,12 +265,35 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
               <span>🤖</span>
               <span>Generated Content</span>
             </h3>
-            {isLoading && (
-              <div className="text-sm text-gray-600 flex items-center gap-2">
-                <div className="animate-pulse w-3 h-3 bg-gradient-to-r from-accent to-accent/80 rounded-full"></div>
-                Streaming...
-              </div>
-            )}
+            <div className="flex items-center gap-3">
+              {completion && !isLoading && (
+                <button
+                  onClick={handleCopy}
+                  className="flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl font-medium transition-all duration-200 hover:shadow-md"
+                  title="Copy to clipboard"
+                >
+                  {copyFeedback ? (
+                    <>
+                      <span>✅</span>
+                      <span>{copyFeedback}</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              )}
+              {isLoading && (
+                <div className="text-sm text-gray-600 flex items-center gap-2">
+                  <div className="animate-pulse w-3 h-3 bg-gradient-to-r from-accent to-accent/80 rounded-full"></div>
+                  Streaming...
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 min-h-[200px] border border-gray-200">
@@ -231,10 +309,32 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
           </div>
           
           {completion && !isLoading && (
-            <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
               <p className="text-sm text-gray-600 font-medium">
                 ✅ Content generation completed • {completion.length} characters
               </p>
+              
+              {/* Save Status */}
+              <div className="flex items-center gap-2 text-sm">
+                {saveStatus === 'saving' && (
+                  <div className="flex items-center gap-2 text-primary">
+                    <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full"></div>
+                    <span>Saving...</span>
+                  </div>
+                )}
+                {saveStatus === 'saved' && (
+                  <div className="flex items-center gap-2 text-green-600">
+                    <span>💾</span>
+                    <span>Saved to library</span>
+                  </div>
+                )}
+                {saveStatus === 'error' && (
+                  <div className="flex items-center gap-2 text-red-600">
+                    <span>⚠️</span>
+                    <span>Save failed</span>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
