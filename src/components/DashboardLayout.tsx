@@ -63,7 +63,7 @@ export default function DashboardLayout({
       
       {/* Sidebar */}
       <div className={`
-        fixed h-full z-50 pt-24 transition-transform duration-300 ease-in-out
+        fixed h-full z-50 pt-32 transition-transform duration-300 ease-in-out
         lg:translate-x-0 lg:w-64 lg:z-40
         ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         w-64
@@ -87,7 +87,7 @@ export default function DashboardLayout({
       </div>
       
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 pt-24 p-3 lg:p-4 min-h-screen">
+      <main className="flex-1 lg:ml-64 pt-32 p-3 lg:p-4 min-h-screen">
         {children}
       </main>
 

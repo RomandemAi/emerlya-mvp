@@ -55,7 +55,7 @@ export default function Sidebar({
 
       {/* Navigation */}
       <div className="flex-1 p-4 overflow-y-auto">
-        <nav className="space-y-6">
+        <nav className="space-y-8">
           {/* Dashboard Section */}
           <div>
             <Link 
@@ -69,10 +69,10 @@ export default function Sidebar({
 
           {/* Website Section */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-3">
               Website
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Link 
                 href="/"
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
@@ -127,10 +127,10 @@ export default function Sidebar({
           
           {/* Quick Actions Section */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">
               Quick Actions
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <button 
                 onClick={onGenerateClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
