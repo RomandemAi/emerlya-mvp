@@ -109,6 +109,10 @@ export default function PricingPage() {
                   <span className="text-sm text-gray-600">Email support</span>
                 </li>
                 <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Top-up options available</span>
+                </li>
+                <li className="flex items-center">
                   <XMarkIcon className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
                   <span className="text-sm text-gray-400">Document analysis</span>
                 </li>
@@ -219,6 +223,76 @@ export default function PricingPage() {
                 </li>
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Top-Up Options Section */}
+      <section className="py-8 px-6 bg-gradient-to-r from-accent/5 to-primary/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-gray-900 mb-4">
+              Need More Words? <span className="text-accent">Top Up Instantly!</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Already on a plan but need extra words this month? Buy top-ups instantly without changing your subscription.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            {/* Small Top-Up */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-4">
+                  <span className="text-2xl">💰</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Quick Top-Up</h3>
+                <div className="text-3xl font-bold text-green-600 mb-2">$10</div>
+                <p className="text-gray-600 mb-4">10,000 extra words</p>
+                <div className="text-sm text-gray-500 mb-6">
+                  <div>• Instant activation</div>
+                  <div>• One-time payment</div>
+                  <div>• Perfect for extra content</div>
+                  <div>• $0.001 per word</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Buy 10,000 Words
+                </button>
+              </div>
+            </div>
+
+            {/* Large Top-Up */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                  Best Value
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
+                  <span className="text-2xl">🚀</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Value Top-Up</h3>
+                <div className="text-3xl font-bold text-purple-600 mb-2">$25</div>
+                <p className="text-gray-600 mb-4">30,000 extra words</p>
+                <div className="text-sm text-gray-500 mb-6">
+                  <div>• Instant activation</div>
+                  <div>• One-time payment</div>
+                  <div>• Great for heavy usage</div>
+                  <div>• $0.0008 per word (17% savings)</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Buy 30,000 Words
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-sm text-gray-600 max-w-md mx-auto">
+              💡 <strong>Pro Tip:</strong> Top-ups are added to your current plan and don't expire. 
+              Credits are used before your monthly allowance resets.
+            </p>
           </div>
         </div>
       </section>
