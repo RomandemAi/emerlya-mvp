@@ -5,7 +5,7 @@
 ### Competitors:
 - **Writesonic Pro**: $12.67/month 
 - **Copy.ai Pro**: $35/month
-- **Jasper Creator**: $49/month
+- **Leading AI Tool**: $49/month
 - **ChatGPT Plus**: $20/month
 - **Claude Pro**: $20/month
 

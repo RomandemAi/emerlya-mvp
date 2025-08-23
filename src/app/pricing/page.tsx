@@ -184,7 +184,7 @@ export default function PricingPage() {
                   <span className="text-gray-600 ml-1">/month</span>
                 </div>
                 <div className="text-xs text-emerald-600 font-medium mb-4 bg-emerald-50 px-2 py-1 rounded-full inline-block">
-                  60% cheaper than Jasper!
+                  60% more affordable!
                 </div>
                 <Link href="/login">
                   <button className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
