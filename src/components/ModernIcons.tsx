@@ -2,20 +2,24 @@ import React from 'react';
 
 interface IconProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const sizeClasses = {
+  xs: 'w-3 h-3',
   sm: 'w-4 h-4',
   md: 'w-6 h-6',
   lg: 'w-8 h-8',
   xl: 'w-12 h-12'
 };
 
+// Enhanced mobile-friendly hover states
+const mobileHoverClass = 'hover:scale-105 active:scale-95 transition-transform duration-200 ease-out';
+
 // Modern 3D User Icon
 const ModernUserIcon = ({ className = '', size = 'md' }: IconProps) => (
   <div className={`${sizeClasses[size]} ${className} relative`}>
-    <div className="w-full h-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center">
+    <div className={`w-full h-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-full shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
       <div className="w-3/5 h-3/5 bg-gradient-to-b from-white/90 to-white/70 rounded-full relative">
         <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-2/5 h-2/5 bg-gradient-to-b from-blue-100 to-blue-200 rounded-full"></div>
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 h-2/5 bg-gradient-to-t from-blue-100 to-transparent rounded-full"></div>
@@ -353,6 +357,18 @@ const ModernLockIcon = ({ className = '', size = 'md' }: IconProps) => (
   </div>
 );
 
+// Modern 3D Hamburger Menu Icon
+const ModernMenuIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-white/80 via-white/90 to-white/80 rounded-lg shadow-lg transform ${mobileHoverClass} flex flex-col justify-center items-center space-y-1 p-1`}>
+      <div className="w-3/4 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+      <div className="w-3/4 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+      <div className="w-3/4 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-lg"></div>
+    </div>
+  </div>
+);
+
 export {
   ModernUserIcon,
   ModernHomeIcon,
@@ -372,5 +388,6 @@ export {
   ModernUsersIcon,
   ModernHeartIcon,
   ModernLightbulbIcon,
-  ModernLockIcon
+  ModernLockIcon,
+  ModernMenuIcon
 };
