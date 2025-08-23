@@ -90,100 +90,100 @@ export default function AnalyticsDashboard({ userId, timeRange = '30d' }: Analyt
   const maxWords = Math.max(...data.weeklyStats.map(d => d.words));
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <ModernChartIcon size="lg" />
-          <h2 className="text-xl font-bold text-gray-900">Analytics Overview</h2>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-2">
+          <ModernChartIcon size="md" />
+          <h2 className="text-lg font-semibold text-gray-900">Analytics Overview</h2>
         </div>
         
         {/* Time Range Selector */}
-        <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="flex bg-gray-100 rounded-md p-0.5">
           {(['7d', '30d', '90d'] as const).map((range) => (
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
+              className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                 selectedRange === range
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              {range === '7d' ? '7 Days' : range === '30d' ? '30 Days' : '90 Days'}
+              {range === '7d' ? '7d' : range === '30d' ? '30d' : '90d'}
             </button>
           ))}
         </div>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         {/* Total Words */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-          <div className="flex items-center justify-between mb-2">
-            <ModernDocumentIcon size="sm" />
-            <span className="text-xs font-medium text-blue-600 bg-blue-200 px-2 py-1 rounded-full">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200">
+          <div className="flex items-center justify-between mb-1">
+            <ModernDocumentIcon size="xs" />
+            <span className="text-xs font-medium text-blue-600 bg-blue-200 px-1.5 py-0.5 rounded-full">
               +{data.monthlyGrowth}%
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900">{data.totalWords.toLocaleString()}</h3>
-          <p className="text-sm text-gray-600">Words Generated</p>
+          <h3 className="text-lg font-bold text-gray-900">{data.totalWords.toLocaleString()}</h3>
+          <p className="text-xs text-gray-600">Words Generated</p>
         </div>
 
         {/* Total Content */}
-        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-          <div className="flex items-center justify-between mb-2">
-            <ModernSparklesIcon size="sm" />
-            <span className="text-xs font-medium text-green-600 bg-green-200 px-2 py-1 rounded-full">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200">
+          <div className="flex items-center justify-between mb-1">
+            <ModernSparklesIcon size="xs" />
+            <span className="text-xs font-medium text-green-600 bg-green-200 px-1.5 py-0.5 rounded-full">
               {data.recentActivity} today
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900">{data.totalContent}</h3>
-          <p className="text-sm text-gray-600">Content Pieces</p>
+          <h3 className="text-lg font-bold text-gray-900">{data.totalContent}</h3>
+          <p className="text-xs text-gray-600">Content Pieces</p>
         </div>
 
         {/* Active Brands */}
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
-          <div className="flex items-center justify-between mb-2">
-            <ModernStarIcon size="sm" />
-            <span className="text-xs font-medium text-purple-600 bg-purple-200 px-2 py-1 rounded-full">
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 border border-purple-200">
+          <div className="flex items-center justify-between mb-1">
+            <ModernStarIcon size="xs" />
+            <span className="text-xs font-medium text-purple-600 bg-purple-200 px-1.5 py-0.5 rounded-full">
               Active
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900">{data.brandsCount}</h3>
-          <p className="text-sm text-gray-600">Brand Profiles</p>
+          <h3 className="text-lg font-bold text-gray-900">{data.brandsCount}</h3>
+          <p className="text-xs text-gray-600">Brand Profiles</p>
         </div>
 
         {/* Time Saved */}
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
-          <div className="flex items-center justify-between mb-2">
-            <ModernUsersIcon size="sm" />
-            <span className="text-xs font-medium text-orange-600 bg-orange-200 px-2 py-1 rounded-full">
+        <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 border border-orange-200">
+          <div className="flex items-center justify-between mb-1">
+            <ModernUsersIcon size="xs" />
+            <span className="text-xs font-medium text-orange-600 bg-orange-200 px-1.5 py-0.5 rounded-full">
               ROI
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900">{data.timesSaved}h</h3>
-          <p className="text-sm text-gray-600">Time Saved</p>
+          <h3 className="text-lg font-bold text-gray-900">{data.timesSaved}h</h3>
+          <p className="text-xs text-gray-600">Time Saved</p>
         </div>
       </div>
 
       {/* Weekly Activity Chart */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Weekly Activity</h3>
-        <div className="bg-gray-50 rounded-xl p-4">
-          <div className="flex items-end justify-between h-32 space-x-2">
+      <div className="mb-5">
+        <h3 className="text-base font-semibold text-gray-900 mb-3">Weekly Activity</h3>
+        <div className="bg-gray-50 rounded-lg p-3">
+          <div className="flex items-end justify-between h-24 space-x-1">
             {data.weeklyStats.map((day, index) => (
               <div key={day.day} className="flex flex-col items-center flex-1">
                 <div className="w-full bg-primary/20 rounded-t-lg relative overflow-hidden">
                   <div 
                     className="bg-gradient-to-t from-primary to-accent rounded-t-lg transition-all duration-500 delay-100"
                     style={{ 
-                      height: `${(day.words / maxWords) * 100}px`,
-                      minHeight: '4px'
+                      height: `${(day.words / maxWords) * 80}px`,
+                      minHeight: '3px'
                     }}
                   ></div>
                 </div>
-                <span className="text-xs font-medium text-gray-600 mt-2">{day.day}</span>
+                <span className="text-xs font-medium text-gray-600 mt-1">{day.day}</span>
                 <span className="text-xs text-gray-500">{day.words}</span>
               </div>
             ))}
@@ -193,24 +193,24 @@ export default function AnalyticsDashboard({ userId, timeRange = '30d' }: Analyt
 
       {/* Top Content Types */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Content Types</h3>
-        <div className="space-y-3">
+        <h3 className="text-base font-semibold text-gray-900 mb-3">Popular Content Types</h3>
+        <div className="space-y-2">
           {data.topContentTypes.map((item, index) => (
-            <div key={item.type} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className={`w-3 h-3 rounded-full ${
+            <div key={item.type} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <div className={`w-2 h-2 rounded-full ${
                   index === 0 ? 'bg-blue-500' :
                   index === 1 ? 'bg-green-500' :
                   index === 2 ? 'bg-purple-500' :
                   index === 3 ? 'bg-orange-500' : 'bg-gray-500'
                 }`}></div>
-                <span className="font-medium text-gray-900">{item.type}</span>
+                <span className="text-sm font-medium text-gray-900">{item.type}</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-gray-600">{item.count} pieces</span>
-                <div className="w-20 bg-gray-200 rounded-full h-2">
+              <div className="flex items-center space-x-2">
+                <span className="text-xs text-gray-600">{item.count}</span>
+                <div className="w-16 bg-gray-200 rounded-full h-1.5">
                   <div 
-                    className={`h-2 rounded-full ${
+                    className={`h-1.5 rounded-full ${
                       index === 0 ? 'bg-blue-500' :
                       index === 1 ? 'bg-green-500' :
                       index === 2 ? 'bg-purple-500' :
@@ -219,7 +219,7 @@ export default function AnalyticsDashboard({ userId, timeRange = '30d' }: Analyt
                     style={{ width: `${item.percentage}%` }}
                   ></div>
                 </div>
-                <span className="text-sm font-medium text-gray-900 w-10 text-right">{item.percentage}%</span>
+                <span className="text-xs font-medium text-gray-900 w-8 text-right">{item.percentage}%</span>
               </div>
             </div>
           ))}

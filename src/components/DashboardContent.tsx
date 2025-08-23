@@ -30,14 +30,14 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
   return (
     <>
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-5">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold font-heading text-gray-900 mb-4">
+          <h1 className="text-lg md:text-xl font-bold font-heading text-gray-900 mb-2">
             {activeTab === 'brands' ? 'My Brand Portfolio' : 
              activeTab === 'analytics' ? 'Analytics & Insights' : 
              'Content Calendar'}
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-sm text-gray-600 leading-relaxed">
             {activeTab === 'brands' ? 'Manage your brand identities and generate AI-powered content that matches your unique voice.' :
              activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
              'Plan, schedule, and organize your content creation workflow.'}
@@ -46,16 +46,16 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
         {activeTab === 'brands' && (
           <button 
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-medium text-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 flex items-center space-x-2"
+            className="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center space-x-1.5"
           >
             <span>✨</span>
-            <span>Create New Brand</span>
+            <span>Create Brand</span>
           </button>
         )}
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-1 mb-8 bg-gray-100 rounded-xl p-1">
+      <div className="flex space-x-0.5 mb-5 bg-gray-100 rounded-lg p-0.5">
         {[
           { key: 'brands' as const, label: 'Brands', icon: '🎯' },
           { key: 'analytics' as const, label: 'Analytics', icon: '📊' },
@@ -64,7 +64,7 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center justify-center space-x-2 ${
+            className={`flex-1 px-3 py-2 rounded-md text-xs font-medium transition-all flex items-center justify-center space-x-1.5 ${
               activeTab === tab.key
                 ? 'bg-white text-primary shadow-sm'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'

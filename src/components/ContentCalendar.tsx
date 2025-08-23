@@ -248,20 +248,20 @@ export default function ContentCalendar({ userId, brandId }: ContentCalendarProp
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <ModernDocumentIcon size="lg" />
-          <h2 className="text-xl font-bold text-gray-900">Content Calendar</h2>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-2">
+          <ModernDocumentIcon size="md" />
+          <h2 className="text-lg font-semibold text-gray-900">Content Calendar</h2>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           {/* View Mode Toggle */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          <div className="flex bg-gray-100 rounded-md p-0.5">
             <button
               onClick={() => setViewMode('month')}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
+              className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                 viewMode === 'month'
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
@@ -271,7 +271,7 @@ export default function ContentCalendar({ userId, brandId }: ContentCalendarProp
             </button>
             <button
               onClick={() => setViewMode('week')}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
+              className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                 viewMode === 'week'
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
@@ -283,40 +283,40 @@ export default function ContentCalendar({ userId, brandId }: ContentCalendarProp
           
           <button
             onClick={() => setShowScheduleModal(true)}
-            className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 flex items-center space-x-2"
+            className="px-3 py-1.5 bg-primary text-white rounded-md text-xs font-medium hover:bg-primary/90 flex items-center space-x-1"
           >
-            <ModernSparklesIcon size="sm" />
-            <span>Schedule Content</span>
+            <ModernSparklesIcon size="xs" />
+            <span>Schedule</span>
           </button>
         </div>
       </div>
 
       {/* Calendar Navigation */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => navigateMonth('prev')}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-1.5 hover:bg-gray-100 rounded-md transition-colors"
         >
           ←
         </button>
         
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-base font-semibold text-gray-900">
           {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
         </h3>
         
         <button
           onClick={() => navigateMonth('next')}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-1.5 hover:bg-gray-100 rounded-md transition-colors"
         >
           →
         </button>
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-1 mb-4">
+      <div className="grid grid-cols-7 gap-0.5 mb-3">
         {/* Day Headers */}
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-          <div key={day} className="p-2 text-center text-sm font-medium text-gray-500">
+          <div key={day} className="p-1 text-center text-xs font-medium text-gray-500">
             {day}
           </div>
         ))}
@@ -331,32 +331,32 @@ export default function ContentCalendar({ userId, brandId }: ContentCalendarProp
             <div
               key={index}
               onClick={() => day && setSelectedDate(day)}
-              className={`min-h-[100px] p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors ${
-                isToday ? 'ring-2 ring-primary bg-primary/5' : ''
+              className={`min-h-[70px] p-1.5 border border-gray-100 rounded-md cursor-pointer hover:bg-gray-50 transition-colors ${
+                isToday ? 'ring-1 ring-primary bg-primary/5' : ''
               } ${isSelected ? 'bg-blue-50 border-blue-200' : ''}`}
             >
               {day && (
                 <>
-                  <div className={`text-sm font-medium mb-1 ${
+                  <div className={`text-xs font-medium mb-1 ${
                     isToday ? 'text-primary' : 'text-gray-900'
                   }`}>
                     {day.getDate()}
                   </div>
                   
-                  <div className="space-y-1">
+                  <div className="space-y-0.5">
                     {dayContent.slice(0, 2).map(item => (
                       <div
                         key={item.id}
-                        className={`text-xs px-2 py-1 rounded border ${statusColors[item.status]} truncate`}
+                        className={`text-xs px-1 py-0.5 rounded border ${statusColors[item.status]} truncate`}
                         title={item.title}
                       >
-                        <span className="mr-1">{typeIcons[item.type]}</span>
+                        <span className="mr-0.5">{typeIcons[item.type]}</span>
                         {item.title}
                       </div>
                     ))}
                     {dayContent.length > 2 && (
-                      <div className="text-xs text-gray-500 px-2">
-                        +{dayContent.length - 2} more
+                      <div className="text-xs text-gray-500 px-1">
+                        +{dayContent.length - 2}
                       </div>
                     )}
                   </div>

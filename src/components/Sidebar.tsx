@@ -54,72 +54,72 @@ export default function Sidebar({
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 p-6 overflow-y-auto">
-        <nav className="space-y-4">
+      <div className="flex-1 p-4 overflow-y-auto">
+        <nav className="space-y-3">
           {/* Dashboard Section */}
           <div>
             <Link 
               href="/dashboard" 
-              className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 text-primary font-medium transition-all duration-200 hover:shadow-md"
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 text-primary font-medium transition-all duration-200 hover:shadow-md text-sm"
             >
-              <ModernUserIcon size="sm" />
+              <ModernUserIcon size="xs" />
               <span>My Brands</span>
             </Link>
           </div>
 
           {/* Website Section */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
               Website
             </div>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               <Link 
                 href="/"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernHomeIcon size="sm" />
+                <ModernHomeIcon size="xs" />
                 <span>Home</span>
               </Link>
               <Link 
                 href="/about"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernInfoIcon size="sm" />
+                <ModernInfoIcon size="xs" />
                 <span>About</span>
               </Link>
               <Link 
                 href="/pricing"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernDollarIcon size="sm" />
+                <ModernDollarIcon size="xs" />
                 <span>Pricing</span>
               </Link>
               <Link 
                 href="/features"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernStarIcon size="sm" />
+                <ModernStarIcon size="xs" />
                 <span>Features</span>
               </Link>
               <Link 
                 href="/blog"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernPencilIcon size="sm" />
+                <ModernPencilIcon size="xs" />
                 <span>Blog</span>
               </Link>
               <Link 
                 href="/contact"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernPhoneIcon size="sm" />
+                <ModernPhoneIcon size="xs" />
                 <span>Contact</span>
               </Link>
               <Link 
                 href="/api-docs"
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
-                <ModernWrenchIcon size="sm" />
+                <ModernWrenchIcon size="xs" />
                 <span>API Docs</span>
               </Link>
             </div>
@@ -133,23 +133,23 @@ export default function Sidebar({
             <div className="space-y-1">
               <button 
                 onClick={onGenerateClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
-                <ModernSparklesIcon size="sm" />
+                <ModernSparklesIcon size="xs" />
                 <span>Generate Content</span>
               </button>
               <button 
                 onClick={onDocumentsClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
-                <ModernDocumentIcon size="sm" />
+                <ModernDocumentIcon size="xs" />
                 <span>Documents</span>
               </button>
               <button 
                 onClick={onSettingsClick}
-                className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
-                <ModernSettingsIcon size="sm" />
+                <ModernSettingsIcon size="xs" />
                 <span>Settings</span>
               </button>
             </div>
