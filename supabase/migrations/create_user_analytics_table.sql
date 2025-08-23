@@ -29,4 +29,3 @@ CREATE POLICY "Users can only insert their own analytics" ON user_analytics
 
 -- Grant permissions
 GRANT ALL ON user_analytics TO authenticated;
-GRANT USAGE ON SEQUENCE user_analytics_id_seq TO authenticated;
