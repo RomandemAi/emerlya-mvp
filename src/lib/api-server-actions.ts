@@ -96,24 +96,28 @@ export async function createApiKey(
  */
 export async function getUserApiKeys(userId: string) {
   try {
+    console.log('getUserApiKeys called for userId:', userId);
     const supabase = await createClient();
     
+    console.log('Querying api_keys table...');
     const { data, error } = await supabase
       .from('api_keys')
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
     
+    console.log('Query result - data:', data, 'error:', error);
+    
     if (error) {
       console.error('Error fetching API keys:', error);
-      return [];
+      throw new Error(`Database error: ${error.message}`);
     }
     
     return data || [];
     
   } catch (error) {
     console.error('Unexpected error fetching API keys:', error);
-    return [];
+    throw error;
   }
 }
 
