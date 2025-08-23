@@ -9,8 +9,15 @@ export default function PricingPage() {
       <UnifiedNavBar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+      <section className="pt-20 pb-6 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-5xl mx-auto text-center">
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-12 h-12 object-contain filter brightness-0 invert"
+            />
+          </div>
           <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
             Simple, Transparent
             <span className="block text-accent">
@@ -44,7 +51,7 @@ export default function PricingPage() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-6 px-6">
+      <section className="py-4 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-4 text-center">
             <div className="flex items-center justify-center space-x-2 text-gray-600">

@@ -8,15 +8,22 @@ export default function ContactPage() {
       <UnifiedNavBar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-24 pb-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Get in Touch with
             <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               The Emerlya AI Team
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Have questions about our AI content platform? Need help with your account? 
             Want to discuss enterprise solutions? We're here to help you succeed.
           </p>
@@ -24,7 +31,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Options */}
-      <section className="py-20 px-6">
+      <section className="py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
             {/* Sales */}

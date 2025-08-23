@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createBrand } from '@/app/actions';
 
 interface CreateBrandFormProps {
@@ -10,14 +10,22 @@ interface CreateBrandFormProps {
 export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
     setIsSubmitting(true);
     setError(null);
+    setSuccess(false);
 
     try {
       await createBrand(formData);
-      onClose();
+      setSuccess(true);
+      
+      // Close modal after a brief success message
+      setTimeout(() => {
+        onClose();
+        setSuccess(false);
+      }, 1500);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -26,6 +34,19 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
   };
 
   if (!isOpen) return null;
+
+  // Reset state when modal opens
+  const handleModalOpen = () => {
+    if (isOpen && (success || error)) {
+      setSuccess(false);
+      setError(null);
+    }
+  };
+
+  // Call reset on mount when modal opens
+  React.useEffect(() => {
+    handleModalOpen();
+  }, [isOpen]);
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -43,7 +64,16 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
           </button>
         </div>
         
-        <form action={handleSubmit}>
+        {success ? (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">✅</span>
+            </div>
+            <h3 className="text-xl font-semibold text-green-600 mb-2">Brand Created Successfully!</h3>
+            <p className="text-gray-600">Your brand is being processed and will be ready shortly.</p>
+          </div>
+        ) : (
+          <form action={handleSubmit}>
           <div className="space-y-6">
             {/* Brand Name */}
             <div>
@@ -169,6 +199,7 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

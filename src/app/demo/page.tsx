@@ -120,9 +120,16 @@ export default function DemoPage() {
       <UnifiedNavBar />
 
       {/* Content */}
-      <div className="pt-24 pb-12 px-4">
+      <div className="pt-20 pb-8 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 md:p-8 shadow-xl border border-white/50">
+            <div className="flex justify-center mb-4">
+              <img 
+                src="/emerlya-logo.svg" 
+                alt="Emerlya AI Logo" 
+                className="w-12 h-12 object-contain"
+              />
+            </div>
             <h1 className="text-2xl md:text-3xl font-bold font-heading text-primary mb-6 text-center">
               Emerlya — Interactive Demo
             </h1>

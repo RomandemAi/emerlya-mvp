@@ -70,9 +70,16 @@ export default async function BlogPage() {
       <UnifiedNavBar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+      <section className="pt-20 pb-6 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white mb-4">
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-12 h-12 object-contain filter brightness-0 invert"
+            />
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
             Insights & Updates from
             <span className="block text-accent">
               The Emerlya AI Team
@@ -101,7 +108,7 @@ export default async function BlogPage() {
       </section>
 
       {/* Category Filter */}
-      <section className="py-8 px-6">
+      <section className="py-6 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {categories.map((category) => (

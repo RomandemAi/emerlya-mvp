@@ -8,8 +8,15 @@ export default function AboutPage() {
       <UnifiedNavBar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+      <section className="pt-20 pb-6 px-6 bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="max-w-5xl mx-auto text-center">
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI Logo" 
+              className="w-12 h-12 object-contain filter brightness-0 invert"
+            />
+          </div>
           <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
             About 
             <span className="block text-accent">
@@ -24,7 +31,7 @@ export default function AboutPage() {
       </section>
 
       {/* Key Stats */}
-      <section className="py-8 px-6">
+      <section className="py-6 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50">
@@ -44,7 +51,7 @@ export default function AboutPage() {
       </section>
 
       {/* Content */}
-      <section className="py-8 px-6">
+      <section className="py-6 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-8 shadow-xl border border-white/50">
             <div className="space-y-8">

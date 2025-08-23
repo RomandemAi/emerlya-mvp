@@ -78,6 +78,10 @@ export async function createBrand(formData: FormData) {
       const webhookUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/process-document`;
       const webhookSecret = process.env.WEBHOOK_SECRET || 'default-secret';
       
+      // Add timeout to webhook request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
@@ -88,7 +92,10 @@ export async function createBrand(formData: FormData) {
           documentId: documentData.id,
           brandId: brandData.id,
         }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorText = await response.text();
