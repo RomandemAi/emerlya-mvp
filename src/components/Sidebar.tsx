@@ -4,18 +4,18 @@ import LogoutButton from './LogoutButton';
 import ManageBillingButton from './ManageBillingButton';
 import UpgradeButton from './UpgradeButton';
 import {
-  UserIcon,
-  HomeIcon,
-  InformationCircleIcon,
-  CurrencyDollarIcon,
-  StarIcon,
-  PencilIcon,
-  PhoneIcon,
-  WrenchScrewdriverIcon,
-  SparklesIcon,
-  DocumentIcon,
-  CogIcon
-} from '@heroicons/react/24/outline';
+  ModernUserIcon,
+  ModernHomeIcon,
+  ModernInfoIcon,
+  ModernDollarIcon,
+  ModernStarIcon,
+  ModernPencilIcon,
+  ModernPhoneIcon,
+  ModernWrenchIcon,
+  ModernSparklesIcon,
+  ModernDocumentIcon,
+  ModernSettingsIcon
+} from './ModernIcons';
 
 interface SidebarProps {
   userEmail: string;
@@ -62,7 +62,7 @@ export default function Sidebar({
               href="/dashboard" 
               className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 text-primary font-medium transition-all duration-200 hover:shadow-md"
             >
-              <UserIcon className="w-5 h-5 text-primary" />
+              <ModernUserIcon size="sm" />
               <span>My Brands</span>
             </Link>
           </div>
@@ -77,49 +77,49 @@ export default function Sidebar({
                 href="/"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <HomeIcon className="w-4 h-4 text-gray-600" />
+                <ModernHomeIcon size="sm" />
                 <span>Home</span>
               </Link>
               <Link 
                 href="/about"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <InformationCircleIcon className="w-4 h-4 text-gray-600" />
+                <ModernInfoIcon size="sm" />
                 <span>About</span>
               </Link>
               <Link 
                 href="/pricing"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <CurrencyDollarIcon className="w-4 h-4 text-gray-600" />
+                <ModernDollarIcon size="sm" />
                 <span>Pricing</span>
               </Link>
               <Link 
                 href="/features"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <StarIcon className="w-4 h-4 text-gray-600" />
+                <ModernStarIcon size="sm" />
                 <span>Features</span>
               </Link>
               <Link 
                 href="/blog"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <PencilIcon className="w-4 h-4 text-gray-600" />
+                <ModernPencilIcon size="sm" />
                 <span>Blog</span>
               </Link>
               <Link 
                 href="/contact"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <PhoneIcon className="w-4 h-4 text-gray-600" />
+                <ModernPhoneIcon size="sm" />
                 <span>Contact</span>
               </Link>
               <Link 
                 href="/api-docs"
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary"
               >
-                <WrenchScrewdriverIcon className="w-4 h-4 text-gray-600" />
+                <ModernWrenchIcon size="sm" />
                 <span>API Docs</span>
               </Link>
             </div>
@@ -135,21 +135,21 @@ export default function Sidebar({
                 onClick={onGenerateClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <SparklesIcon className="w-4 h-4 text-gray-600" />
+                <ModernSparklesIcon size="sm" />
                 <span>Generate Content</span>
               </button>
               <button 
                 onClick={onDocumentsClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <DocumentIcon className="w-4 h-4 text-gray-600" />
+                <ModernDocumentIcon size="sm" />
                 <span>Documents</span>
               </button>
               <button 
                 onClick={onSettingsClick}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary w-full text-left"
               >
-                <CogIcon className="w-4 h-4 text-gray-600" />
+                <ModernSettingsIcon size="sm" />
                 <span>Settings</span>
               </button>
             </div>

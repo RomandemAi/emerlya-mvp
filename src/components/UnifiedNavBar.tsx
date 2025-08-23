@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { useAuth } from './AuthProvider';
 import LogoutButton from './LogoutButton';
 import {
-  UserIcon,
-  InformationCircleIcon,
-  CurrencyDollarIcon,
-  StarIcon,
-  PencilIcon,
-  PhoneIcon,
-  WrenchScrewdriverIcon
-} from '@heroicons/react/24/outline';
+  ModernUserIcon,
+  ModernInfoIcon,
+  ModernDollarIcon,
+  ModernStarIcon,
+  ModernPencilIcon,
+  ModernPhoneIcon,
+  ModernWrenchIcon
+} from './ModernIcons';
 
 interface UnifiedNavBarProps {
   onMobileMenuClick?: () => void;
@@ -131,7 +131,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                       className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
-                      <UserIcon className="w-4 h-4 mr-3 text-gray-600" />
+                      <ModernUserIcon className="mr-3" size="sm" />
                       My Dashboard
                     </Link>
                     
@@ -142,7 +142,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <InformationCircleIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernInfoIcon className="mr-3" size="sm" />
                         About
                       </Link>
                       <Link 
@@ -150,7 +150,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <StarIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernStarIcon className="mr-3" size="sm" />
                         Features
                       </Link>
                       <Link 
@@ -158,7 +158,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <CurrencyDollarIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernDollarIcon className="mr-3" size="sm" />
                         Pricing
                       </Link>
                       <Link 
@@ -166,7 +166,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <PencilIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernPencilIcon className="mr-3" size="sm" />
                         Blog
                       </Link>
                       <Link 
@@ -174,7 +174,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <PhoneIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernPhoneIcon className="mr-3" size="sm" />
                         Contact
                       </Link>
                       <Link 
@@ -182,7 +182,7 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
                         className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-primary/5 rounded-xl transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <WrenchScrewdriverIcon className="w-4 h-4 mr-3 text-gray-600" />
+                        <ModernWrenchIcon className="mr-3" size="sm" />
                         API Docs
                       </Link>
                     </div>

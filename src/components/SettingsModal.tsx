@@ -2,15 +2,17 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  CogIcon,
+  ModernSettingsIcon,
+  ModernUserIcon,
+  ModernPencilIcon,
+  ModernSparklesIcon
+} from './ModernIcons';
+import {
   XMarkIcon,
-  UserIcon,
   UserCircleIcon,
   EnvelopeIcon,
   LockClosedIcon,
   TrashIcon,
-  PencilIcon,
-  SparklesIcon,
   ChartBarIcon,
   FolderIcon
 } from '@heroicons/react/24/outline';
