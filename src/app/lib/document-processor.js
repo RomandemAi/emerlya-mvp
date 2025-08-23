@@ -6,16 +6,51 @@ import { createClient } from '@supabase/supabase-js';
 import { Pinecone } from '@pinecone-database/pinecone';
 import OpenAI from 'openai';
 
-// 2. Initialize clients
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
-const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Lazy singletons
+let _supabase = null;
+let _pinecone = null;
+let _openai = null;
+
+function getSupabase() {
+  if (_supabase) return _supabase;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+  if (!url || !serviceKey) {
+    throw new Error('Supabase configuration missing');
+  }
+  _supabase = createClient(url, serviceKey);
+  return _supabase;
+}
+
+function getPinecone() {
+  if (_pinecone) return _pinecone;
+  const apiKey = process.env.PINECONE_API_KEY;
+  if (!apiKey) {
+    throw new Error('Pinecone API key missing');
+  }
+  _pinecone = new Pinecone({ apiKey });
+  return _pinecone;
+}
+
+function getOpenAI() {
+  if (_openai) return _openai;
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY missing');
+  }
+  _openai = new OpenAI({ apiKey });
+  return _openai;
+}
 
 // 3. Main processing function
 export async function processDocument(documentId) {
   console.log(`Processing document: ${documentId}`);
 
   try {
+    const supabase = getSupabase();
+    const pinecone = getPinecone();
+    const openai = getOpenAI();
+
     // STEP 1: Fetch Data from Supabase
     const { data: documentData, error: documentError } = await supabase
       .from('documents')
@@ -75,8 +110,10 @@ export async function processDocument(documentId) {
 
   } catch (error) {
     console.error(`Error processing document ${documentId}:`, error);
-    // Update document status to 'error' in Supabase if anything fails
-    await supabase.from('documents').update({ status: 'error' }).eq('id', documentId);
+    try {
+      const supabase = getSupabase();
+      await supabase.from('documents').update({ status: 'error' }).eq('id', documentId);
+    } catch {}
     return { success: false, error: error.message };
   }
 }

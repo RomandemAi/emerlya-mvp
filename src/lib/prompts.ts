@@ -6,7 +6,7 @@ export function styleSystemPrompt(
   settings: BrandSettings
 ): string {
   // Sort memory by importance (highest first)
-  const sortedMemory = memory.sort((a, b) => b.importance - a.importance);
+  const sortedMemory = [...memory].sort((a, b) => b.importance - a.importance);
   
   return `You are Emerlya AI, a brand voice mirror that generates content with perfect brand alignment.
 
@@ -122,7 +122,7 @@ Be extremely specific and actionable. Extract only facts that are clearly stated
 }
 
 export function seedContentPrompt(profile: StyleProfile, memory: BrandMemory[]): string {
-  const sortedMemory = memory.sort((a, b) => b.importance - a.importance);
+  const sortedMemory = [...memory].sort((a, b) => b.importance - a.importance);
   
   return `Generate seed content for this brand to demonstrate the voice and provide instant examples.
 
