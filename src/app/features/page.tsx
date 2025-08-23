@@ -122,16 +122,16 @@ export default function FeaturesPage() {
               <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center mb-3">
                 <GlobeAltIcon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-base font-semibold font-heading text-primary mb-2">Brand Voice Control</h3>
+              <h3 className="text-base font-semibold font-heading text-primary mb-2">Advanced Brand DNA System</h3>
               <p className="text-sm text-gray-600 mb-3">
-                Maintain perfect consistency across all content with customizable brand personas that capture 
-                your unique voice, tone, and messaging style.
+                Our sophisticated Brand DNA system goes beyond basic brand voice with detailed personality profiles, 
+                audience insights, and intelligent brand memory that learns from your content.
               </p>
               <ul className="text-xs text-gray-600 space-y-1">
-                <li>• Custom brand personas</li>
-                <li>• Tone consistency</li>
-                <li>• Style guidelines enforcement</li>
-                <li>• Multiple brand management</li>
+                <li>• Complete StyleProfile with voice, tone, and personality</li>
+                <li>• Brand memory system with importance ranking</li>
+                <li>• Audience demographics and pain points</li>
+                <li>• Banned words and brand rules enforcement</li>
               </ul>
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function FeaturesPage() {
                   <div>
                     <h3 className="text-base font-semibold font-heading text-primary mb-2">Content Templates</h3>
                     <p className="text-sm text-gray-600">
-                      Access hundreds of pre-built templates for emails, blogs, social posts, and more.
+                      Access 12+ professional content templates including sales sequences, Facebook ads, SEO blog posts, and more.
                     </p>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function FeaturesPage() {
                   <div>
                     <h3 className="text-base font-semibold font-heading text-primary mb-2">API Integration</h3>
                     <p className="text-sm text-gray-600">
-                      Integrate Emerlya AI into your existing tools and workflows with our robust REST API.
+                      Powerful REST API with usage included in subscription plans - no surprise charges for integrations.
                     </p>
                   </div>
                 </div>
@@ -265,6 +265,41 @@ export default function FeaturesPage() {
               <p className="text-sm text-gray-600">
                 Reliable, scalable infrastructure ensures your content generation is always available when you need it.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Competitive Advantages */}
+      <section className="py-12 px-6 bg-gradient-to-r from-emerald-50 to-blue-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-lg md:text-xl font-bold font-heading text-center text-primary mb-8">
+            Why Emerlya AI Stands Out
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-3xl font-bold text-emerald-600 mb-2">60%</div>
+              <div className="text-sm font-semibold text-gray-800 mb-2">More Affordable</div>
+              <div className="text-xs text-gray-600">
+                Get enterprise-level features for 60% less than industry leaders
+              </div>
+            </div>
+            
+            <div className="text-center bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">API</div>
+              <div className="text-sm font-semibold text-gray-800 mb-2">Included Free</div>
+              <div className="text-xs text-gray-600">
+                API access included in subscription - no surprise charges
+              </div>
+            </div>
+            
+            <div className="text-center bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-3xl font-bold text-purple-600 mb-2">🇪🇺</div>
+              <div className="text-sm font-semibold text-gray-800 mb-2">EU-First</div>
+              <div className="text-xs text-gray-600">
+                GDPR compliant, built for European businesses and values
+              </div>
             </div>
           </div>
         </div>

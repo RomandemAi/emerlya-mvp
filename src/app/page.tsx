@@ -44,8 +44,8 @@ export default async function LandingPage() {
             </span>
           </div>
           <p className="text-sm md:text-base text-white/90 max-w-xl mx-auto mb-5 leading-relaxed">
-            AI for on-brand content creation in seconds. Transform your content strategy with 
-            intelligent generation that understands your unique voice.
+            Advanced Brand DNA System for intelligent content generation. Create on-brand content 
+            in seconds with our affordable, subscription-inclusive AI platform.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link href="/login">
@@ -92,10 +92,10 @@ export default async function LandingPage() {
                   <GlobeAltIcon className="w-4 h-4 text-primary" />
                 </div>
                 <h3 className="text-sm font-semibold font-heading text-primary mb-2">
-                  Brand Voice Control
+                  Advanced Brand DNA
                 </h3>
                 <p className="text-xs text-gray-600 leading-relaxed">
-                  Maintain perfect consistency across all content with customizable brand voice profiles.
+                  Sophisticated Brand DNA system with personality profiles, audience insights, and brand memory.
                 </p>
               </div>
             </div>

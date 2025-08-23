@@ -58,9 +58,10 @@ export default function AboutPage() {
               <section>
                 <h2 className="text-xl md:text-2xl font-bold font-heading text-primary mb-4">Our Mission</h2>
                 <p className="text-gray-600 leading-relaxed">
-                  Emerlya AI is revolutionizing content creation for modern businesses. We believe that every brand deserves 
-                  to communicate with clarity, consistency, and impact. Our AI-powered platform empowers teams to generate 
-                  high-quality content that perfectly captures their unique brand voice.
+                  Emerlya AI is revolutionizing content creation with the most advanced Brand DNA system in the industry. 
+                  We believe that every brand deserves to communicate with clarity, consistency, and impact - at an affordable price. 
+                  Our AI-powered platform empowers teams to generate high-quality content that perfectly captures their unique brand voice, 
+                  while being 60% more affordable than industry leaders.
                 </p>
               </section>
 
@@ -70,11 +71,12 @@ export default function AboutPage() {
                   We combine cutting-edge artificial intelligence with deep understanding of brand communication to deliver:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                  <li>Intelligent content generation that maintains brand consistency</li>
-                  <li>Advanced document analysis to extract and utilize your knowledge base</li>
-                  <li>Customizable AI personas that embody your brand's voice</li>
+                  <li>Advanced Brand DNA System with StyleProfile technology</li>
+                  <li>12+ professional content templates for all business needs</li>
+                  <li>API access included in subscription plans (no extra charges)</li>
+                  <li>Intelligent brand memory that learns from your content</li>
+                  <li>Document analysis to extract and utilize your knowledge base</li>
                   <li>Enterprise-grade security and GDPR compliance</li>
-                  <li>Seamless integration with your existing workflow</li>
                 </ul>
               </section>
 
@@ -148,14 +150,15 @@ export default function AboutPage() {
               <section>
                 <h2 className="text-xl md:text-2xl font-bold font-heading text-primary mb-4">Why Choose Emerlya?</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
-                  We're building the future of AI-powered content creation, making it accessible and 
-                  intuitive for businesses of all sizes. Our platform learns from your unique style and 
-                  preferences, ensuring every piece of content feels authentically yours.
+                  We're building the future of AI-powered content creation, making enterprise-level features 
+                  accessible and affordable for businesses of all sizes. Our advanced Brand DNA system goes beyond 
+                  basic brand voice to understand personality, audience, and brand rules - creating content that 
+                  feels authentically yours.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
                   Whether you're a marketer crafting campaigns, a startup founder telling your story,
-                  or an enterprise managing multiple brands, Emerlya AI adapts to your needs and scales 
-                  with your ambitions.
+                  or an enterprise managing multiple brands, Emerlya AI delivers professional results at 
+                  60% less cost than industry leaders, with API access included in your subscription.
                 </p>
               </section>
 

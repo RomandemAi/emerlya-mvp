@@ -353,19 +353,23 @@ export default function APIPage() {
               </div>
               
               <div>
-                <h3 className="text-base font-semibold text-gray-900 mb-4">API Pricing</h3>
+                <h3 className="text-base font-semibold text-gray-900 mb-4">API Access Included</h3>
                 <ul className="space-y-2 text-gray-600 text-sm">
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                    <span><strong>Free:</strong> Included in all plans</span>
+                    <span><strong>Essentials:</strong> 1,000 requests/month included</span>
                   </li>
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                    <span><strong>Overage:</strong> €0.02 per 1,000 words</span>
+                    <span><strong>Professional:</strong> 5,000 requests/month included</span>
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                    <span><strong>Business:</strong> 25,000 requests/month included</span>
                   </li>
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
-                    <span><strong>Enterprise:</strong> Volume discounts available</span>
+                    <span><strong>Enterprise:</strong> 100,000 requests/month included</span>
                   </li>
                 </ul>
               </div>
