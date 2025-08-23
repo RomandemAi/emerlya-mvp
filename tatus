@@ -1,0 +1,5 @@
+[33m977d9bb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeat/demo-email-presets[m[33m, [m[1;31morigin/feat/demo-email-presets[m[33m)[m  Fix React useEffect error in CreateBrandForm
+[33m7567ebb[m  Fix navbar overlap - increase padding
+[33me577325[m  Fix navbar overlap & add sidebar breathing room
+[33mb015a5a[m  Transform UI to Professional Compact Design
+[33m2d1ef53[m  Add Analytics Dashboard + Content Calendar Features
