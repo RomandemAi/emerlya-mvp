@@ -35,8 +35,6 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
     }
   };
 
-  if (!isOpen) return null;
-
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
@@ -44,6 +42,8 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
       setError(null);
     }
   }, [isOpen]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
