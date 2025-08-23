@@ -21,23 +21,22 @@ interface UnifiedNavBarProps {
 export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps) {
   const { user, loading } = useAuth();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 w-full z-50 px-6 py-3 backdrop-blur-xl bg-primary/90 border-b border-primary/20">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Mobile Menu Button */}
-        {onMobileMenuClick && (
-          <button
-            onClick={onMobileMenuClick}
-            className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
-            aria-label="Open mobile menu"
-            title="Open mobile menu"
-          >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        )}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+          aria-label="Toggle mobile menu"
+          title="Toggle mobile menu"
+        >
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </button>
         
         {/* Logo and Home Link */}
         <Link href="/" className="flex items-center space-x-3">
@@ -216,11 +215,89 @@ export default function UnifiedNavBar({ onMobileMenuClick }: UnifiedNavBarProps)
         </div>
       </div>
 
-      {/* Click outside to close dropdown */}
-      {isUserMenuOpen && (
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full backdrop-blur-xl bg-primary/95 border-b border-primary/20 shadow-xl z-50">
+          <div className="px-6 py-4 space-y-4 max-h-screen overflow-y-auto">
+            {user && (
+              <Link 
+                href="/dashboard" 
+                className="block py-3 text-white/80 hover:text-accent transition-colors font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
+            <Link 
+              href="/about" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link 
+              href="/features" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Features
+            </Link>
+            <Link 
+              href="/pricing" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Pricing
+            </Link>
+            <Link 
+              href="/blog" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link 
+              href="/contact" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+            <Link 
+              href="/api-docs" 
+              className="block py-3 text-white/80 hover:text-accent transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              API
+            </Link>
+            
+            {/* Mobile Auth Buttons */}
+            {!user && (
+              <div className="pt-4 border-t border-white/20 space-y-3">
+                <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full py-3 bg-accent text-primary rounded-xl font-medium hover:shadow-lg transition-all duration-200">
+                    Request Demo
+                  </button>
+                </Link>
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full py-3 border border-white/30 text-white rounded-xl font-medium hover:bg-white/10 transition-all duration-200">
+                    Login
+                  </button>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Click outside to close dropdowns */}
+      {(isUserMenuOpen || isMobileMenuOpen) && (
         <div 
           className="fixed inset-0 z-40" 
-          onClick={() => setIsUserMenuOpen(false)}
+          onClick={() => {
+            setIsUserMenuOpen(false);
+            setIsMobileMenuOpen(false);
+          }}
         ></div>
       )}
     </nav>
