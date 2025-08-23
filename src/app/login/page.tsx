@@ -99,9 +99,9 @@ function LoginForm() {
         setSuccessMessage('Successfully signed in! Redirecting...');
         // Clear localStorage
         localStorage.removeItem('emerlya_otp_email');
-        // Redirect to dashboard
+        // Force a page refresh to ensure auth state is synchronized
         setTimeout(() => {
-          router.push('/dashboard');
+          window.location.href = '/dashboard';
         }, 1000);
       } else {
         setErrorMessage('Authentication failed. Please try again.');

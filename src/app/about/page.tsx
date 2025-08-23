@@ -190,12 +190,14 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                  <span className="text-primary font-bold font-heading">E</span>
-                </div>
-                <span className="text-xl font-semibold font-heading text-white">Emerlya AI</span>
-              </div>
+              <Link href="/" className="flex items-center space-x-2 mb-4">
+                <img 
+                  src="/emerlya-logo.svg" 
+                  alt="Emerlya AI Logo" 
+                  className="w-8 h-8 object-contain"
+                />
+                <span className="text-xl font-semibold font-heading text-white hover:text-accent transition-colors">Emerlya AI</span>
+              </Link>
               <p className="text-white/80 text-sm leading-relaxed">
                 Intelligent content generation for modern teams.
               </p>

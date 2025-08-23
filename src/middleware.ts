@@ -45,11 +45,13 @@ export async function middleware(request: NextRequest) {
     // For refresh token errors, just continue - user will need to log in again
     if (
       (error as { code?: string })?.code === 'refresh_token_not_found' || 
-      (error as { name?: string })?.name === 'AuthApiError'
+      (error as { name?: string })?.name === 'AuthApiError' ||
+      errorMessage.includes('refresh_token_not_found')
     ) {
-      // Clear any invalid cookies
-      response.cookies.delete('sb-access-token')
-      response.cookies.delete('sb-refresh-token')
+      // Clear any invalid cookies for Supabase auth
+      response.cookies.delete('sb-localhost-auth-token')
+      response.cookies.delete('sb-localhost-auth-token.0')
+      response.cookies.delete('sb-localhost-auth-token.1')
     }
   }
 

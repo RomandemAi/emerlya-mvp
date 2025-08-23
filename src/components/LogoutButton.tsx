@@ -8,6 +8,10 @@ export default function LogoutButton() {
 
   const handleSignOut = async () => {
     await signOut();
+    // Clear any local storage
+    localStorage.removeItem('emerlya_otp_email');
+    // Redirect to home page after logout
+    router.push('/');
     router.refresh();
   };
 

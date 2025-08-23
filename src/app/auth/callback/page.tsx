@@ -51,10 +51,9 @@ export default function AuthCallback() {
           // Force refresh the session to ensure it's properly set
           await supabase.auth.getSession()
           
-          // Use router.replace instead of push to avoid back button issues
-          // Also use a shorter timeout for better mobile experience
+          // Use window.location for more reliable redirect after auth
           setTimeout(() => {
-            router.replace('/dashboard')
+            window.location.href = '/dashboard'
           }, 1000)
         } else {
           setState('error')

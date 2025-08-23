@@ -58,6 +58,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Handle sign out
         if (event === 'SIGNED_OUT') {
           setUser(null);
+          // Clear any persisted data
+          localStorage.removeItem('emerlya_otp_email');
+        }
+        
+        // Handle sign in
+        if (event === 'SIGNED_IN' && session?.user) {
+          setUser(session.user);
+        }
+        
+        // Handle token refresh
+        if (event === 'TOKEN_REFRESHED' && session?.user) {
+          setUser(session.user);
         }
       }
     );
@@ -74,8 +86,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) {
         console.error('Error signing out:', error.message);
       }
+      // Always clear user state, even if there was an error
+      setUser(null);
+      // Clear any persisted data
+      localStorage.removeItem('emerlya_otp_email');
     } catch (error) {
       console.error('Error in signOut:', error);
+      // Still clear user state on error
+      setUser(null);
+      localStorage.removeItem('emerlya_otp_email');
     } finally {
       setLoading(false);
     }
