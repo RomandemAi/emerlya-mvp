@@ -3,6 +3,7 @@
 import { createClient } from './supabase/server';
 import { createHash, randomBytes } from 'crypto';
 import { API_TIERS } from './api-keys';
+import { TIER_LIMITS } from './usage-types';
 
 /**
  * Generate a new API key
@@ -27,12 +28,21 @@ function generateApiKey(): { key: string; hash: string; prefix: string } {
 export async function createApiKey(
   userId: string, 
   name: string, 
-  tier: string = 'free'
+  subscriptionTier: string = 'free'
 ): Promise<{ success: boolean; data?: { id: string; key: string }; error?: string }> {
   try {
     const supabase = await createClient();
     
-    // Check if user already has the maximum number of keys for their tier
+    // Get subscription tier info
+    const tierInfo = TIER_LIMITS[subscriptionTier];
+    if (!tierInfo || tierInfo.api_requests_per_month === 0) {
+      return { 
+        success: false, 
+        error: 'API access not available in your current plan. Upgrade to Essentials or higher.' 
+      };
+    }
+
+    // Check if user already has the maximum number of keys for their subscription
     const { data: existingKeys, error: countError } = await supabase
       .from('api_keys')
       .select('id')
@@ -43,19 +53,26 @@ export async function createApiKey(
       return { success: false, error: 'Failed to check existing keys' };
     }
     
-    const maxKeysPerTier = { free: 1, starter: 3, pro: 10, enterprise: 50 };
-    const maxKeys = maxKeysPerTier[tier as keyof typeof maxKeysPerTier] || 1;
+    // Key limits based on subscription tier
+    const maxKeysPerTier = { 
+      free: 0, 
+      essentials: 2, 
+      professional: 5, 
+      active: 5, // Legacy users
+      business: 10, 
+      enterprise: 25 
+    };
+    const maxKeys = maxKeysPerTier[subscriptionTier as keyof typeof maxKeysPerTier] || 0;
     
     if (existingKeys && existingKeys.length >= maxKeys) {
       return { 
         success: false, 
-        error: `Maximum ${maxKeys} API keys allowed for ${tier} tier` 
+        error: `Maximum ${maxKeys} API keys allowed for your ${subscriptionTier} plan` 
       };
     }
     
     // Generate new API key
     const { key, hash, prefix } = generateApiKey();
-    const tierInfo = API_TIERS[tier] || API_TIERS.free;
     
     // Insert into database
     const { data, error } = await supabase
@@ -65,8 +82,8 @@ export async function createApiKey(
         name,
         key_hash: hash,
         key_prefix: prefix,
-        tier,
-        requests_limit: tierInfo.requests_per_month,
+        tier: subscriptionTier, // Store the subscription tier
+        requests_limit: tierInfo.api_requests_per_month,
         is_active: true
       })
       .select('id')

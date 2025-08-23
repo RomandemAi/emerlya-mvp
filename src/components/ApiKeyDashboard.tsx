@@ -41,34 +41,38 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
-  const [selectedTier, setSelectedTier] = useState('free');
   const [creating, setCreating] = useState(false);
   const [newApiKey, setNewApiKey] = useState<string | null>(null);
   const [showKey, setShowKey] = useState<{ [key: string]: boolean }>({});
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [deletingKey, setDeletingKey] = useState<string | null>(null);
 
-  // Get available API tiers based on subscription
-  const getAvailableApiTiers = () => {
+  // Get API access info based on subscription
+  const getApiAccessInfo = () => {
     const userTier = subscriptionStatus || 'free';
+    const tierInfo = TIER_LIMITS[userTier];
     
-    if (userTier === 'business' || userTier === 'enterprise') {
-      return ['free', 'starter', 'pro', 'enterprise'];
-    } else if (userTier === 'professional' || userTier === 'active') {
-      // Legacy 'active' users had Professional-level features, so limit to pro tier
-      return ['free', 'starter', 'pro'];
-    } else if (userTier === 'essentials') {
-      return ['free', 'starter'];
-    } else {
-      return ['free'];
+    if (!tierInfo || tierInfo.api_requests_per_month === 0) {
+      return {
+        hasAccess: false,
+        monthlyLimit: 0,
+        upgradeMessage: 'API access starts with Essentials plan (€9/month)'
+      };
     }
+    
+    return {
+      hasAccess: true,
+      monthlyLimit: tierInfo.api_requests_per_month,
+      tierName: userTier === 'active' ? 'Legacy Pro' : 
+                userTier === 'professional' ? 'Professional' :
+                userTier === 'essentials' ? 'Essentials' :
+                userTier === 'business' ? 'Business' : 'Enterprise'
+    };
   };
 
   // Check if user can access API features
   const canAccessApi = () => {
-    const userTier = subscriptionStatus || 'free';
-    const tierFeatures = TIER_LIMITS[userTier]?.features || [];
-    return tierFeatures.includes('API access') || userTier === 'active' || userTier === 'business' || userTier === 'enterprise';
+    return getApiAccessInfo().hasAccess;
   };
 
   const fetchApiKeys = async () => {
@@ -98,12 +102,13 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
     setError(null);
     
     try {
+      const apiInfo = getApiAccessInfo();
       const response = await fetch('/api/user/api-keys', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: newKeyName.trim(),
-          tier: selectedTier
+          subscription_tier: subscriptionStatus || 'free'
         })
       });
       
@@ -213,16 +218,29 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
           <p className="text-sm text-gray-600">
             Manage your API keys for programmatic access to Emerlya AI
           </p>
-          {!canAccessApi() && (
-            <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm text-amber-800">
-                🔒 API access is available with Business plan or higher. 
-                <a href="/pricing" className="font-medium underline hover:no-underline ml-1">
-                  Upgrade your plan
-                </a>
-              </p>
-            </div>
-          )}
+          {(() => {
+            const apiInfo = getApiAccessInfo();
+            if (!apiInfo.hasAccess) {
+              return (
+                <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p className="text-sm text-amber-800">
+                    🔒 {apiInfo.upgradeMessage}
+                    <a href="/pricing" className="font-medium underline hover:no-underline ml-1">
+                      Upgrade your plan
+                    </a>
+                  </p>
+                </div>
+              );
+            } else {
+              return (
+                <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-800">
+                    ✅ API access included in your {apiInfo.tierName} plan: {apiInfo.monthlyLimit.toLocaleString()} requests/month
+                  </p>
+                </div>
+              );
+            }
+          })()}
         </div>
         {canAccessApi() && (
           <button
@@ -418,39 +436,23 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    API Tier
+                    Your API Access
                   </label>
-                  <select
-                    value={selectedTier}
-                    onChange={(e) => setSelectedTier(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                  >
-                    {getAvailableApiTiers().map((tier) => {
-                      const info = API_TIERS[tier];
-                      return (
-                        <option key={tier} value={tier}>
-                          {info.name} - {info.requests_per_month.toLocaleString()} requests/month
-                          {info.price_per_month > 0 && ` - €${info.price_per_month}/month`}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  
-                  {selectedTier && (
-                    <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <div className="text-sm text-blue-800">
-                        <div className="font-medium mb-1">{API_TIERS[selectedTier].name} Features:</div>
-                        <ul className="space-y-1">
-                          {API_TIERS[selectedTier].features.map((feature, idx) => (
-                            <li key={idx}>• {feature}</li>
-                          ))}
-                        </ul>
-                        <div className="mt-2 text-xs">
-                          Rate limit: {API_TIERS[selectedTier].rate_limit_per_minute} requests/minute
+                  {(() => {
+                    const apiInfo = getApiAccessInfo();
+                    return (
+                      <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="text-sm text-blue-800">
+                          <div className="font-medium mb-1">
+                            {apiInfo.tierName} Plan - Included API Access
+                          </div>
+                          <div className="text-xs">
+                            {apiInfo.monthlyLimit.toLocaleString()} requests/month included in your subscription
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
                 </div>
 
                 <div className="flex space-x-3">

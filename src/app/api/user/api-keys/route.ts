@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, tier = 'free' } = body;
+    const { name, subscription_tier } = body;
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return NextResponse.json(
@@ -52,14 +52,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!['free', 'starter', 'pro', 'enterprise'].includes(tier)) {
-      return NextResponse.json(
-        { error: 'Invalid tier. Must be one of: free, starter, pro, enterprise' },
-        { status: 400 }
-      );
-    }
-
-    const result = await createApiKey(session.user.id, name.trim(), tier);
+    const result = await createApiKey(session.user.id, name.trim(), subscription_tier);
 
     if (!result.success) {
       return NextResponse.json(
