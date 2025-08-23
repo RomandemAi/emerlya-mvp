@@ -9,16 +9,22 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 // Top-up packages
 const TOPUP_PACKAGES = {
   'small': {
-    words: 10000,
-    price: 1000, // $10.00 in cents
-    name: '10,000 Words Top-Up',
-    description: 'Perfect for occasional extra content needs'
+    words: 5000,
+    price: 500, // €5.00 in cents
+    name: '5,000 Words Top-Up',
+    description: 'Perfect for quick boosts'
   },
   'medium': {
-    words: 30000,
-    price: 2500, // $25.00 in cents (better value)
-    name: '30,000 Words Top-Up',
-    description: 'Great value for heavy content creators'
+    words: 12000,
+    price: 1000, // €10.00 in cents
+    name: '12,000 Words Top-Up',
+    description: 'Great value for content creators'
+  },
+  'large': {
+    words: 35000,
+    price: 2500, // €25.00 in cents (best value)
+    name: '35,000 Words Top-Up',
+    description: 'Best value for heavy content creators'
   }
 };
 

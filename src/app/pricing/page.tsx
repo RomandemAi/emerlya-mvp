@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import UnifiedNavBar from '@/components/UnifiedNavBar';
 import PricingCheckoutButton from '@/components/PricingCheckoutButton';
+import TopUpButton from '@/components/TopUpButton';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function PricingPage() {
@@ -301,9 +302,14 @@ export default function PricingPage() {
                   <div>• €0.001 per word</div>
                   <div>• Great value option</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <TopUpButton
+                  packageType="small"
+                  words={5000}
+                  price={5}
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Buy 5,000 Words
-                </button>
+                </TopUpButton>
               </div>
             </div>
 
@@ -322,9 +328,14 @@ export default function PricingPage() {
                   <div>• €0.00083 per word</div>
                   <div>• 20% better value</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <TopUpButton
+                  packageType="medium"
+                  words={12000}
+                  price={10}
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Buy 12,000 Words
-                </button>
+                </TopUpButton>
               </div>
             </div>
 
@@ -348,9 +359,14 @@ export default function PricingPage() {
                   <div>• €0.00071 per word</div>
                   <div>• 30% better value</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <TopUpButton
+                  packageType="large"
+                  words={35000}
+                  price={25}
+                  className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Buy 35,000 Words
-                </button>
+                </TopUpButton>
               </div>
             </div>
           </div>
@@ -392,9 +408,12 @@ export default function PricingPage() {
                   <div>• Community support</div>
                   <div>• 1 API key</div>
                 </div>
-                <button className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <PricingCheckoutButton
+                  planName="Starter"
+                  className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Get Free API Key
-                </button>
+                </PricingCheckoutButton>
               </div>
             </div>
 
@@ -417,9 +436,12 @@ export default function PricingPage() {
                   <div>• Email support</div>
                   <div>• 3 API keys</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <PricingCheckoutButton
+                  planName="Essentials"
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Get Starter API
-                </button>
+                </PricingCheckoutButton>
               </div>
             </div>
 
@@ -447,9 +469,12 @@ export default function PricingPage() {
                   <div>• Priority support</div>
                   <div>• 10 API keys</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <PricingCheckoutButton
+                  planName="Professional"
+                  className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Get Pro API
-                </button>
+                </PricingCheckoutButton>
               </div>
             </div>
 
@@ -468,9 +493,12 @@ export default function PricingPage() {
                   <div>• Dedicated support</div>
                   <div>• Unlimited keys</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                <PricingCheckoutButton
+                  planName="Business"
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
                   Get Enterprise API
-                </button>
+                </PricingCheckoutButton>
               </div>
             </div>
           </div>
