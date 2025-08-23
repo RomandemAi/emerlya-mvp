@@ -51,9 +51,10 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
   const getAvailableApiTiers = () => {
     const userTier = subscriptionStatus || 'free';
     
-    if (userTier === 'business' || userTier === 'enterprise' || userTier === 'active') {
+    if (userTier === 'business' || userTier === 'enterprise') {
       return ['free', 'starter', 'pro', 'enterprise'];
-    } else if (userTier === 'professional') {
+    } else if (userTier === 'professional' || userTier === 'active') {
+      // Legacy 'active' users had Professional-level features, so limit to pro tier
       return ['free', 'starter', 'pro'];
     } else if (userTier === 'essentials') {
       return ['free', 'starter'];

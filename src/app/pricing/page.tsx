@@ -124,12 +124,14 @@ export default function PricingPage() {
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-green-700 mb-2">Essentials</h3>
                 <p className="text-sm text-gray-600 mb-4">Great value for content creators</p>
-                <div className="mb-2">
+                <div className="mb-1">
                   <span className="text-sm text-gray-500 line-through">€15</span>
                   <span className="text-3xl font-bold text-green-600 ml-2">€9</span>
                   <span className="text-gray-600 ml-1">/month</span>
                 </div>
-                <div className="text-xs text-green-600 font-medium mb-4">40% more affordable!</div>
+                <div className="text-xs text-green-600 font-medium mb-4 bg-green-50 px-2 py-1 rounded-full inline-block">
+                  40% more affordable!
+                </div>
                 <Link href="/login">
                   <button className="w-full px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                     Start 14-Day Trial
@@ -176,12 +178,14 @@ export default function PricingPage() {
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-primary mb-2">Professional</h3>
                 <p className="text-sm text-gray-600 mb-4">For growing businesses</p>
-                <div className="mb-2">
+                <div className="mb-1">
                   <span className="text-sm text-gray-500 line-through">€29</span>
                   <span className="text-3xl font-bold text-primary ml-2">€19</span>
                   <span className="text-gray-600 ml-1">/month</span>
                 </div>
-                <div className="text-xs text-primary font-medium mb-4">60% cheaper than Jasper!</div>
+                <div className="text-xs text-emerald-600 font-medium mb-4 bg-emerald-50 px-2 py-1 rounded-full inline-block">
+                  60% cheaper than Jasper!
+                </div>
                 <Link href="/login">
                   <button className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                     Start Free Trial
