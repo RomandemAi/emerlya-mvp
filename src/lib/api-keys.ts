@@ -27,32 +27,32 @@ export interface ApiKeyTier {
 
 export const API_TIERS: Record<string, ApiKeyTier> = {
   free: {
-    name: 'Free',
-    requests_per_month: 100,
+    name: 'Developer Free',
+    requests_per_month: 500,
     features: ['Basic content generation', 'Rate limited'],
     price_per_month: 0,
-    rate_limit_per_minute: 5
+    rate_limit_per_minute: 10
   },
   starter: {
-    name: 'Starter API',
-    requests_per_month: 1000,
-    features: ['Content generation', 'Document analysis', 'Basic analytics'],
-    price_per_month: 15,
-    rate_limit_per_minute: 30
+    name: 'Developer Starter',
+    requests_per_month: 2000,
+    features: ['All content types', 'Email support', 'Basic analytics'],
+    price_per_month: 9,
+    rate_limit_per_minute: 50
   },
   pro: {
-    name: 'Pro API', 
-    requests_per_month: 10000,
-    features: ['All content features', 'Advanced analytics', 'Webhooks', 'Priority support'],
-    price_per_month: 49,
-    rate_limit_per_minute: 100
+    name: 'Developer Pro', 
+    requests_per_month: 15000,
+    features: ['Advanced features', 'Webhooks', 'Priority support'],
+    price_per_month: 29,
+    rate_limit_per_minute: 150
   },
   enterprise: {
     name: 'Enterprise API',
-    requests_per_month: 100000,
-    features: ['Unlimited features', 'Custom models', 'Dedicated support', 'SLA'],
-    price_per_month: 199,
-    rate_limit_per_minute: 1000
+    requests_per_month: 50000,
+    features: ['Custom integrations', 'Dedicated support', 'SLA'],
+    price_per_month: 99,
+    rate_limit_per_minute: 500
   }
 };
 

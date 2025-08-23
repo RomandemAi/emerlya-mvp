@@ -73,13 +73,13 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-8 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-4 gap-6">
             
             {/* Free Plan */}
             <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-primary mb-2">Starter</h3>
-                <p className="text-sm text-gray-600 mb-4">Perfect for individuals getting started</p>
+                <p className="text-sm text-gray-600 mb-4">Perfect for trying out AI content</p>
                 <div className="mb-4">
                   <span className="text-3xl font-bold text-primary">€0</span>
                   <span className="text-gray-600 ml-2">/month</span>
@@ -110,11 +110,53 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Top-up options available</span>
+                  <span className="text-sm text-gray-600">Top-up options</span>
                 </li>
                 <li className="flex items-center">
                   <XMarkIcon className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
                   <span className="text-sm text-gray-400">Document analysis</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* NEW Essentials Plan */}
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-green-200 hover:border-green-300 hover:shadow-2xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-bold font-heading text-green-700 mb-2">Essentials</h3>
+                <p className="text-sm text-gray-600 mb-4">Great value for content creators</p>
+                <div className="mb-2">
+                  <span className="text-sm text-gray-500 line-through">€15</span>
+                  <span className="text-3xl font-bold text-green-600 ml-2">€9</span>
+                  <span className="text-gray-600 ml-1">/month</span>
+                </div>
+                <div className="text-xs text-green-600 font-medium mb-4">40% more affordable!</div>
+                <Link href="/login">
+                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
+                    Start 14-Day Trial
+                  </button>
+                </Link>
+              </div>
+              
+              <ul className="space-y-3">
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">20,000 words/month</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">3 brand profiles</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">All content types</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Email support</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Basic analytics</span>
                 </li>
                 <li className="flex items-center">
                   <XMarkIcon className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
@@ -123,7 +165,7 @@ export default function PricingPage() {
               </ul>
             </div>
 
-            {/* Pro Plan - Most Popular */}
+            {/* Professional Plan - Most Popular */}
             <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border-2 border-accent hover:shadow-2xl transition-all duration-300 relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-sm font-medium">
@@ -133,11 +175,13 @@ export default function PricingPage() {
               
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-primary mb-2">Professional</h3>
-                <p className="text-sm text-gray-600 mb-4">For growing businesses and teams</p>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-primary">€29</span>
-                  <span className="text-gray-600 ml-2">/month</span>
+                <p className="text-sm text-gray-600 mb-4">For growing businesses</p>
+                <div className="mb-2">
+                  <span className="text-sm text-gray-500 line-through">€29</span>
+                  <span className="text-3xl font-bold text-primary ml-2">€19</span>
+                  <span className="text-gray-600 ml-1">/month</span>
                 </div>
+                <div className="text-xs text-primary font-medium mb-4">60% cheaper than Jasper!</div>
                 <Link href="/login">
                   <button className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
                     Start Free Trial
@@ -168,26 +212,23 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Team collaboration (5 users)</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">API access</span>
+                  <span className="text-sm text-gray-600">Advanced analytics</span>
                 </li>
               </ul>
             </div>
 
-            {/* Enterprise Plan */}
-            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
+            {/* Business Plan */}
+            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-purple-200 hover:border-purple-300 hover:shadow-2xl transition-all duration-300">
               <div className="text-center mb-6">
-                <h3 className="text-lg font-bold font-heading text-primary mb-2">Enterprise</h3>
-                <p className="text-sm text-gray-600 mb-4">For large organizations with custom needs</p>
+                <h3 className="text-lg font-bold font-heading text-purple-700 mb-2">Business</h3>
+                <p className="text-sm text-gray-600 mb-4">For teams and agencies</p>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-primary">Custom</span>
+                  <span className="text-3xl font-bold text-purple-600">€39</span>
+                  <span className="text-gray-600 ml-2">/month</span>
                 </div>
-                <Link href="/contact">
-                  <button className="w-full px-5 py-2.5 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors">
-                    Contact Sales
+                <Link href="/login">
+                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
+                    Start Free Trial
                   </button>
                 </Link>
               </div>
@@ -195,31 +236,27 @@ export default function PricingPage() {
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Unlimited words</span>
+                  <span className="text-sm text-gray-600">150,000 words/month</span>
                 </li>
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Unlimited brand profiles</span>
+                  <span className="text-sm text-gray-600">Unlimited brands</span>
                 </li>
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Custom AI models</span>
+                  <span className="text-sm text-gray-600">Team collaboration (5 users)</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">API access included</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
+                  <span className="text-sm text-gray-600">Priority support</span>
                 </li>
                 <li className="flex items-center">
                   <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
                   <span className="text-sm text-gray-600">Advanced analytics</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Dedicated support</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">Unlimited team members</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">On-premise deployment</span>
                 </li>
               </ul>
             </div>
@@ -239,29 +276,50 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {/* Small Top-Up */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Micro Top-Up */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
+                  <span className="text-2xl">💡</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Micro Top-Up</h3>
+                <div className="text-3xl font-bold text-blue-600 mb-2">€5</div>
+                <p className="text-gray-600 mb-4">5,000 extra words</p>
+                <div className="text-sm text-gray-500 mb-6">
+                  <div>• Instant activation</div>
+                  <div>• Perfect for quick boosts</div>
+                  <div>• €0.001 per word</div>
+                  <div>• Great value option</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Buy 5,000 Words
+                </button>
+              </div>
+            </div>
+
+            {/* Standard Top-Up */}
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-4">
                   <span className="text-2xl">💰</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Quick Top-Up</h3>
-                <div className="text-3xl font-bold text-green-600 mb-2">$10</div>
-                <p className="text-gray-600 mb-4">10,000 extra words</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Standard Top-Up</h3>
+                <div className="text-3xl font-bold text-green-600 mb-2">€10</div>
+                <p className="text-gray-600 mb-4">12,000 extra words</p>
                 <div className="text-sm text-gray-500 mb-6">
                   <div>• Instant activation</div>
                   <div>• One-time payment</div>
-                  <div>• Perfect for extra content</div>
-                  <div>• $0.001 per word</div>
+                  <div>• €0.00083 per word</div>
+                  <div>• 20% better value</div>
                 </div>
                 <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                  Buy 10,000 Words
+                  Buy 12,000 Words
                 </button>
               </div>
             </div>
 
-            {/* Large Top-Up */}
+            {/* Value Top-Up */}
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
@@ -273,16 +331,16 @@ export default function PricingPage() {
                   <span className="text-2xl">🚀</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Value Top-Up</h3>
-                <div className="text-3xl font-bold text-purple-600 mb-2">$25</div>
-                <p className="text-gray-600 mb-4">30,000 extra words</p>
+                <div className="text-3xl font-bold text-purple-600 mb-2">€25</div>
+                <p className="text-gray-600 mb-4">35,000 extra words</p>
                 <div className="text-sm text-gray-500 mb-6">
                   <div>• Instant activation</div>
-                  <div>• One-time payment</div>
-                  <div>• Great for heavy usage</div>
-                  <div>• $0.0008 per word (17% savings)</div>
+                  <div>• Best value per word</div>
+                  <div>• €0.00071 per word</div>
+                  <div>• 30% better value</div>
                 </div>
                 <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                  Buy 30,000 Words
+                  Buy 35,000 Words
                 </button>
               </div>
             </div>
@@ -316,12 +374,12 @@ export default function PricingPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-4">
                   <span className="text-2xl">🔑</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Free API</h3>
-                <div className="text-3xl font-bold text-gray-600 mb-2">$0</div>
-                <p className="text-gray-600 mb-4">100 requests/month</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Developer Free</h3>
+                <div className="text-3xl font-bold text-gray-600 mb-2">€0</div>
+                <p className="text-gray-600 mb-4">500 requests/month</p>
                 <div className="text-sm text-gray-500 mb-6 space-y-1">
                   <div>• Basic content generation</div>
-                  <div>• 5 requests/minute</div>
+                  <div>• 10 requests/minute</div>
                   <div>• Community support</div>
                   <div>• 1 API key</div>
                 </div>
@@ -337,12 +395,16 @@ export default function PricingPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
                   <span className="text-2xl">⚡</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Starter API</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-2">$15</div>
-                <p className="text-gray-600 mb-4">1,000 requests/month</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Developer Starter</h3>
+                <div className="mb-2">
+                  <span className="text-sm text-gray-500 line-through">€15</span>
+                  <span className="text-3xl font-bold text-blue-600 ml-2">€9</span>
+                  <span className="text-gray-600 ml-1">/month</span>
+                </div>
+                <p className="text-gray-600 mb-4">2,000 requests/month</p>
                 <div className="text-sm text-gray-500 mb-6 space-y-1">
                   <div>• All content types</div>
-                  <div>• 30 requests/minute</div>
+                  <div>• 50 requests/minute</div>
                   <div>• Email support</div>
                   <div>• 3 API keys</div>
                 </div>
@@ -363,12 +425,16 @@ export default function PricingPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
                   <span className="text-2xl">🚀</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Pro API</h3>
-                <div className="text-3xl font-bold text-purple-600 mb-2">$49</div>
-                <p className="text-gray-600 mb-4">10,000 requests/month</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Developer Pro</h3>
+                <div className="mb-2">
+                  <span className="text-sm text-gray-500 line-through">€49</span>
+                  <span className="text-3xl font-bold text-purple-600 ml-2">€29</span>
+                  <span className="text-gray-600 ml-1">/month</span>
+                </div>
+                <p className="text-gray-600 mb-4">15,000 requests/month</p>
                 <div className="text-sm text-gray-500 mb-6 space-y-1">
                   <div>• Advanced features</div>
-                  <div>• 100 requests/minute</div>
+                  <div>• 150 requests/minute</div>
                   <div>• Priority support</div>
                   <div>• 10 API keys</div>
                 </div>
@@ -385,16 +451,16 @@ export default function PricingPage() {
                   <span className="text-2xl">🏢</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise API</h3>
-                <div className="text-3xl font-bold text-orange-600 mb-2">$199</div>
-                <p className="text-gray-600 mb-4">100,000 requests/month</p>
+                <div className="text-3xl font-bold text-orange-600 mb-2">€99</div>
+                <p className="text-gray-600 mb-4">50,000 requests/month</p>
                 <div className="text-sm text-gray-500 mb-6 space-y-1">
                   <div>• Custom integrations</div>
-                  <div>• 1000 requests/minute</div>
+                  <div>• 500 requests/minute</div>
                   <div>• Dedicated support</div>
                   <div>• Unlimited keys</div>
                 </div>
                 <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-                  Contact Sales
+                  Get Enterprise API
                 </button>
               </div>
             </div>

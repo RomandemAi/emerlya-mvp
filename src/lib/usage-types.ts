@@ -22,9 +22,25 @@ export const TIER_LIMITS: Record<string, TierLimits> = {
   'free': {
     words_per_month: 5000,
     content_per_month: 25,
-    features: ['Basic content generation', '1 brand', 'Community support']
+    features: ['Basic content generation', '1 brand', 'Email support', 'Top-up options']
   },
-  'active': { // Pro tier
+  'essentials': {
+    words_per_month: 20000,
+    content_per_month: 100,
+    features: ['All content types', '3 brands', 'Email support', 'Basic analytics']
+  },
+  'professional': {
+    words_per_month: 50000,
+    content_per_month: 250,
+    features: ['All content types', '5 brands', 'Document analysis', 'Priority support', 'Advanced analytics']
+  },
+  'business': {
+    words_per_month: 150000,
+    content_per_month: 750,
+    features: ['Unlimited brands', 'Team collaboration', 'API access', 'Priority support', 'Advanced analytics']
+  },
+  // Legacy tier - keep for existing users
+  'active': { 
     words_per_month: 50000,
     content_per_month: 500,
     features: ['Advanced content generation', 'Unlimited brands', 'Priority support', 'Analytics', 'API access']
@@ -32,6 +48,6 @@ export const TIER_LIMITS: Record<string, TierLimits> = {
   'enterprise': {
     words_per_month: 1000000, // Effectively unlimited
     content_per_month: 10000,
-    features: ['Everything in Pro', 'Custom integrations', 'Dedicated support', 'Custom analytics']
+    features: ['Everything in Business', 'Custom integrations', 'Dedicated support', 'Custom analytics', 'On-premise deployment']
   }
 };
