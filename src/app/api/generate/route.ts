@@ -11,6 +11,7 @@ import {
 import { styleSystemPrompt } from '../../../lib/prompts';
 import { callOpenAI } from '../../../lib/openai';
 import { trackAnalyticsEvent } from '../../../lib/analytics';
+import { checkUsageLimit } from '../../../lib/usage';
 
 // Force dynamic rendering to use Node.js runtime instead of edge
 export const dynamic = 'force-dynamic';
@@ -79,6 +80,23 @@ export async function POST(req: Request) {
 
     console.log(`🚀 Generating ${type} content for brand: ${brand_id}`);
     console.log(`📝 Prompt: "${user_prompt.substring(0, 100)}..."`);
+
+    // Check usage limits before generation
+    const usageCheck = await checkUsageLimit(session.user.id, wordCount);
+    
+    if (!usageCheck.allowed) {
+      return new Response(
+        JSON.stringify({
+          error: 'usage_limit_exceeded',
+          message: usageCheck.reason,
+          usage: usageCheck.usage
+        }),
+        { 
+          status: 429, // Too Many Requests
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
 
     // Track analytics event
     await trackAnalyticsEvent({

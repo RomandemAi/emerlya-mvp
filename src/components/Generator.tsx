@@ -11,6 +11,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
   const [completion, setCompletion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [subscriptionError, setSubscriptionError] = useState('');
+  const [usageError, setUsageError] = useState('');
 
   // Check if user has an active subscription
   const hasActiveSubscription = subscriptionStatus === 'active';
@@ -26,6 +27,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
     setIsLoading(true);
     setCompletion('');
     setSubscriptionError('');
+    setUsageError('');
 
     try {
       const response = await fetch('/api/generate', {
@@ -44,6 +46,13 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       if (response.status === 402) {
         const errorData = await response.json();
         setSubscriptionError(errorData.message || 'Subscription required to generate content');
+        return;
+      }
+
+      // Handle usage limit exceeded error
+      if (response.status === 429) {
+        const errorData = await response.json();
+        setUsageError(errorData.message || 'Usage limit exceeded. Please upgrade your plan.');
         return;
       }
 
@@ -84,10 +93,29 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
               <h3 className="text-red-700 font-bold text-lg mb-3">Subscription Required</h3>
               <p className="text-red-600 mb-4 leading-relaxed">{subscriptionError}</p>
               <button 
-                onClick={() => window.location.href = '/dashboard'}
+                onClick={() => window.location.href = '/pricing'}
                 className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
               >
-                Manage Subscription
+                Upgrade Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Usage Limit Error Display */}
+      {usageError && (
+        <div className="backdrop-blur-xl bg-yellow-50/60 border border-yellow-200 rounded-3xl p-6 shadow-2xl mb-8">
+          <div className="flex items-start gap-4">
+            <span className="text-yellow-500 text-2xl">⚠️</span>
+            <div className="flex-1">
+              <h3 className="text-yellow-700 font-bold text-lg mb-3">Usage Limit Reached</h3>
+              <p className="text-yellow-600 mb-4 leading-relaxed">{usageError}</p>
+              <button 
+                onClick={() => window.location.href = '/pricing'}
+                className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+              >
+                Upgrade to Continue
               </button>
             </div>
           </div>
