@@ -5,6 +5,8 @@ import {
   ModernKeyIcon, ModernEyeIcon, ModernEyeSlashIcon, ModernCopyIcon,
   ModernTrashIcon, ModernPlusIcon, ModernCheckIcon, ModernInfoIcon
 } from './ModernIcons';
+import { API_TIERS } from '@/lib/api-keys';
+import { TIER_LIMITS } from '@/lib/usage-types';
 
 interface ApiKey {
   id: string;
@@ -26,36 +28,7 @@ interface ApiTier {
   rate_limit_per_minute: number;
 }
 
-const API_TIERS: Record<string, ApiTier> = {
-  free: {
-    name: 'Free',
-    requests_per_month: 100,
-    features: ['Basic content generation', 'Rate limited'],
-    price_per_month: 0,
-    rate_limit_per_minute: 5
-  },
-  starter: {
-    name: 'Starter API',
-    requests_per_month: 1000,
-    features: ['Content generation', 'Document analysis', 'Basic analytics'],
-    price_per_month: 15,
-    rate_limit_per_minute: 30
-  },
-  pro: {
-    name: 'Pro API', 
-    requests_per_month: 10000,
-    features: ['All content features', 'Advanced analytics', 'Webhooks', 'Priority support'],
-    price_per_month: 49,
-    rate_limit_per_minute: 100
-  },
-  enterprise: {
-    name: 'Enterprise API',
-    requests_per_month: 100000,
-    features: ['Unlimited features', 'Custom models', 'Dedicated support', 'SLA'],
-    price_per_month: 199,
-    rate_limit_per_minute: 1000
-  }
-};
+// API_TIERS now imported from @/lib/api-keys
 
 interface ApiKeyDashboardProps {
   userEmail: string;
@@ -73,6 +46,28 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
   const [newApiKey, setNewApiKey] = useState<string | null>(null);
   const [showKey, setShowKey] = useState<{ [key: string]: boolean }>({});
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // Get available API tiers based on subscription
+  const getAvailableApiTiers = () => {
+    const userTier = subscriptionStatus || 'free';
+    
+    if (userTier === 'business' || userTier === 'enterprise' || userTier === 'active') {
+      return ['free', 'starter', 'pro', 'enterprise'];
+    } else if (userTier === 'professional') {
+      return ['free', 'starter', 'pro'];
+    } else if (userTier === 'essentials') {
+      return ['free', 'starter'];
+    } else {
+      return ['free'];
+    }
+  };
+
+  // Check if user can access API features
+  const canAccessApi = () => {
+    const userTier = subscriptionStatus || 'free';
+    const tierFeatures = TIER_LIMITS[userTier]?.features || [];
+    return tierFeatures.includes('API access') || userTier === 'active' || userTier === 'business' || userTier === 'enterprise';
+  };
 
   const fetchApiKeys = async () => {
     try {
@@ -191,14 +186,26 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
           <p className="text-sm text-gray-600">
             Manage your API keys for programmatic access to Emerlya AI
           </p>
+          {!canAccessApi() && (
+            <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-800">
+                🔒 API access is available with Business plan or higher. 
+                <a href="/pricing" className="font-medium underline hover:no-underline ml-1">
+                  Upgrade your plan
+                </a>
+              </p>
+            </div>
+          )}
         </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-        >
-          <ModernPlusIcon size="xs" />
-          <span>Create API Key</span>
-        </button>
+        {canAccessApi() && (
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
+          >
+            <ModernPlusIcon size="xs" />
+            <span>Create API Key</span>
+          </button>
+        )}
       </div>
 
       {error && (
@@ -212,13 +219,19 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <ModernKeyIcon size="lg" className="mx-auto mb-4 text-gray-400" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No API Keys</h3>
-          <p className="text-gray-600 mb-4">Create your first API key to get started</p>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            Create API Key
-          </button>
+          {canAccessApi() ? (
+            <>
+              <p className="text-gray-600 mb-4">Create your first API key to get started</p>
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Create API Key
+              </button>
+            </>
+          ) : (
+            <p className="text-gray-600">API access requires Business plan or higher</p>
+          )}
         </div>
       ) : (
         <div className="space-y-4">
@@ -373,12 +386,15 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
                     onChange={(e) => setSelectedTier(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   >
-                    {Object.entries(API_TIERS).map(([tier, info]) => (
-                      <option key={tier} value={tier}>
-                        {info.name} - {info.requests_per_month.toLocaleString()} requests/month
-                        {info.price_per_month > 0 && ` - $${info.price_per_month}/month`}
-                      </option>
-                    ))}
+                    {getAvailableApiTiers().map((tier) => {
+                      const info = API_TIERS[tier];
+                      return (
+                        <option key={tier} value={tier}>
+                          {info.name} - {info.requests_per_month.toLocaleString()} requests/month
+                          {info.price_per_month > 0 && ` - €${info.price_per_month}/month`}
+                        </option>
+                      );
+                    })}
                   </select>
                   
                   {selectedTier && (

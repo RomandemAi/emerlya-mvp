@@ -4,22 +4,17 @@ import { createApiKey, getUserApiKeys } from '@/lib/api-server-actions';
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('API Keys GET route called');
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    console.log('Session:', !!session, session?.user?.id);
 
     if (!session) {
-      console.log('No session found');
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    console.log('Calling getUserApiKeys for user:', session.user.id);
     const keys = await getUserApiKeys(session.user.id);
-    console.log('Got keys:', keys);
 
     return NextResponse.json({
       success: true,
@@ -29,7 +24,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('GET API keys error:', error);
     return NextResponse.json(
-      { error: 'Internal server error', details: error instanceof Error ? error.message : String(error) },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
