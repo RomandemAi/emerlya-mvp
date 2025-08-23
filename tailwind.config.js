@@ -8,9 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0A2540',
-        accent: '#00D084',
-        neutral: '#F4F7FA',
+        primary: '#1E293B',     // Midnight Blue (warmer, more modern)
+        accent: '#22D3EE',      // Electric Cyan (more tech-forward)
+        neutral: '#F9FAFB',     // Soft white
+        secondary: '#64748B',   // Slate gray for hierarchy
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
