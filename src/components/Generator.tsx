@@ -36,6 +36,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         body: JSON.stringify({
           brand_id: brandId,
           user_prompt: input,
+          wordCount: 400, // Request longer content
         }),
       });
 

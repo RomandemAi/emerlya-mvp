@@ -69,7 +69,7 @@ export async function POST(req: Request) {
       brand_id, 
       user_prompt, 
       type = 'post', 
-      wordCount = 120,
+      wordCount = 300,
       tone 
     } = await req.json();
 
@@ -163,7 +163,7 @@ Adhere strictly to the persona rules. Do not break character.`;
       ],
       {
         temperature: 0.7,
-        maxTokens: Math.min(2000, wordCount * 4), // Rough token estimate
+        maxTokens: Math.min(4000, wordCount * 5), // Increased token limit for longer content
         stream: true
       }
     );
