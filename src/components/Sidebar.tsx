@@ -55,7 +55,7 @@ export default function Sidebar({
 
       {/* Navigation */}
       <div className="flex-1 p-4 overflow-y-auto">
-        <nav className="space-y-3">
+        <nav className="space-y-6">
           {/* Dashboard Section */}
           <div>
             <Link 
@@ -69,55 +69,55 @@ export default function Sidebar({
 
           {/* Website Section */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
               Website
             </div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               <Link 
                 href="/"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernHomeIcon size="xs" />
                 <span>Home</span>
               </Link>
               <Link 
                 href="/about"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernInfoIcon size="xs" />
                 <span>About</span>
               </Link>
               <Link 
                 href="/pricing"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernDollarIcon size="xs" />
                 <span>Pricing</span>
               </Link>
               <Link 
                 href="/features"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernStarIcon size="xs" />
                 <span>Features</span>
               </Link>
               <Link 
                 href="/blog"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernPencilIcon size="xs" />
                 <span>Blog</span>
               </Link>
               <Link 
                 href="/contact"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernPhoneIcon size="xs" />
                 <span>Contact</span>
               </Link>
               <Link 
                 href="/api-docs"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernWrenchIcon size="xs" />
                 <span>API Docs</span>
@@ -133,21 +133,21 @@ export default function Sidebar({
             <div className="space-y-1">
               <button 
                 onClick={onGenerateClick}
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
                 <ModernSparklesIcon size="xs" />
                 <span>Generate Content</span>
               </button>
               <button 
                 onClick={onDocumentsClick}
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
                 <ModernDocumentIcon size="xs" />
                 <span>Documents</span>
               </button>
               <button 
                 onClick={onSettingsClick}
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm w-full text-left"
               >
                 <ModernSettingsIcon size="xs" />
                 <span>Settings</span>
@@ -158,7 +158,7 @@ export default function Sidebar({
       </div>
 
       {/* User Profile & Actions */}
-      <div className="p-6 border-t border-white/50 space-y-4">
+      <div className="p-4 border-t border-white/50 space-y-3">
         <div className="px-4 py-3 rounded-xl bg-gradient-to-r from-neutral/50 to-neutral/30 border border-white/50">
           <div className="text-sm font-medium font-heading text-primary mb-1">Account</div>
           <div className="text-xs text-gray-600 truncate">{userEmail}</div>
