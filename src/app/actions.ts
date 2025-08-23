@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { stripe } from '../lib/stripe';
+import { getStripe } from '../lib/stripe';
 import { createClient } from '../lib/supabase/actions';
 import { getAuthenticatedUser, ensureUserProfile } from '../lib/supabase/auth';
 
@@ -139,7 +139,7 @@ export async function createStripePortalSession() {
   let customerId = profile.stripe_customer_id;
   if (!customerId) {
     // Create a new customer in Stripe
-    const customer = await stripe.customers.create({ email: user.email });
+    const customer = await getStripe().customers.create({ email: user.email });
     customerId = customer.id;
     // Save the new customer ID in our database
     await supabase
@@ -148,7 +148,7 @@ export async function createStripePortalSession() {
       .eq('id', user.id);
   }
 
-  const portalSession = await stripe.billingPortal.sessions.create({
+  const portalSession = await getStripe().billingPortal.sessions.create({
     customer: customerId,
     return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/`,
   });
@@ -306,7 +306,7 @@ export async function createCheckoutSession() {
       console.log('Creating new Stripe customer...');
       try {
         // Create a new customer in Stripe
-        const customer = await stripe.customers.create({ 
+        const customer = await getStripe().customers.create({ 
           email: user.email,
           metadata: {
             supabase_user_id: user.id
@@ -335,7 +335,7 @@ export async function createCheckoutSession() {
 
     // Create Stripe Checkout Session
     try {
-      const checkoutSession = await stripe.checkout.sessions.create({
+      const checkoutSession = await getStripe().checkout.sessions.create({
         customer: customerId,
         client_reference_id: user.id,
         line_items: [

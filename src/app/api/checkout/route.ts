@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '../../../lib/stripe';
+import { getStripe } from '../../../lib/stripe';
 import { createClient } from '../../../lib/supabase/server';
 
 export async function POST(request: NextRequest) {
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
       console.log('Creating new Stripe customer...');
       try {
         // Create a new customer in Stripe
-        const customer = await stripe.customers.create({ 
+        const customer = await getStripe().customers.create({ 
           email: user.email,
           metadata: {
             supabase_user_id: user.id
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
 
     // Create Stripe Checkout Session
     try {
-      const checkoutSession = await stripe.checkout.sessions.create({
+      const checkoutSession = await getStripe().checkout.sessions.create({
         customer: customerId,
         client_reference_id: user.id,
         line_items: [

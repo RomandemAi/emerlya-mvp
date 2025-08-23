@@ -262,15 +262,12 @@ export async function retrieveChunks(brandId: string, query: string, limit: numb
   const supabase = await createClient();
   
   try {
-    // Create embedding for the query
-    const queryEmbedding = await createEmbedding(query);
-    
-    // For now, get random chunks since we need proper vector search setup
     // TODO: Implement proper vector similarity search when pgvector is configured
     const { data, error } = await supabase
       .from('brand_chunks')
       .select('*')
       .eq('brand_id', brandId)
+      .order('created_at', { ascending: false })
       .limit(limit);
 
     if (error) {

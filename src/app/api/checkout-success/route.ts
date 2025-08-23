@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '../../../lib/stripe';
+import { getStripe } from '../../../lib/stripe';
 import { createClient } from '../../../lib/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the checkout session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await getStripe().checkout.sessions.retrieve(sessionId);
     
     if (!session) {
       return NextResponse.json(
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the subscription details
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await getStripe().subscriptions.retrieve(subscriptionId);
     
     const customerId = subscription.customer as string;
     const userId = session.client_reference_id;
