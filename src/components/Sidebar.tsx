@@ -1,8 +1,7 @@
 'use client';
 import Link from 'next/link';
 import LogoutButton from './LogoutButton';
-import ManageBillingButton from './ManageBillingButton';
-import UpgradeButton from './UpgradeButton';
+
 import {
   ModernUserIcon,
   ModernHomeIcon,
@@ -35,7 +34,7 @@ export default function Sidebar({
   return (
     <div className="h-full backdrop-blur-xl bg-white/90 border-r border-white/50 flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-white/50">
+      <div className="p-6 border-b border-white/50 space-y-4">
         <Link href="/" className="flex items-center space-x-3">
           <div className="relative w-12 h-12 flex items-center justify-center">
             <img 
@@ -51,6 +50,24 @@ export default function Sidebar({
             <div className="text-xs text-gray-500">Dashboard</div>
           </div>
         </Link>
+        
+        {/* User Info */}
+        <div className="px-3 py-2 rounded-xl bg-gradient-to-r from-neutral/50 to-neutral/30 border border-white/50">
+          <div className="text-xs text-gray-600 truncate">{userEmail}</div>
+          <div className="mt-1">
+            {subscriptionStatus === 'active' ? (
+              <div className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-medium">
+                <span className="w-2 h-2 bg-accent rounded-full mr-1"></span>
+                Pro Plan
+              </div>
+            ) : (
+              <div className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-800 text-xs font-medium">
+                <span className="w-2 h-2 bg-gray-400 rounded-full mr-1"></span>
+                Free Plan
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -152,40 +169,13 @@ export default function Sidebar({
                 <ModernSettingsIcon size="xs" />
                 <span>Settings</span>
               </button>
+              <LogoutButton />
             </div>
           </div>
         </nav>
       </div>
 
-      {/* User Profile & Actions */}
-      <div className="p-4 border-t border-white/50 space-y-3">
-        <div className="px-4 py-3 rounded-xl bg-gradient-to-r from-neutral/50 to-neutral/30 border border-white/50">
-          <div className="text-sm font-medium font-heading text-primary mb-1">Account</div>
-          <div className="text-xs text-gray-600 truncate">{userEmail}</div>
-          <div className="mt-2">
-            {subscriptionStatus === 'active' ? (
-              <div className="inline-flex items-center px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-medium">
-                <span className="w-2 h-2 bg-accent rounded-full mr-2"></span>
-                Pro Plan
-              </div>
-            ) : (
-              <div className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-800 text-xs font-medium">
-                <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-                Free Plan
-              </div>
-            )}
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          {subscriptionStatus === 'active' ? (
-            <ManageBillingButton />
-          ) : (
-            <UpgradeButton />
-          )}
-          <LogoutButton />
-        </div>
-      </div>
+
     </div>
   );
 }

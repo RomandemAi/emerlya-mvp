@@ -2,7 +2,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from './Sidebar';
-import TopNavBar from './TopNavBar';
+
 import CheckoutSuccessHandler from './CheckoutSuccessHandler';
 import BrandSelectorModal from './BrandSelectorModal';
 import GlobalDocumentsModal from './GlobalDocumentsModal';
@@ -46,12 +46,7 @@ export default function DashboardLayout({
         <CheckoutSuccessHandler />
       </Suspense>
       
-      {/* Top Navigation Bar */}
-      <TopNavBar 
-        userEmail={userEmail}
-        subscriptionStatus={subscriptionStatus}
-        onMobileMenuClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-      />
+
       
       {/* Mobile Sidebar Overlay */}
       {isMobileSidebarOpen && (
@@ -63,7 +58,7 @@ export default function DashboardLayout({
       
       {/* Sidebar */}
       <div className={`
-        fixed h-full z-50 pt-40 transition-transform duration-300 ease-in-out
+        fixed h-full z-40 transition-transform duration-300 ease-in-out
         lg:translate-x-0 lg:w-64 lg:z-40
         ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         w-64
@@ -87,7 +82,7 @@ export default function DashboardLayout({
       </div>
       
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 pt-40 p-3 lg:p-4 min-h-screen">
+      <main className="flex-1 lg:ml-64 p-3 lg:p-4 min-h-screen">
         {children}
       </main>
 
