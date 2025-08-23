@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { deactivateApiKey } from '@/lib/api-server-actions';
+import { deleteApiKey } from '@/lib/api-server-actions';
 
 export async function DELETE(
   request: NextRequest,
@@ -25,7 +25,7 @@ export async function DELETE(
       );
     }
 
-    const result = await deactivateApiKey(session.user.id, keyId);
+    const result = await deleteApiKey(session.user.id, keyId);
 
     if (!result.success) {
       return NextResponse.json(
@@ -36,7 +36,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: 'API key deactivated successfully'
+      message: 'API key deleted successfully'
     });
 
   } catch (error) {

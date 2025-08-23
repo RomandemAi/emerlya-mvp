@@ -46,6 +46,7 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
   const [newApiKey, setNewApiKey] = useState<string | null>(null);
   const [showKey, setShowKey] = useState<{ [key: string]: boolean }>({});
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [deletingKey, setDeletingKey] = useState<string | null>(null);
 
   // Get available API tiers based on subscription
   const getAvailableApiTiers = () => {
@@ -154,6 +155,31 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
 
   const toggleKeyVisibility = (keyId: string) => {
     setShowKey(prev => ({ ...prev, [keyId]: !prev[keyId] }));
+  };
+
+  const deleteApiKey = async (keyId: string) => {
+    if (!confirm('Are you sure you want to delete this API key? This action cannot be undone.')) {
+      return;
+    }
+
+    setDeletingKey(keyId);
+    try {
+      const response = await fetch(`/api/user/api-keys/${keyId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Remove the key from the local state
+        setApiKeys(prev => prev.filter(key => key.id !== keyId));
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to delete API key');
+      }
+    } catch (err) {
+      setError('Network error while deleting API key');
+    } finally {
+      setDeletingKey(null);
+    }
   };
 
   const formatDate = (dateStr: string) => {
@@ -276,6 +302,18 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
                         <ModernCheckIcon size="xs" className="text-green-600" />
                       ) : (
                         <ModernCopyIcon size="xs" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => deleteApiKey(key.id)}
+                      disabled={deletingKey === key.id}
+                      className="p-1 hover:bg-red-100 rounded text-red-600 hover:text-red-700 disabled:opacity-50"
+                      title="Delete API key"
+                    >
+                      {deletingKey === key.id ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600"></div>
+                      ) : (
+                        <ModernTrashIcon size="xs" />
                       )}
                     </button>
                   </div>

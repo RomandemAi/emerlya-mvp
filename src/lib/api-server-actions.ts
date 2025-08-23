@@ -192,6 +192,47 @@ export async function deactivateApiKey(
 }
 
 /**
+ * Delete an API key permanently - SERVER ACTION
+ */
+export async function deleteApiKey(
+  userId: string, 
+  keyId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const supabase = await createClient();
+    
+    // First verify the key belongs to the user
+    const { data: keyData, error: fetchError } = await supabase
+      .from('api_keys')
+      .select('id')
+      .eq('id', keyId)
+      .eq('user_id', userId)
+      .single();
+
+    if (fetchError || !keyData) {
+      return { success: false, error: 'API key not found or access denied' };
+    }
+
+    // Delete the API key (this will cascade delete related api_usage records)
+    const { error } = await supabase
+      .from('api_keys')
+      .delete()
+      .eq('id', keyId)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error deleting API key:', error);
+      return { success: false, error: 'Failed to delete API key' };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Unexpected error deleting API key:', error);
+    return { success: false, error: 'Unexpected error occurred' };
+  }
+}
+
+/**
  * Log API usage - SERVER ACTION
  */
 export async function logApiUsage(
