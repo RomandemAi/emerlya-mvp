@@ -41,6 +41,7 @@ export interface BrandSettings {
   region?: string;
   language: string;
   profanity_policy: string;
+  tone?: string; // Add tone property
 }
 
 export interface BrandSource {

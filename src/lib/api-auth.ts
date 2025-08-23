@@ -192,7 +192,7 @@ export function withApiAuth(
           0, // words_generated - will be filled by specific endpoints
           {
             user_agent: request.headers.get('user-agent'),
-            ip: request.ip || request.headers.get('x-forwarded-for'),
+            ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip'),
             tier: apiContext.tier
           }
         ).catch(console.error);

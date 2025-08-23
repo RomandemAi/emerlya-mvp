@@ -83,10 +83,13 @@ async function blogHandler(request: NextRequest, context: ApiContext) {
     }
 
     // Build blog-specific system prompt
-    const systemPrompt = `You are an expert content writer for ${profile.name || 'this brand'}.
+    const systemPrompt = `You are an expert content writer for ${brandData.name || 'this brand'}.
 
 BRAND VOICE & STYLE:
-${profile.description || 'No specific brand description provided'}
+- Tone: ${profile.voice?.tone?.join(', ') || 'Professional'}
+- Personality: ${profile.voice?.personality?.join(', ') || 'Engaging'}
+- Themes: ${profile.content?.themes?.join(', ') || 'General business topics'}
+- Key Rules: ${profile.content?.brandRules?.do?.join(', ') || 'Follow brand guidelines'}
 
 WRITING GUIDELINES:
 - Tone: ${tone || settings?.tone || 'professional'}
@@ -129,14 +132,17 @@ Create content that would rank well in search engines while maintaining readabil
 
     // Collect response
     let content = '';
-    const reader = response.body?.getReader();
     
-    if (reader) {
+    if ('body' in response && response.body && typeof response.body === 'object' && 'getReader' in response.body) {
+      const reader = (response.body as ReadableStream).getReader();
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         content += new TextDecoder().decode(value);
       }
+    } else {
+      // Handle non-streaming response
+      content = (response as any).choices?.[0]?.message?.content || '';
     }
 
     // Track analytics

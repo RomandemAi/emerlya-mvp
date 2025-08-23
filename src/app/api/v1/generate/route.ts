@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { withApiAuth, createApiErrorResponse, createApiSuccessResponse, ApiContext } from '@/lib/api-auth';
 import { getProfile, getMemory, getSettings, retrieveChunks } from '@/lib/brand';
 import { styleSystemPrompt } from '@/lib/prompts';
@@ -92,13 +92,11 @@ async function generateHandler(request: NextRequest, context: ApiContext) {
       );
     }
 
-    // Build system prompt
+    // Build system prompt  
     const systemPrompt = styleSystemPrompt(
       profile,
-      memory || '',
-      settings,
-      type,
-      tone || settings?.tone || 'professional'
+      memory || [],
+      settings
     );
 
     // Build user prompt
@@ -134,28 +132,34 @@ async function generateHandler(request: NextRequest, context: ApiContext) {
 
     if (streaming) {
       // Return streaming response
-      return new Response(response.body, {
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'Transfer-Encoding': 'chunked',
-          'X-API-Tier': context.tier,
-          'X-Requests-Remaining': context.requests_remaining.toString()
-        }
-      });
-    } else {
-      // Collect full response
-      let content = '';
-      const reader = response.body?.getReader();
-      
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          content += new TextDecoder().decode(value);
-        }
+      if ('body' in response && response.body && typeof response.body === 'object') {
+        return new NextResponse(response.body as ReadableStream, {
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Transfer-Encoding': 'chunked',
+            'X-API-Tier': context.tier,
+            'X-Requests-Remaining': context.requests_remaining.toString()
+          }
+        });
       }
+    } 
+    
+    // Collect full response
+    let content = '';
+    
+    if ('body' in response && response.body && typeof response.body === 'object' && 'getReader' in response.body) {
+      const reader = (response.body as ReadableStream).getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        content += new TextDecoder().decode(value);
+      }
+    } else {
+      // Handle non-streaming response
+      content = (response as any).choices?.[0]?.message?.content || '';
+    }
 
-      return createApiSuccessResponse(
+    return createApiSuccessResponse(
         {
           content: content.trim(),
           brand_id,
@@ -169,7 +173,6 @@ async function generateHandler(request: NextRequest, context: ApiContext) {
           brand_name: brandData.name
         }
       );
-    }
 
   } catch (error) {
     console.error('API generate error:', error);
