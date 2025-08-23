@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import UnifiedNavBar from '@/components/UnifiedNavBar';
+import PricingCheckoutButton from '@/components/PricingCheckoutButton';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function PricingPage() {
@@ -84,11 +85,12 @@ export default function PricingPage() {
                   <span className="text-3xl font-bold text-primary">€0</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
-                <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors">
-                    Get Started Free
-                  </button>
-                </Link>
+                <PricingCheckoutButton
+                  planName="Starter"
+                  className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors"
+                >
+                  Get Started Free
+                </PricingCheckoutButton>
               </div>
               
               <ul className="space-y-3">
@@ -132,11 +134,12 @@ export default function PricingPage() {
                 <div className="text-xs text-green-600 font-medium mb-4 bg-green-50 px-2 py-1 rounded-full inline-block">
                   40% more affordable!
                 </div>
-                <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
-                    Start 14-Day Trial
-                  </button>
-                </Link>
+                <PricingCheckoutButton
+                  planName="Essentials"
+                  className="w-full px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200"
+                >
+                  Start 14-Day Trial
+                </PricingCheckoutButton>
               </div>
               
               <ul className="space-y-3">
@@ -186,11 +189,12 @@ export default function PricingPage() {
                 <div className="text-xs text-emerald-600 font-medium mb-4 bg-emerald-50 px-2 py-1 rounded-full inline-block">
                   60% more affordable!
                 </div>
-                <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
-                    Start Free Trial
-                  </button>
-                </Link>
+                <PricingCheckoutButton
+                  planName="Professional"
+                  className="w-full px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200"
+                >
+                  Start Free Trial
+                </PricingCheckoutButton>
               </div>
               
               <ul className="space-y-3">
@@ -230,11 +234,12 @@ export default function PricingPage() {
                   <span className="text-3xl font-bold text-purple-600">€39</span>
                   <span className="text-gray-600 ml-2">/month</span>
                 </div>
-                <Link href="/login">
-                  <button className="w-full px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200">
-                    Start Free Trial
-                  </button>
-                </Link>
+                <PricingCheckoutButton
+                  planName="Business"
+                  className="w-full px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200"
+                >
+                  Start Free Trial
+                </PricingCheckoutButton>
               </div>
               
               <ul className="space-y-3">
@@ -569,11 +574,12 @@ export default function PricingPage() {
             Start your free trial today - no credit card required.
           </p>
           <div className="flex justify-center space-x-4">
-            <Link href="/login">
-              <button className="px-6 py-3 bg-accent text-primary rounded-lg font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1">
-                Start Free Trial
-              </button>
-            </Link>
+            <PricingCheckoutButton
+              planName="Starter"
+              className="px-6 py-3 bg-accent text-primary rounded-lg font-medium hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
+            >
+              Start Free Trial
+            </PricingCheckoutButton>
             <Link href="/contact">
               <button className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-lg font-medium hover:bg-white/20 transition-all duration-200">
                 Contact Sales

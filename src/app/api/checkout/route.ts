@@ -7,6 +7,11 @@ export async function POST(request: NextRequest) {
     console.log('=== CHECKOUT API ROUTE START ===');
     console.log('Environment:', process.env.NODE_ENV);
     
+    // Parse request body to get plan information
+    const body = await request.json().catch(() => ({}));
+    const { planName, priceId } = body;
+    console.log('Plan requested:', planName, 'Price ID:', priceId);
+    
     // Get cookies from request headers
     const cookieHeader = request.headers.get('cookie');
     console.log('Cookie header present:', !!cookieHeader);
@@ -132,16 +137,31 @@ export async function POST(request: NextRequest) {
 
     console.log('Creating Stripe checkout session...');
     
-    // Debug: Log the price ID being used
-    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
-    console.log('Using Price ID:', priceId);
-    console.log('Price ID starts with:', priceId?.substring(0, 10));
+    // Determine which price ID to use based on plan
+    // For now, we'll use the same price ID for all paid plans
+    // TODO: Set up different price IDs in Stripe for different plans
+    let finalPriceId = priceId || process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
+    
+    // Plan mapping (when we have multiple price IDs)
+    const priceMapping: Record<string, string> = {
+      'Essentials': process.env.NEXT_PUBLIC_STRIPE_ESSENTIALS_PRICE_ID || finalPriceId || '',
+      'Professional': process.env.NEXT_PUBLIC_STRIPE_PROFESSIONAL_PRICE_ID || finalPriceId || '',
+      'Business': process.env.NEXT_PUBLIC_STRIPE_BUSINESS_PRICE_ID || finalPriceId || '',
+    };
+    
+    // Use plan-specific price ID if available
+    if (planName && priceMapping[planName]) {
+      finalPriceId = priceMapping[planName];
+    }
+    
+    console.log('Using Price ID:', finalPriceId);
+    console.log('Price ID starts with:', finalPriceId?.substring(0, 10));
     console.log('Full environment check:');
     console.log('- Stripe Secret Key starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 10));
     console.log('- Publishable Key starts with:', process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.substring(0, 10));
     console.log('- Site URL:', process.env.NEXT_PUBLIC_SITE_URL);
 
-    if (!priceId) {
+    if (!finalPriceId) {
       console.error('CRITICAL: Price ID is undefined!');
       return NextResponse.json(
         { error: 'Price ID not configured. Please contact support.' },
@@ -156,7 +176,7 @@ export async function POST(request: NextRequest) {
         client_reference_id: user.id,
         line_items: [
           {
-            price: priceId,
+            price: finalPriceId,
             quantity: 1,
           },
         ],
