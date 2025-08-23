@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBrand } from '@/app/actions';
 
 interface CreateBrandFormProps {
@@ -23,11 +23,13 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
       
       // Close modal after a brief success message
       setTimeout(() => {
-        onClose();
         setSuccess(false);
+        onClose();
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error('Brand creation error:', err);
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while creating the brand';
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -36,16 +38,11 @@ export default function CreateBrandForm({ isOpen, onClose }: CreateBrandFormProp
   if (!isOpen) return null;
 
   // Reset state when modal opens
-  const handleModalOpen = () => {
-    if (isOpen && (success || error)) {
+  useEffect(() => {
+    if (isOpen) {
       setSuccess(false);
       setError(null);
     }
-  };
-
-  // Call reset on mount when modal opens
-  React.useEffect(() => {
-    handleModalOpen();
   }, [isOpen]);
 
   return (
