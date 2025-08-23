@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { createApiKey, getUserApiKeys } from '@/lib/api-keys';
+import { createApiKey, getUserApiKeys } from '@/lib/api-server-actions';
 
 export async function GET(request: NextRequest) {
   try {

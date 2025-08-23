@@ -1,8 +1,7 @@
-'use server';
-
 import { NextRequest, NextResponse } from 'next/server';
 import { createHash } from 'crypto';
-import { validateApiKey, logApiUsage, API_TIERS } from './api-keys';
+import { validateApiKey, logApiUsage } from './api-server-actions';
+import { API_TIERS } from './api-keys';
 
 export interface ApiContext {
   user_id: string;

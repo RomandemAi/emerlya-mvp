@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { deactivateApiKey } from '@/lib/api-keys';
+import { deactivateApiKey } from '@/lib/api-server-actions';
 
 export async function DELETE(
   request: NextRequest,
