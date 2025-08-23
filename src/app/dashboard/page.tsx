@@ -47,7 +47,11 @@ export default async function Dashboard() {
       subscriptionStatus={profile?.subscription_status || null}
       brands={brands || []}
     >
-      <DashboardContent brands={brands || []} />
+      <DashboardContent 
+        brands={brands || []} 
+        userEmail={user.email || ''} 
+        subscriptionStatus={profile?.subscription_status || null} 
+      />
     </DashboardLayout>
   );
 }

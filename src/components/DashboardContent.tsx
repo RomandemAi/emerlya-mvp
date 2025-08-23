@@ -7,6 +7,7 @@ import BrandSettingsModal from './BrandSettingsModal';
 import BrandDocumentsModal from './BrandDocumentsModal';
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ContentCalendar from './ContentCalendar';
+import ApiKeyDashboard from './ApiKeyDashboard';
 
 interface Brand {
   id: string;
@@ -17,15 +18,17 @@ interface Brand {
 
 interface DashboardContentProps {
   brands: Brand[];
+  userEmail: string;
+  subscriptionStatus: string | null;
 }
 
-export default function DashboardContent({ brands }: DashboardContentProps) {
+export default function DashboardContent({ brands, userEmail, subscriptionStatus }: DashboardContentProps) {
   const router = useRouter();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isDocumentsModalOpen, setIsDocumentsModalOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
-  const [activeTab, setActiveTab] = useState<'brands' | 'analytics' | 'calendar'>('brands');
+  const [activeTab, setActiveTab] = useState<'brands' | 'analytics' | 'calendar' | 'api'>('brands');
 
   return (
     <>
@@ -35,12 +38,14 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
           <h1 className="text-lg md:text-xl font-bold font-heading text-gray-900 mb-2">
             {activeTab === 'brands' ? 'My Brand Portfolio' : 
              activeTab === 'analytics' ? 'Analytics & Insights' : 
-             'Content Calendar'}
+             activeTab === 'calendar' ? 'Content Calendar' : 
+             'API Access'}
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed">
             {activeTab === 'brands' ? 'Manage your brand identities and generate AI-powered content that matches your unique voice.' :
              activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
-             'Plan, schedule, and organize your content creation workflow.'}
+             activeTab === 'calendar' ? 'Plan, schedule, and organize your content creation workflow.' :
+             'Manage API keys and integrate Emerlya AI into your applications.'}
           </p>
         </div>
         {activeTab === 'brands' && (
@@ -59,7 +64,8 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
         {[
           { key: 'brands' as const, label: 'Brands', icon: '🎯' },
           { key: 'analytics' as const, label: 'Analytics', icon: '📊' },
-          { key: 'calendar' as const, label: 'Calendar', icon: '📅' }
+          { key: 'calendar' as const, label: 'Calendar', icon: '📅' },
+          { key: 'api' as const, label: 'API', icon: '🔑' }
         ].map(tab => (
           <button
             key={tab.key}
@@ -159,6 +165,13 @@ export default function DashboardContent({ brands }: DashboardContentProps) {
 
       {activeTab === 'calendar' && (
         <ContentCalendar />
+      )}
+
+      {activeTab === 'api' && (
+        <ApiKeyDashboard 
+          userEmail={userEmail} 
+          subscriptionStatus={subscriptionStatus} 
+        />
       )}
 
       <CreateBrandForm 

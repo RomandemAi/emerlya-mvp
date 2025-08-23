@@ -369,6 +369,109 @@ const ModernMenuIcon = ({ className = '', size = 'md' }: IconProps) => (
   </div>
 );
 
+// Modern 3D Key Icon
+const ModernKeyIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-lg shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-4/5 h-3/5 bg-gradient-to-b from-white/90 to-white/70 rounded-sm relative">
+        <div className="absolute left-1/4 top-1/2 transform -translate-y-1/2 w-1/2 h-1/4 bg-gradient-to-r from-yellow-200 to-yellow-300 rounded-full"></div>
+        <div className="absolute right-1/6 top-1/3 w-1/6 h-1/6 bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-sm"></div>
+        <div className="absolute right-1/6 bottom-1/3 w-1/6 h-1/6 bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-sm"></div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-lg"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Eye Icon
+const ModernEyeIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-indigo-400 via-indigo-500 to-indigo-600 rounded-full shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-4/5 h-3/5 bg-gradient-to-b from-white/90 to-white/70 rounded-full relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 via-white to-indigo-100 rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 h-2/5 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-full">
+          <div className="absolute top-1/4 left-1/4 w-1/3 h-1/3 bg-white rounded-full"></div>
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-full"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Eye Slash Icon
+const ModernEyeSlashIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 rounded-full shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-4/5 h-3/5 bg-gradient-to-b from-white/90 to-white/70 rounded-full relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-white to-gray-100 rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 h-2/5 bg-gradient-to-br from-gray-600 to-gray-800 rounded-full opacity-50">
+          <div className="absolute top-1/4 left-1/4 w-1/3 h-1/3 bg-white rounded-full"></div>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-1/4 w-1/2 h-0.5 bg-red-500 transform rotate-45 rounded-full"></div>
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-full"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Copy Icon
+const ModernCopyIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-cyan-400 via-cyan-500 to-cyan-600 rounded-lg shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-4/5 h-4/5 relative">
+        <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-gradient-to-b from-white/90 to-white/70 rounded border border-cyan-200"></div>
+        <div className="absolute bottom-0 left-0 w-3/4 h-3/4 bg-gradient-to-b from-white/80 to-white/60 rounded border border-cyan-300"></div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-lg"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Check Icon
+const ModernCheckIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-green-400 via-green-500 to-green-600 rounded-full shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-3/5 h-3/5 flex items-center justify-center">
+        <div className="relative">
+          <div className="w-2 h-1 bg-white rounded-full transform rotate-45 origin-bottom"></div>
+          <div className="w-1 h-2 bg-white rounded-full transform -rotate-45 origin-top absolute -right-0.5 -top-0.5"></div>
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-full"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Trash Icon
+const ModernTrashIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-red-400 via-red-500 to-red-600 rounded-lg shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-3/5 h-4/5 bg-gradient-to-b from-white/90 to-white/70 rounded-sm relative">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-1/4 bg-gradient-to-b from-red-200 to-red-300 rounded-sm"></div>
+        <div className="absolute top-1/4 left-1/4 w-1/6 h-2/4 bg-red-300 rounded-sm"></div>
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-1/6 h-2/4 bg-red-300 rounded-sm"></div>
+        <div className="absolute top-1/4 right-1/4 w-1/6 h-2/4 bg-red-300 rounded-sm"></div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-lg"></div>
+    </div>
+  </div>
+);
+
+// Modern 3D Plus Icon
+const ModernPlusIcon = ({ className = '', size = 'md' }: IconProps) => (
+  <div className={`${sizeClasses[size]} ${className} relative`}>
+    <div className={`w-full h-full bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-lg transform ${mobileHoverClass} flex items-center justify-center`}>
+      <div className="w-3/5 h-3/5 relative">
+        <div className="absolute top-1/2 left-0 w-full h-1/5 bg-white rounded-full transform -translate-y-1/2"></div>
+        <div className="absolute left-1/2 top-0 w-1/5 h-full bg-white rounded-full transform -translate-x-1/2"></div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-white/40 rounded-full"></div>
+    </div>
+  </div>
+);
+
 export {
   ModernUserIcon,
   ModernHomeIcon,
@@ -389,5 +492,12 @@ export {
   ModernHeartIcon,
   ModernLightbulbIcon,
   ModernLockIcon,
-  ModernMenuIcon
+  ModernMenuIcon,
+  ModernKeyIcon,
+  ModernEyeIcon,
+  ModernEyeSlashIcon,
+  ModernCopyIcon,
+  ModernCheckIcon,
+  ModernTrashIcon,
+  ModernPlusIcon
 };

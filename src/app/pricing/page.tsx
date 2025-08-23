@@ -297,6 +297,124 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* API Pricing Section */}
+      <section className="py-8 px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-gray-900 mb-4">
+              Developer <span className="text-blue-600">API Access</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Integrate Emerlya AI directly into your applications, websites, or workflows with our powerful API.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Free API */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-4">
+                  <span className="text-2xl">🔑</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Free API</h3>
+                <div className="text-3xl font-bold text-gray-600 mb-2">$0</div>
+                <p className="text-gray-600 mb-4">100 requests/month</p>
+                <div className="text-sm text-gray-500 mb-6 space-y-1">
+                  <div>• Basic content generation</div>
+                  <div>• 5 requests/minute</div>
+                  <div>• Community support</div>
+                  <div>• 1 API key</div>
+                </div>
+                <button className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Get Free API Key
+                </button>
+              </div>
+            </div>
+
+            {/* Starter API */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Starter API</h3>
+                <div className="text-3xl font-bold text-blue-600 mb-2">$15</div>
+                <p className="text-gray-600 mb-4">1,000 requests/month</p>
+                <div className="text-sm text-gray-500 mb-6 space-y-1">
+                  <div>• All content types</div>
+                  <div>• 30 requests/minute</div>
+                  <div>• Email support</div>
+                  <div>• 3 API keys</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Get Starter API
+                </button>
+              </div>
+            </div>
+
+            {/* Pro API */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                  Most Popular
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
+                  <span className="text-2xl">🚀</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Pro API</h3>
+                <div className="text-3xl font-bold text-purple-600 mb-2">$49</div>
+                <p className="text-gray-600 mb-4">10,000 requests/month</p>
+                <div className="text-sm text-gray-500 mb-6 space-y-1">
+                  <div>• Advanced features</div>
+                  <div>• 100 requests/minute</div>
+                  <div>• Priority support</div>
+                  <div>• 10 API keys</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Get Pro API
+                </button>
+              </div>
+            </div>
+
+            {/* Enterprise API */}
+            <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full mb-4">
+                  <span className="text-2xl">🏢</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise API</h3>
+                <div className="text-3xl font-bold text-orange-600 mb-2">$199</div>
+                <p className="text-gray-600 mb-4">100,000 requests/month</p>
+                <div className="text-sm text-gray-500 mb-6 space-y-1">
+                  <div>• Custom integrations</div>
+                  <div>• 1000 requests/minute</div>
+                  <div>• Dedicated support</div>
+                  <div>• Unlimited keys</div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                  Contact Sales
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-sm text-gray-600 max-w-2xl mx-auto mb-4">
+              🔗 <strong>Easy Integration:</strong> RESTful API with comprehensive documentation, 
+              SDKs, and code examples. Get up and running in minutes.
+            </p>
+            <a 
+              href="/api-docs" 
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm"
+            >
+              View API Documentation →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-8 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
