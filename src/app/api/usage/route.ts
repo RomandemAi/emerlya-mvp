@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { getCurrentUsage, TIER_LIMITS } from '@/lib/usage';
+import { getCurrentUsage } from '@/lib/usage';
+import { TIER_LIMITS } from '@/lib/usage-types';
 
 export async function GET(req: NextRequest) {
   try {
