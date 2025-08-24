@@ -8,6 +8,7 @@ import {
   ModernDocumentIcon,
   ModernStarIcon 
 } from './ModernIcons';
+import { CelebrationIcon } from './icons';
 
 interface UsageData {
   words_used: number;
