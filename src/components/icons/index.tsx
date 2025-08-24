@@ -385,3 +385,60 @@ export const KeyIcon: React.FC<IconProps> = ({ className = "", size = 24 }) => (
     <path d="M15.5 7.5l3 3L22 7l-3-3" />
   </svg>
 );
+
+// Download Icon
+export const DownloadIcon: React.FC<IconProps> = ({ className = "", size = 24 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7,10 12,15 17,10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
+// Type/Text Icon
+export const TypeIcon: React.FC<IconProps> = ({ className = "", size = 24 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <polyline points="4,7 4,4 20,4 20,7" />
+    <line x1="9" y1="20" x2="15" y2="20" />
+    <line x1="12" y1="4" x2="12" y2="20" />
+  </svg>
+);
+
+// Color Swatch Icon
+export const ColorSwatchIcon: React.FC<IconProps> = ({ className = "", size = 24 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z" />
+    <path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7" />
+    <path d="M14.5 17.5 4.5 15" />
+  </svg>
+);

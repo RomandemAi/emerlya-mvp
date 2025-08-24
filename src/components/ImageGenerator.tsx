@@ -10,9 +10,12 @@ import {
   CopyIcon,
   CheckIcon,
   DollarIcon,
-  RocketIcon 
+  RocketIcon,
+  TypeIcon,
+  DownloadIcon
 } from './icons';
 import TopUpModal from './TopUpModal';
+import CanvasEditor from './CanvasEditor';
 
 interface ImageGeneratorProps {
   brandId?: string;
@@ -31,6 +34,8 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
   const [subscriptionError, setSubscriptionError] = useState('');
   const [error, setError] = useState('');
   const [showTopUpModal, setShowTopUpModal] = useState(false);
+  const [editingImage, setEditingImage] = useState<string | null>(null);
+  const [showCanvasEditor, setShowCanvasEditor] = useState(false);
   
   // Image settings with smart presets
   const [size, setSize] = useState('auto');
@@ -202,6 +207,29 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
     }
   };
 
+  const openCanvasEditor = () => {
+    if (!generatedImage?.url) return;
+    setEditingImage(generatedImage.url);
+    setShowCanvasEditor(true);
+  };
+
+  const handleCanvasSave = (canvasData: any) => {
+    console.log('Canvas design saved:', canvasData);
+    // Here you could save the canvas data to your backend
+  };
+
+  const handleCanvasExport = (blob: Blob, filename: string) => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    console.log('Canvas design exported:', filename);
+  };
+
   return (
     <div className="max-w-5xl mx-auto">
       {/* Subscription Error Display */}
@@ -370,13 +398,19 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
             
             <div className="flex items-center gap-3">
               <button
+                onClick={openCanvasEditor}
+                className="flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl font-medium transition-all duration-200 hover:shadow-md"
+                title="Edit with text overlay"
+              >
+                <TypeIcon size={16} />
+                <span>Edit</span>
+              </button>
+              <button
                 onClick={downloadImage}
                 className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl font-medium transition-all duration-200 hover:shadow-md"
                 title="Download image"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+                <DownloadIcon size={16} />
                 <span>Download</span>
               </button>
             </div>
@@ -453,6 +487,38 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
           isOpen={showTopUpModal}
           onClose={() => setShowTopUpModal(false)}
         />
+      )}
+
+      {/* Canvas Editor Modal */}
+      {showCanvasEditor && editingImage && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl w-full max-w-7xl max-h-[95vh] overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-2xl font-bold text-primary flex items-center gap-3">
+                <TypeIcon size={24} />
+                Canvas Editor
+              </h2>
+              <button
+                onClick={() => {
+                  setShowCanvasEditor(false);
+                  setEditingImage(null);
+                }}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-all duration-200"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-6 max-h-[calc(95vh-120px)] overflow-y-auto">
+              <CanvasEditor
+                imageUrl={editingImage}
+                brandName={brandName}
+                brandColors={['#1E293B', '#22D3EE', '#64748B']} // Using our theme colors
+                onSave={handleCanvasSave}
+                onExport={handleCanvasExport}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
