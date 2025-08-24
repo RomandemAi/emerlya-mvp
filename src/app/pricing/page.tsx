@@ -4,8 +4,22 @@ import PricingCheckoutButton from '@/components/PricingCheckoutButton';
 import TopUpButton from '@/components/TopUpButton';
 import { LightbulbIcon, DollarIcon, RocketIcon } from '@/components/icons';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { createClient } from '@/lib/supabase/server';
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // Check if user is logged in and their current subscription
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  let currentSubscription = null;
+  if (session) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('subscription_status')
+      .eq('id', session.user.id)
+      .single();
+    currentSubscription = profile?.subscription_status || 'free';
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
@@ -22,14 +36,36 @@ export default function PricingPage() {
             />
           </div>
           <h1 className="text-xl md:text-2xl font-bold font-heading text-white mb-4">
-            Simple, Transparent
-            <span className="block text-accent">
-              Pricing for Everyone
-            </span>
+            {currentSubscription ? (
+              <>
+                Upgrade Your
+                <span className="block text-accent">
+                  {currentSubscription === 'free' ? 'Free Plan' : 
+                   currentSubscription === 'essentials' ? 'Essentials Plan' :
+                   currentSubscription === 'professional' ? 'Professional Plan' :
+                   currentSubscription === 'business' ? 'Business Plan' :
+                   currentSubscription === 'active' ? 'Legacy Plan' : 'Current Plan'}
+                </span>
+              </>
+            ) : (
+              <>
+                Simple, Transparent
+                <span className="block text-accent">
+                  Pricing for Everyone
+                </span>
+              </>
+            )}
           </h1>
           <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed">
-            Choose the perfect plan for your content needs. Start free, upgrade anytime.
-            No hidden fees, no long-term contracts.
+            {currentSubscription ? (
+              currentSubscription === 'free' ? 
+                'Unlock more features and higher limits with a paid plan. Upgrade anytime with no long-term commitment.' :
+              currentSubscription === 'active' ?
+                'You\'re on our legacy plan with grandfathered pricing. Explore our new plans for additional features.' :
+                'Get even more content generation power and advanced features with a higher-tier plan.'
+            ) : (
+              'Choose the perfect plan for your content needs. Start free, upgrade anytime. No hidden fees, no long-term contracts.'
+            )}
           </p>
           
           {/* Billing Toggle */}
@@ -76,10 +112,34 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-8 px-6">
         <div className="max-w-5xl mx-auto">
+          {currentSubscription && (
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-full">
+                <span className="text-primary font-medium">
+                  Current Plan: {
+                    currentSubscription === 'free' ? 'Starter (Free)' :
+                    currentSubscription === 'essentials' ? 'Essentials' :
+                    currentSubscription === 'professional' ? 'Professional' :
+                    currentSubscription === 'business' ? 'Business' :
+                    currentSubscription === 'active' ? 'Legacy Pro' : 'Unknown'
+                  }
+                </span>
+              </div>
+            </div>
+          )}
           <div className="grid lg:grid-cols-4 gap-6">
             
             {/* Free Plan */}
-            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
+            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
+              currentSubscription === 'free' ? 'border-primary ring-2 ring-primary/20' : 'border-white/50 hover:shadow-2xl'
+            }`}>
+              {currentSubscription === 'free' && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Current Plan
+                  </span>
+                </div>
+              )}
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-primary mb-2">Starter</h3>
                 <p className="text-sm text-gray-600 mb-4">Perfect for trying out AI content</p>
@@ -89,9 +149,14 @@ export default function PricingPage() {
                 </div>
                 <PricingCheckoutButton
                   planName="Starter"
-                  className="w-full px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors"
+                  className={`w-full px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+                    currentSubscription === 'free' 
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                  }`}
+                  disabled={currentSubscription === 'free'}
                 >
-                  Get Started Free
+                  {currentSubscription === 'free' ? 'Current Plan' : 'Get Started Free'}
                 </PricingCheckoutButton>
               </div>
               
@@ -124,7 +189,24 @@ export default function PricingPage() {
             </div>
 
             {/* NEW Essentials Plan */}
-            <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-green-200 hover:border-green-300 hover:shadow-2xl transition-all duration-300">
+            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
+              currentSubscription === 'essentials' ? 'border-green-400 ring-2 ring-green-200' : 
+              currentSubscription === 'free' ? 'border-green-300 hover:border-green-400' : 'border-green-200 hover:border-green-300 hover:shadow-2xl'
+            }`}>
+              {currentSubscription === 'essentials' && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                    Current Plan
+                  </span>
+                </div>
+              )}
+              {currentSubscription === 'free' && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-accent text-primary px-3 py-1 rounded-full text-xs font-medium">
+                    Recommended Upgrade
+                  </span>
+                </div>
+              )}
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-green-700 mb-2">Essentials</h3>
                 <p className="text-sm text-gray-600 mb-4">Great value for content creators</p>
@@ -138,9 +220,14 @@ export default function PricingPage() {
                 </div>
                 <PricingCheckoutButton
                   planName="Essentials"
-                  className="w-full px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200"
+                  className={`w-full px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
+                    currentSubscription === 'essentials' 
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg'
+                  }`}
+                  disabled={currentSubscription === 'essentials'}
                 >
-                  Start 14-Day Trial
+                  {currentSubscription === 'essentials' ? 'Current Plan' : 'Start 14-Day Trial'}
                 </PricingCheckoutButton>
               </div>
               
