@@ -12,6 +12,12 @@ export async function POST(req: NextRequest) {
     console.log('🔍 Image generation API called');
     
     // Check if OpenAI API key is configured
+    console.log('🔍 OpenAI API Key check:', {
+      hasKey: !!process.env.OPENAI_API_KEY,
+      keyLength: process.env.OPENAI_API_KEY?.length || 0,
+      keyPrefix: process.env.OPENAI_API_KEY?.substring(0, 7) || 'none'
+    });
+    
     if (!process.env.OPENAI_API_KEY) {
       console.error('❌ OPENAI_API_KEY not configured');
       return NextResponse.json(
