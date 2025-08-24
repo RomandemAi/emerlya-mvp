@@ -296,8 +296,10 @@ export default async function PricingPage() {
                 </li>
               </ul>
             </div>
+            )}
 
             {/* Professional Plan - Most Popular */}
+            {shouldShowPlan('professional') && (
             <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border-2 border-accent hover:shadow-2xl transition-all duration-300 relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-sm font-medium">
