@@ -9,10 +9,23 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('🔍 Image generation API called');
+    
+    // Check if OpenAI API key is configured
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('❌ OPENAI_API_KEY not configured');
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured' },
+        { status: 500 }
+      );
+    }
+    
     const supabase = await createClient();
     
     // Check authentication
     const { data: { session } } = await supabase.auth.getSession();
+    console.log('🔍 Session check:', session ? 'authenticated' : 'not authenticated');
+    
     if (!session) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -52,15 +65,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Check user's subscription status
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('subscription_status')
       .eq('id', session.user.id)
       .single();
 
+    console.log('🔍 Profile check:', { profile, profileError });
+
     const hasActiveSubscription = profile?.subscription_status === 'active';
 
     if (!hasActiveSubscription) {
+      console.log('❌ No active subscription for user');
       return NextResponse.json(
         { 
           error: 'subscription_required',
@@ -83,6 +99,11 @@ export async function POST(req: NextRequest) {
       size: size as "1024x1024" | "1024x1792" | "1792x1024",
       quality: quality as "standard" | "hd",
       style: style as "vivid" | "natural",
+    });
+
+    console.log('🔍 OpenAI response received:', { 
+      hasData: !!response.data, 
+      dataLength: response.data?.length 
     });
 
     const imageUrl = response.data?.[0]?.url;
@@ -114,8 +135,10 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (saveError) {
-      console.error('Failed to save image record:', saveError);
+      console.error('❌ Failed to save image record:', saveError);
       // Continue anyway - user still gets the image
+    } else {
+      console.log('✅ Image saved to database:', savedImage?.id);
     }
 
     return NextResponse.json({
