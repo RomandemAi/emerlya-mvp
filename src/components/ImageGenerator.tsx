@@ -72,8 +72,8 @@ export default function ImageGenerator({ brandId, subscriptionStatus }: ImageGen
           prompt: prompt.trim(),
           size,
           quality,
-          style,
-          brand_id: brandId
+          style
+          // brand_id removed - images belong to user, not specific brand
         }),
       });
 

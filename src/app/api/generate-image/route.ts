@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       size = "1024x1024", 
       quality = "standard",
       style = "vivid",
-      brand_id 
+      brand_id // Optional - for organization only
     } = await req.json();
 
     console.log('Image generation request:', { 
@@ -100,12 +100,12 @@ export async function POST(req: NextRequest) {
 
     console.log('✅ Image generated successfully');
 
-    // Save image record to database
+    // Save image record to database (brand_id is optional)
     const { data: savedImage, error: saveError } = await supabase
       .from('brand_images')
       .insert({
         user_id: session.user.id,
-        brand_id: brand_id || null,
+        brand_id: brand_id || null, // Optional - just for organization
         original_prompt: prompt.trim(),
         revised_prompt: revisedPrompt || prompt.trim(),
         image_url: imageUrl,
