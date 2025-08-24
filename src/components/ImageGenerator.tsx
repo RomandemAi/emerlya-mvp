@@ -375,7 +375,6 @@ export default function ImageGenerator({ brandId, subscriptionStatus }: ImageGen
         <TopUpModal
           isOpen={showTopUpModal}
           onClose={() => setShowTopUpModal(false)}
-          usageData={null}
         />
       )}
     </div>
