@@ -132,7 +132,15 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error: any) {
-    console.error('Image generation error:', error);
+    console.error('❌ Image generation error (DETAILED):', {
+      message: error?.message,
+      stack: error?.stack,
+      error: error?.error,
+      code: error?.error?.code,
+      type: error?.error?.type,
+      param: error?.error?.param,
+      fullError: error
+    });
     
     // Handle specific OpenAI errors
     if (error?.error?.code === 'content_policy_violation') {
@@ -155,10 +163,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Return detailed error for debugging
     return NextResponse.json(
       { 
         error: 'internal_error',
-        message: 'Failed to generate image. Please try again.' 
+        message: 'Failed to generate image. Please try again.',
+        debug: process.env.NODE_ENV === 'development' ? {
+          errorMessage: error?.message,
+          errorCode: error?.error?.code,
+          errorType: error?.error?.type
+        } : undefined
       },
       { status: 500 }
     );
