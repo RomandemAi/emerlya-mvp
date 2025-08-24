@@ -12,7 +12,8 @@ import {
   LightbulbIcon,
   CheckIcon,
   LoadingIcon,
-  CopyIcon 
+  CopyIcon,
+  RocketIcon 
 } from './icons';
 
 interface GeneratorProps {
