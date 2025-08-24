@@ -39,14 +39,14 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-5 gap-3">
         <div className="flex-1 min-w-0">
           <h1 className="text-lg md:text-xl font-bold font-heading text-gray-900 mb-2 truncate">
-            {activeTab === 'brands' ? 'AI Content Creation' :
+            {activeTab === 'brands' ? 'Select Your Brand' :
              activeTab === 'library' ? 'Content Library' :
              activeTab === 'analytics' ? 'Analytics & Insights' :
              activeTab === 'calendar' ? 'Content Calendar' :
              'API Access'}
           </h1>
           <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
-            {activeTab === 'brands' ? 'Create amazing text content and images with AI. Manage your brand identities and generate content that matches your unique voice.' :
+            {activeTab === 'brands' ? 'Choose a brand to create content for. Each brand has its own unique voice, style, and personality that AI will match.' :
              activeTab === 'library' ? 'Browse and manage all your generated content - text and images in one place.' :
              activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
              activeTab === 'calendar' ? 'Plan, schedule, and organize your content creation workflow.' :
