@@ -96,14 +96,31 @@ export async function POST(req: NextRequest) {
       style
     });
     
-    const response = await openai.images.generate({
-      model: "dall-e-3",
-      prompt: prompt.trim(),
-      n: 1,
-      size: size as "1024x1024" | "1024x1792" | "1792x1024",
-      quality: quality as "standard" | "hd",
-      style: style as "vivid" | "natural",
-    });
+    // Try DALL-E 3 first, fall back to DALL-E 2 if not available
+    let response;
+    try {
+      console.log('🎨 Attempting DALL-E 3...');
+      response = await openai.images.generate({
+        model: "dall-e-3",
+        prompt: prompt.trim(),
+        n: 1,
+        size: size as "1024x1024" | "1024x1792" | "1792x1024",
+        quality: quality as "standard" | "hd",
+        style: style as "vivid" | "natural",
+      });
+    } catch (dalleError: any) {
+      if (dalleError?.error?.code === 'model_not_found' || dalleError?.status === 403) {
+        console.log('⚠️ DALL-E 3 not available, falling back to DALL-E 2...');
+        response = await openai.images.generate({
+          model: "dall-e-2",
+          prompt: prompt.trim(),
+          n: 1,
+          size: "1024x1024", // DALL-E 2 only supports 1024x1024
+        });
+      } else {
+        throw dalleError; // Re-throw if it's a different error
+      }
+    }
     
     console.log('✅ OpenAI response success:', {
       hasData: !!response.data,
