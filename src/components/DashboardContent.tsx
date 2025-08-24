@@ -36,22 +36,22 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
   return (
     <>
       {/* Header */}
-      <div className="flex justify-between items-center mb-5">
-        <div>
-                  <h1 className="text-lg md:text-xl font-bold font-heading text-gray-900 mb-2">
-          {activeTab === 'brands' ? 'AI Content Creation' :
-           activeTab === 'library' ? 'Content Library' :
-           activeTab === 'analytics' ? 'Analytics & Insights' :
-           activeTab === 'calendar' ? 'Content Calendar' :
-           'API Access'}
-        </h1>
-        <p className="text-sm text-gray-600 leading-relaxed">
-          {activeTab === 'brands' ? 'Create amazing text content and images with AI. Manage your brand identities and generate content that matches your unique voice.' :
-           activeTab === 'library' ? 'Browse and manage all your generated content - text and images in one place.' :
-           activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
-           activeTab === 'calendar' ? 'Plan, schedule, and organize your content creation workflow.' :
-           'Manage API keys and integrate Emerlya AI into your applications.'}
-        </p>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-5 gap-3">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-lg md:text-xl font-bold font-heading text-gray-900 mb-2 truncate">
+            {activeTab === 'brands' ? 'AI Content Creation' :
+             activeTab === 'library' ? 'Content Library' :
+             activeTab === 'analytics' ? 'Analytics & Insights' :
+             activeTab === 'calendar' ? 'Content Calendar' :
+             'API Access'}
+          </h1>
+          <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
+            {activeTab === 'brands' ? 'Create amazing text content and images with AI. Manage your brand identities and generate content that matches your unique voice.' :
+             activeTab === 'library' ? 'Browse and manage all your generated content - text and images in one place.' :
+             activeTab === 'analytics' ? 'Track your content performance and see how much time you\'ve saved with AI.' :
+             activeTab === 'calendar' ? 'Plan, schedule, and organize your content creation workflow.' :
+             'Manage API keys and integrate Emerlya AI into your applications.'}
+          </p>
         </div>
         {activeTab === 'brands' && (
           <button 
@@ -65,25 +65,25 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-0.5 mb-5 bg-gray-100 rounded-lg p-0.5">
+      <div className="flex space-x-0.5 mb-5 bg-gray-100 rounded-lg p-0.5 overflow-x-auto">
         {[
-          { key: 'brands' as const, label: 'Create', icon: <SparklesIcon size={20} /> },
-          { key: 'library' as const, label: 'Library', icon: <DocumentIcon size={20} /> },
-          { key: 'analytics' as const, label: 'Analytics', icon: <BarChartIcon size={20} /> },
-          { key: 'calendar' as const, label: 'Calendar', icon: <CalendarIcon size={20} /> },
-          { key: 'api' as const, label: 'API', icon: <KeyIcon size={20} /> }
+          { key: 'brands' as const, label: 'Create', icon: <SparklesIcon size={18} className="md:w-5 md:h-5" /> },
+          { key: 'library' as const, label: 'Library', icon: <DocumentIcon size={18} className="md:w-5 md:h-5" /> },
+          { key: 'analytics' as const, label: 'Analytics', icon: <BarChartIcon size={18} className="md:w-5 md:h-5" /> },
+          { key: 'calendar' as const, label: 'Calendar', icon: <CalendarIcon size={18} className="md:w-5 md:h-5" /> },
+          { key: 'api' as const, label: 'API', icon: <KeyIcon size={18} className="md:w-5 md:h-5" /> }
         ].map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 px-3 py-2 rounded-md text-xs font-medium transition-all flex items-center justify-center space-x-1.5 ${
+            className={`flex-1 min-w-0 px-2 md:px-3 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium transition-all flex flex-col md:flex-row items-center justify-center space-y-0.5 md:space-y-0 md:space-x-1.5 ${
               activeTab === tab.key
                 ? 'bg-white text-primary shadow-sm'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
             }`}
           >
-            <span>{tab.icon}</span>
-            <span>{tab.label}</span>
+            <span className="flex-shrink-0">{tab.icon}</span>
+            <span className="truncate text-[10px] md:text-xs leading-tight">{tab.label}</span>
           </button>
         ))}
       </div>

@@ -40,29 +40,31 @@ export default function UnifiedContentCreator({
   return (
     <div className="space-y-6">
       {/* Creation Mode Toggle */}
-      <div className="flex items-center justify-center">
-        <div className="flex bg-gray-100 rounded-xl p-1">
+      <div className="flex items-center justify-center px-4 md:px-0">
+        <div className="flex w-full max-w-xs bg-gray-100 rounded-xl p-1">
           <button
             onClick={() => setCreationMode('text')}
-            className={`px-6 py-3 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+            className={`flex-1 px-3 md:px-6 py-2 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-1 md:gap-2 ${
               creationMode === 'text'
                 ? 'bg-white text-primary shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            <SparklesIcon size={18} />
-            <span>Text Content</span>
+            <SparklesIcon size={16} className="md:w-[18px] md:h-[18px]" />
+            <span className="hidden sm:inline">Text Content</span>
+            <span className="sm:hidden">Text</span>
           </button>
           <button
             onClick={() => setCreationMode('image')}
-            className={`px-6 py-3 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+            className={`flex-1 px-3 md:px-6 py-2 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-1 md:gap-2 ${
               creationMode === 'image'
                 ? 'bg-white text-primary shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            <RobotIcon size={18} />
-            <span>AI Images</span>
+            <RobotIcon size={16} className="md:w-[18px] md:h-[18px]" />
+            <span className="hidden sm:inline">AI Images</span>
+            <span className="sm:hidden">Images</span>
           </button>
         </div>
       </div>
@@ -72,7 +74,7 @@ export default function UnifiedContentCreator({
         <ImageGenerator subscriptionStatus={subscriptionStatus} />
       ) : (
         // Text Content Creation - Show Brands
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {brands.map((brand) => (
             <div key={brand.id} className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
               <div className="mb-4">
