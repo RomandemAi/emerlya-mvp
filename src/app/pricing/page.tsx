@@ -20,6 +20,19 @@ export default async function PricingPage() {
       .single();
     currentSubscription = profile?.subscription_status || 'free';
   }
+
+  // Define tier hierarchy for upgrade logic
+  const tierHierarchy = ['free', 'essentials', 'professional', 'business', 'enterprise'];
+  const currentTierIndex = currentSubscription ? tierHierarchy.indexOf(currentSubscription) : -1;
+  
+  // Helper function to check if a plan should be shown
+  const shouldShowPlan = (planTier: string) => {
+    if (!currentSubscription) return true; // Show all plans for logged-out users
+    if (currentSubscription === 'active') return true; // Legacy users see all plans
+    
+    const planIndex = tierHierarchy.indexOf(planTier);
+    return planIndex > currentTierIndex; // Only show plans above current tier
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral via-white to-neutral">
       {/* Navigation */}
@@ -62,7 +75,9 @@ export default async function PricingPage() {
                 'Unlock more features and higher limits with a paid plan. Upgrade anytime with no long-term commitment.' :
               currentSubscription === 'active' ?
                 'You\'re on our legacy plan with grandfathered pricing. Explore our new plans for additional features.' :
-                'Get even more content generation power and advanced features with a higher-tier plan.'
+              currentTierIndex >= tierHierarchy.indexOf('business') ?
+                'You\'re on our highest tier! Contact us for enterprise solutions or custom plans.' :
+                'Upgrade to unlock even more content generation power and advanced features.'
             ) : (
               'Choose the perfect plan for your content needs. Start free, upgrade anytime. No hidden fees, no long-term contracts.'
             )}
@@ -127,9 +142,30 @@ export default async function PricingPage() {
               </div>
             </div>
           )}
-          <div className="grid lg:grid-cols-4 gap-6">
+          {/* Show message for users on highest tier */}
+          {currentSubscription && currentTierIndex >= tierHierarchy.indexOf('business') && currentSubscription !== 'active' && (
+            <div className="text-center py-12">
+              <div className="backdrop-blur-xl bg-white/80 rounded-3xl p-8 shadow-xl border border-purple-200 max-w-2xl mx-auto">
+                <div className="text-6xl mb-6">🎉</div>
+                <h3 className="text-2xl font-bold text-purple-700 mb-4">You're on our highest tier!</h3>
+                <p className="text-gray-600 mb-6">
+                  You have access to all our premium features. Need something custom? Let's talk!
+                </p>
+                <a href="/contact" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-200">
+                  Contact Sales for Enterprise
+                </a>
+              </div>
+            </div>
+          )}
+
+          <div className={`grid gap-6 ${currentSubscription && currentTierIndex >= tierHierarchy.indexOf('business') && currentSubscription !== 'active' ? 'hidden' : ''}`} style={{gridTemplateColumns: `repeat(${
+            currentSubscription ? 
+              (currentSubscription === 'active' ? 4 : Math.max(1, 4 - (currentTierIndex + 1))) 
+              : 4
+          }, minmax(0, 1fr))`}}>
             
             {/* Free Plan */}
+            {shouldShowPlan('free') && (
             <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
               currentSubscription === 'free' ? 'border-primary ring-2 ring-primary/20' : 'border-white/50 hover:shadow-2xl'
             }`}>
@@ -187,8 +223,10 @@ export default async function PricingPage() {
                 </li>
               </ul>
             </div>
+            )}
 
             {/* NEW Essentials Plan */}
+            {shouldShowPlan('essentials') && (
             <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
               currentSubscription === 'essentials' ? 'border-green-400 ring-2 ring-green-200' : 
               currentSubscription === 'free' ? 'border-green-300 hover:border-green-400' : 'border-green-200 hover:border-green-300 hover:shadow-2xl'
@@ -313,8 +351,10 @@ export default async function PricingPage() {
                 </li>
               </ul>
             </div>
+            )}
 
             {/* Business Plan */}
+            {shouldShowPlan('business') && (
             <div className="backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border border-purple-200 hover:border-purple-300 hover:shadow-2xl transition-all duration-300">
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-heading text-purple-700 mb-2">Business</h3>
@@ -358,6 +398,7 @@ export default async function PricingPage() {
                 </li>
               </ul>
             </div>
+            )}
           </div>
         </div>
       </section>
