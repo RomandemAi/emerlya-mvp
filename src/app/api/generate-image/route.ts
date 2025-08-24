@@ -108,8 +108,7 @@ export async function POST(req: NextRequest) {
         image_url: imageUrl,
         size,
         quality,
-        style,
-        model: 'dall-e-3'
+        style
       })
       .select('id')
       .single();
