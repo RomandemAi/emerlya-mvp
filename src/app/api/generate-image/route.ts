@@ -2,10 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import OpenAI from 'openai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Use the same OpenAI initialization approach as text generation
+function getOpenAIClient(): OpenAI {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY environment variable is required');
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -79,7 +84,8 @@ export async function POST(req: NextRequest) {
 
     console.log('🎨 Generating image with DALL-E 3...');
 
-    // Generate image with DALL-E 3
+    // Generate image with DALL-E 3 using same client approach as text generation
+    const openai = getOpenAIClient();
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt: prompt.trim(),
