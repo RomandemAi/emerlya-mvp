@@ -63,6 +63,21 @@ export default function DashboardLayout({
         ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         w-64
       `}>
+        {/* Mobile Close Button */}
+        {isMobileSidebarOpen && (
+          <div className="lg:hidden absolute top-4 right-4 z-50">
+            <button
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all"
+              aria-label="Close menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
+        
         <Sidebar 
           userEmail={userEmail} 
           subscriptionStatus={subscriptionStatus}
@@ -78,11 +93,38 @@ export default function DashboardLayout({
             setIsSettingsOpen(true);
             setIsMobileSidebarOpen(false);
           }}
+          onMobileLinkClick={() => setIsMobileSidebarOpen(false)}
         />
       </div>
       
+      {/* Mobile Header with Hamburger Menu */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-30 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => setIsMobileSidebarOpen(true)}
+            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all"
+            aria-label="Open menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          
+          <div className="flex items-center space-x-2">
+            <img 
+              src="/emerlya-logo.svg" 
+              alt="Emerlya AI" 
+              className="w-8 h-8"
+            />
+            <span className="text-lg font-semibold text-primary">Emerlya AI</span>
+          </div>
+          
+          <div className="w-10"></div> {/* Spacer for center alignment */}
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 p-3 lg:p-4 min-h-screen">
+      <main className="flex-1 lg:ml-64 p-3 lg:p-4 min-h-screen pt-16 lg:pt-4">
         {children}
       </main>
 

@@ -22,6 +22,7 @@ interface SidebarProps {
   onGenerateClick?: () => void;
   onDocumentsClick?: () => void;
   onSettingsClick?: () => void;
+  onMobileLinkClick?: () => void;
 }
 
 export default function Sidebar({ 
@@ -29,7 +30,8 @@ export default function Sidebar({
   subscriptionStatus,
   onGenerateClick,
   onDocumentsClick,
-  onSettingsClick
+  onSettingsClick,
+  onMobileLinkClick
 }: SidebarProps) {
   return (
     <div className="h-full backdrop-blur-xl bg-white/90 border-r border-white/50 flex flex-col">
@@ -92,6 +94,7 @@ export default function Sidebar({
             <div className="space-y-2">
               <Link 
                 href="/"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernHomeIcon size="xs" />
@@ -99,6 +102,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/about"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernInfoIcon size="xs" />
@@ -106,6 +110,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/pricing"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernDollarIcon size="xs" />
@@ -113,6 +118,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/features"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernStarIcon size="xs" />
@@ -120,6 +126,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/blog"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernPencilIcon size="xs" />
@@ -127,6 +134,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/contact"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernPhoneIcon size="xs" />
@@ -134,6 +142,7 @@ export default function Sidebar({
               </Link>
               <Link 
                 href="/api-docs"
+                onClick={onMobileLinkClick}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 transition-all duration-200 hover:text-primary text-sm"
               >
                 <ModernWrenchIcon size="xs" />
