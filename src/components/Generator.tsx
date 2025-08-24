@@ -1,6 +1,19 @@
 'use client';
 import { useState, FormEvent, ChangeEvent } from 'react';
 import TopUpModal from './TopUpModal';
+import { 
+  RobotIcon, 
+  SparklesIcon, 
+  LockIcon, 
+  DollarIcon, 
+  SaveIcon, 
+  WarningIcon, 
+  BlockIcon, 
+  LightbulbIcon,
+  CheckIcon,
+  LoadingIcon,
+  CopyIcon 
+} from './icons';
 
 interface GeneratorProps {
   brandId: string;
@@ -147,7 +160,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {subscriptionError && (
         <div className="backdrop-blur-xl bg-red-50/60 border border-red-200 rounded-3xl p-6 shadow-2xl mb-8">
           <div className="flex items-start gap-4">
-            <span className="text-red-500 text-2xl">🚫</span>
+            <BlockIcon className="text-red-500" size={32} />
             <div className="flex-1">
               <h3 className="text-red-700 font-bold text-lg mb-3">Subscription Required</h3>
               <p className="text-red-600 mb-4 leading-relaxed">{subscriptionError}</p>
@@ -166,16 +179,17 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {usageError && (
         <div className="backdrop-blur-xl bg-yellow-50/60 border border-yellow-200 rounded-3xl p-6 shadow-2xl mb-8">
           <div className="flex items-start gap-4">
-            <span className="text-yellow-500 text-2xl">⚠️</span>
+            <WarningIcon className="text-yellow-500" size={32} />
             <div className="flex-1">
               <h3 className="text-yellow-700 font-bold text-lg mb-3">Usage Limit Reached</h3>
               <p className="text-yellow-600 mb-4 leading-relaxed">{usageError}</p>
               <div className="flex space-x-3">
                 <button 
                   onClick={() => setShowTopUpModal(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl font-medium transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2"
                 >
-                  💰 Top Up Words
+                  <DollarIcon size={18} />
+                  Top Up Words
                 </button>
                 <button 
                   onClick={() => window.location.href = '/pricing'}
@@ -193,7 +207,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {!hasActiveSubscription && !subscriptionError && (
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-8 shadow-2xl border border-white/50 mb-8">
           <div className="text-center">
-            <span className="text-6xl mb-4 block">🔒</span>
+            <LockIcon className="text-gray-400 mb-4 mx-auto" size={64} />
             <h2 className="text-2xl font-bold text-primary mb-4">
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Premium Feature
@@ -205,9 +219,10 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
             <div className="space-y-3">
               <button 
                 onClick={() => window.location.href = '/dashboard'}
-                className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-2xl transition-all duration-200 hover:shadow-xl hover:-translate-y-1"
+                className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-2xl transition-all duration-200 hover:shadow-xl hover:-translate-y-1 flex items-center gap-2"
               >
-                🚀 Upgrade to Premium
+                <RocketIcon size={18} />
+                Upgrade to Premium
               </button>
               <p className="text-sm text-gray-500">
                 Current status: <span className="capitalize font-medium">{subscriptionStatus || 'Free'}</span>
@@ -248,7 +263,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
                 </>
               ) : (
                 <>
-                  <span>✨</span>
+                  <SparklesIcon size={18} />
                   <span>Generate Content</span>
                 </>
               )}
@@ -262,7 +277,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-primary flex items-center gap-3">
-              <span>🤖</span>
+              <RobotIcon className="text-primary" size={24} />
               <span>Generated Content</span>
             </h3>
             <div className="flex items-center gap-3">
@@ -274,14 +289,12 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
                 >
                   {copyFeedback ? (
                     <>
-                      <span>✅</span>
+                      <CheckIcon size={16} />
                       <span>{copyFeedback}</span>
                     </>
                   ) : (
                     <>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
+                      <CopyIcon size={16} />
                       <span>Copy</span>
                     </>
                   )}
@@ -318,19 +331,19 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
               <div className="flex items-center gap-2 text-sm">
                 {saveStatus === 'saving' && (
                   <div className="flex items-center gap-2 text-primary">
-                    <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full"></div>
+                    <LoadingIcon size={16} />
                     <span>Saving...</span>
                   </div>
                 )}
                 {saveStatus === 'saved' && (
                   <div className="flex items-center gap-2 text-green-600">
-                    <span>💾</span>
+                    <SaveIcon size={16} />
                     <span>Saved to library</span>
                   </div>
                 )}
                 {saveStatus === 'error' && (
                   <div className="flex items-center gap-2 text-red-600">
-                    <span>⚠️</span>
+                    <WarningIcon size={16} />
                     <span>Save failed</span>
                   </div>
                 )}
@@ -344,7 +357,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       {!completion && !isLoading && hasActiveSubscription && (
         <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 shadow-2xl border border-white/50">
           <h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-3">
-            <span>💡</span>
+            <LightbulbIcon className="text-primary" size={24} />
             <span>How it Works</span>
           </h3>
           <ul className="space-y-3 text-gray-700">

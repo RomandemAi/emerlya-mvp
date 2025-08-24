@@ -8,6 +8,7 @@ import BrandDocumentsModal from './BrandDocumentsModal';
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ContentCalendar from './ContentCalendar';
 import ApiKeyDashboard from './ApiKeyDashboard';
+import { SparklesIcon, TargetIcon, BarChartIcon, CalendarIcon, KeyIcon } from './icons';
 
 interface Brand {
   id: string;
@@ -53,7 +54,7 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
             onClick={() => setIsCreateModalOpen(true)}
             className="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center space-x-1.5"
           >
-            <span>✨</span>
+            <SparklesIcon size={16} />
             <span>Create Brand</span>
           </button>
         )}
@@ -62,10 +63,10 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       {/* Tab Navigation */}
       <div className="flex space-x-0.5 mb-5 bg-gray-100 rounded-lg p-0.5">
         {[
-          { key: 'brands' as const, label: 'Brands', icon: '🎯' },
-          { key: 'analytics' as const, label: 'Analytics', icon: '📊' },
-          { key: 'calendar' as const, label: 'Calendar', icon: '📅' },
-          { key: 'api' as const, label: 'API', icon: '🔑' }
+          { key: 'brands' as const, label: 'Brands', icon: <TargetIcon size={20} /> },
+          { key: 'analytics' as const, label: 'Analytics', icon: <BarChartIcon size={20} /> },
+          { key: 'calendar' as const, label: 'Calendar', icon: <CalendarIcon size={20} /> },
+          { key: 'api' as const, label: 'API', icon: <KeyIcon size={20} /> }
         ].map(tab => (
           <button
             key={tab.key}

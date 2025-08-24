@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { 
   CONTENT_TEMPLATES, 
   TEMPLATE_CATEGORIES, 
@@ -8,6 +8,7 @@ import {
   getTemplatesByCategory,
   searchTemplates 
 } from '@/lib/content-templates';
+import { ClipboardIcon, SearchIcon, LightbulbIcon, DocumentIcon } from './icons';
 import { MagnifyingGlassIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
 interface ContentTemplateSelectorProps {
@@ -41,7 +42,7 @@ export default function ContentTemplateSelector({ onTemplateSelect, onClose }: C
   };
 
   const getCategoryIcon = (category: string) => {
-    return TEMPLATE_CATEGORIES[category as keyof typeof TEMPLATE_CATEGORIES]?.icon || '📝';
+    return TEMPLATE_CATEGORIES[category as keyof typeof TEMPLATE_CATEGORIES]?.icon || <DocumentIcon size={16} />;
   };
 
   return (
@@ -93,7 +94,7 @@ export default function ContentTemplateSelector({ onTemplateSelect, onClose }: C
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
-              <span className="mr-2">📋</span>
+              <ClipboardIcon className="mr-2 text-accent" size={20} />
               All Templates ({Object.keys(CONTENT_TEMPLATES).length})
             </button>
 
@@ -120,7 +121,7 @@ export default function ContentTemplateSelector({ onTemplateSelect, onClose }: C
           <div className="flex-1 p-4 overflow-y-auto">
             {filteredTemplates.length === 0 ? (
               <div className="text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">🔍</div>
+                <SearchIcon className="text-gray-400 mb-4 mx-auto" size={64} />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No templates found</h3>
                 <p className="text-gray-600">Try adjusting your search or selecting a different category.</p>
               </div>
@@ -192,7 +193,7 @@ export default function ContentTemplateSelector({ onTemplateSelect, onClose }: C
         <div className="p-4 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
-              💡 <strong>Pro Tip:</strong> Templates adapt to your brand voice automatically
+              <LightbulbIcon className="inline mr-2" size={16} /> <strong>Pro Tip:</strong> Templates adapt to your brand voice automatically
             </div>
             <div className="flex items-center space-x-2">
               <span className="text-xs text-gray-500">

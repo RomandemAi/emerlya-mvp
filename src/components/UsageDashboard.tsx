@@ -166,7 +166,7 @@ export default function UsageDashboard() {
       {usage.subscription_status === 'active' && (
         <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl p-6 border border-emerald-200">
           <div className="flex items-center space-x-2 mb-2">
-            <span className="text-emerald-600">🎉</span>
+            <CelebrationIcon className="text-emerald-600" size={20} />
             <h3 className="text-lg font-semibold text-gray-900">Grandfathered Legacy Plan</h3>
           </div>
           <p className="text-gray-700 mb-3">

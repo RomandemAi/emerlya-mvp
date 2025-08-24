@@ -224,7 +224,7 @@ export default function ApiKeyDashboard({ userEmail, subscriptionStatus }: ApiKe
               return (
                 <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                   <p className="text-sm text-amber-800">
-                    🔒 {apiInfo.upgradeMessage}
+                    <LockIcon className="inline mr-2" size={16} /> {apiInfo.upgradeMessage}
                     <a href="/pricing" className="font-medium underline hover:no-underline ml-1">
                       Upgrade your plan
                     </a>

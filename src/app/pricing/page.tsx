@@ -2,6 +2,7 @@ import Link from 'next/link';
 import UnifiedNavBar from '@/components/UnifiedNavBar';
 import PricingCheckoutButton from '@/components/PricingCheckoutButton';
 import TopUpButton from '@/components/TopUpButton';
+import { LightbulbIcon, DollarIcon, RocketIcon } from '@/components/icons';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function PricingPage() {
@@ -291,7 +292,7 @@ export default function PricingPage() {
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
-                  <span className="text-2xl">💡</span>
+                  <LightbulbIcon className="text-primary" size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Micro Top-Up</h3>
                 <div className="text-3xl font-bold text-blue-600 mb-2">€5</div>
@@ -317,7 +318,7 @@ export default function PricingPage() {
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-4">
-                  <span className="text-2xl">💰</span>
+                  <DollarIcon className="text-green-600" size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Standard Top-Up</h3>
                 <div className="text-3xl font-bold text-green-600 mb-2">€10</div>
@@ -348,7 +349,7 @@ export default function PricingPage() {
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
-                  <span className="text-2xl">🚀</span>
+                  <RocketIcon className="text-accent" size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Value Top-Up</h3>
                 <div className="text-3xl font-bold text-purple-600 mb-2">€25</div>
@@ -454,7 +455,7 @@ export default function PricingPage() {
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
-                  <span className="text-2xl">🚀</span>
+                  <RocketIcon className="text-accent" size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Developer Pro</h3>
                 <div className="mb-2">
