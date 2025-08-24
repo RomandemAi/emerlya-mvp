@@ -46,7 +46,13 @@ export default function ContentLibrary({ brandId }: ContentLibraryProps) {
 
       if (error) {
         console.error('Error fetching content:', error);
-        setError('Failed to load content library');
+        // If table doesn't exist, show empty state instead of error
+        if (error.message?.includes('relation "brand_drafts" does not exist')) {
+          setContentItems([]);
+          setError('');
+        } else {
+          setError('Failed to load content library');
+        }
         return;
       }
 

@@ -37,7 +37,13 @@ export default function ImageLibrary() {
 
       if (error) {
         console.error('Error fetching images:', error);
-        setError('Failed to load image library');
+        // If table doesn't exist, show empty state instead of error
+        if (error.message?.includes('relation "brand_images" does not exist')) {
+          setImages([]);
+          setError('');
+        } else {
+          setError('Failed to load image library');
+        }
         return;
       }
 
