@@ -86,6 +86,16 @@ export async function POST(req: NextRequest) {
 
     // Generate image with DALL-E 3 using same client approach as text generation
     const openai = getOpenAIClient();
+    
+    console.log('🎨 Sending request to OpenAI DALL-E 3:', {
+      model: "dall-e-3",
+      prompt: prompt.trim().substring(0, 100) + '...',
+      n: 1,
+      size,
+      quality,
+      style
+    });
+    
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt: prompt.trim(),
@@ -93,6 +103,12 @@ export async function POST(req: NextRequest) {
       size: size as "1024x1024" | "1024x1792" | "1792x1024",
       quality: quality as "standard" | "hd",
       style: style as "vivid" | "natural",
+    });
+    
+    console.log('✅ OpenAI response success:', {
+      hasData: !!response.data,
+      dataLength: response.data?.length,
+      firstImageUrl: response.data?.[0]?.url ? 'present' : 'missing'
     });
 
     console.log('🔍 OpenAI response received:', { 

@@ -107,7 +107,19 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
 
     } catch (error: any) {
       console.error('Error generating image:', error);
-      setError(error.message || 'Failed to generate image. Please try again.');
+      
+      // Try to get more specific error info from the response
+      if (error.message?.includes('fetch')) {
+        setError('Network error. Please check your connection and try again.');
+      } else if (error.message?.includes('429')) {
+        setError('Rate limit exceeded. Please wait a moment before trying again.');
+      } else if (error.message?.includes('401')) {
+        setError('Authentication error. Please refresh the page and try again.');
+      } else if (error.message?.includes('billing')) {
+        setError('Billing issue detected. Please check your OpenAI account billing status.');
+      } else {
+        setError(error.message || 'Failed to generate image. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
