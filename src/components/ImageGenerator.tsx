@@ -32,10 +32,43 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
   const [error, setError] = useState('');
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   
-  // Image settings
-  const [size, setSize] = useState('1024x1024');
+  // Image settings with smart presets
+  const [size, setSize] = useState('auto');
   const [quality, setQuality] = useState('standard');
   const [style, setStyle] = useState('vivid');
+  
+  // Smart size detection from prompt
+  const detectSizeFromPrompt = (prompt: string): string => {
+    const lowerPrompt = prompt.toLowerCase();
+    
+    // Social media formats
+    if (lowerPrompt.includes('instagram') || lowerPrompt.includes('ig post') || lowerPrompt.includes('square post')) {
+      return '1024x1024'; // Square
+    }
+    if (lowerPrompt.includes('instagram story') || lowerPrompt.includes('ig story')) {
+      return '1024x1792'; // Vertical story
+    }
+    if (lowerPrompt.includes('twitter') || lowerPrompt.includes('x post') || lowerPrompt.includes('tweet')) {
+      return '1792x1024'; // Horizontal
+    }
+    if (lowerPrompt.includes('linkedin') || lowerPrompt.includes('facebook post')) {
+      return '1792x1024'; // Horizontal
+    }
+    if (lowerPrompt.includes('youtube thumbnail') || lowerPrompt.includes('thumbnail')) {
+      return '1792x1024'; // Horizontal
+    }
+    if (lowerPrompt.includes('banner') || lowerPrompt.includes('header') || lowerPrompt.includes('cover')) {
+      return '1792x1024'; // Horizontal
+    }
+    if (lowerPrompt.includes('portrait') || lowerPrompt.includes('vertical')) {
+      return '1024x1792'; // Vertical
+    }
+    if (lowerPrompt.includes('landscape') || lowerPrompt.includes('horizontal') || lowerPrompt.includes('wide')) {
+      return '1792x1024'; // Horizontal
+    }
+    
+    return '1024x1024'; // Default square
+  };
   
   // Feedback states
   const [copyFeedback, setCopyFeedback] = useState('');
@@ -63,6 +96,15 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
     setSubscriptionError('');
     setError('');
 
+    // Auto-detect size from prompt
+    const smartSize = detectSizeFromPrompt(prompt);
+    const finalSize = size === 'auto' ? smartSize : size;
+    
+    // Update size state if auto-detected differently
+    if (size === 'auto' && smartSize !== size) {
+      setSize(smartSize);
+    }
+
     try {
       const response = await fetch('/api/generate-image', {
         method: 'POST',
@@ -71,7 +113,7 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
         },
         body: JSON.stringify({
           prompt: brandName ? `${prompt.trim()} (for ${brandName} brand)` : prompt.trim(),
-          size,
+          size: finalSize,
           quality,
           style,
           brand_id: brandId
@@ -129,18 +171,34 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
     if (!generatedImage?.url) return;
 
     try {
-      const response = await fetch(generatedImage.url);
+      // Use a proxy approach for CORS issues
+      const response = await fetch('/api/download-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl: generatedImage.url
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `generated-image-${Date.now()}.png`;
+      a.download = `emerlya-generated-${Date.now()}.png`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (error) {
       console.error('Error downloading image:', error);
+      // Fallback: open image in new tab
+      window.open(generatedImage?.url, '_blank');
     }
   };
 
@@ -221,7 +279,7 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
                 rows={3}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Describe the image you want to create... (e.g., 'A modern logo for a tech startup, minimalist design, blue and white colors')"
+                placeholder="Describe the image you want to create... Try: 'Instagram post about coffee', 'Twitter banner for tech company', 'YouTube thumbnail for cooking video', or 'LinkedIn post graphic about AI'"
                 maxLength={1000}
                 disabled={isLoading}
               />
@@ -241,10 +299,16 @@ export default function ImageGenerator({ brandId, brandName, subscriptionStatus 
                   className="w-full p-3 bg-white/80 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
                   disabled={isLoading}
                 >
-                  <option value="1024x1024">Square (1024×1024)</option>
-                  <option value="1024x1792">Portrait (1024×1792)</option>
-                  <option value="1792x1024">Landscape (1792×1024)</option>
+                  <option value="auto">🎯 Auto (Smart Detection)</option>
+                  <option value="1024x1024">📱 Square (Instagram Post)</option>
+                  <option value="1024x1792">📲 Portrait (Instagram Story)</option>
+                  <option value="1792x1024">🖥️ Landscape (X/Twitter, YouTube)</option>
                 </select>
+                {size === 'auto' && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Will auto-detect format from your prompt (e.g., "Instagram post", "Twitter banner")
+                  </p>
+                )}
               </div>
 
               <div>
