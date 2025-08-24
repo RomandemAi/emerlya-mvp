@@ -16,34 +16,17 @@ export async function GET() {
     
     const openai = getOpenAIClient();
     
-    // Test with a very simple, safe prompt - try DALL-E 3 first, fall back to DALL-E 2
-    let response;
-    let modelUsed;
-    try {
-      console.log('Testing DALL-E 3...');
-      response = await openai.images.generate({
-        model: "dall-e-3",
-        prompt: "a simple red circle on white background",
-        n: 1,
-        size: "1024x1024",
-        quality: "standard",
-        style: "natural",
-      });
-      modelUsed = "dall-e-3";
-    } catch (dalleError: any) {
-      if (dalleError?.error?.code === 'model_not_found' || dalleError?.status === 403) {
-        console.log('DALL-E 3 not available, trying DALL-E 2...');
-        response = await openai.images.generate({
-          model: "dall-e-2",
-          prompt: "a simple red circle on white background",
-          n: 1,
-          size: "1024x1024",
-        });
-        modelUsed = "dall-e-2";
-      } else {
-        throw dalleError;
-      }
-    }
+    // Test DALL-E 3 (Tier 2 account with access)
+    console.log('Testing DALL-E 3 (Tier 2 account)...');
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: "a simple red circle on white background",
+      n: 1,
+      size: "1024x1024",
+      quality: "standard",
+      style: "natural",
+    });
+    const modelUsed = "dall-e-3";
 
     console.log('✅ DALL-E test successful');
     
