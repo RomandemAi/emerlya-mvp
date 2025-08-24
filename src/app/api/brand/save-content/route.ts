@@ -16,6 +16,8 @@ export async function POST(req: NextRequest) {
 
     const { brand_id, title, content, type = 'generated' } = await req.json();
 
+    console.log('Save content request:', { brand_id, title: title?.substring(0, 50), contentLength: content?.length, type });
+
     if (!brand_id || !title || !content) {
       return NextResponse.json(
         { error: 'Missing required fields: brand_id, title, content' },
@@ -51,8 +53,17 @@ export async function POST(req: NextRequest) {
 
     if (saveError) {
       console.error('Error saving content:', saveError);
+      console.error('Save error details:', {
+        message: saveError.message,
+        details: saveError.details,
+        hint: saveError.hint,
+        code: saveError.code
+      });
       return NextResponse.json(
-        { error: 'Failed to save content' },
+        { 
+          error: 'Failed to save content',
+          details: saveError.message 
+        },
         { status: 500 }
       );
     }

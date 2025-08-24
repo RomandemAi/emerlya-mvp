@@ -74,6 +74,8 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
         setSaveStatus('saved');
         setTimeout(() => setSaveStatus(null), 3000);
       } else {
+        const errorData = await response.json();
+        console.error('Save failed:', errorData);
         setSaveStatus('error');
         setTimeout(() => setSaveStatus(null), 3000);
       }
@@ -144,6 +146,7 @@ export default function Generator({ brandId, subscriptionStatus }: GeneratorProp
       
       // Auto-save the completed content
       if (fullContent && fullContent.length > 10 && !fullContent.startsWith('Error:')) {
+        console.log('Auto-saving content:', { brandId, fullContentLength: fullContent.length, inputLength: input.length });
         setTimeout(() => saveContent(fullContent, input), 1000);
       }
     } catch (error) {
