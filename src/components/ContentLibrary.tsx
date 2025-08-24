@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { DocumentIcon, CopyIcon, CheckIcon, WarningIcon } from './icons';
+import { DocumentIcon, CopyIcon, CheckIcon, WarningIcon, RobotIcon } from './icons';
+import ImageLibrary from './ImageLibrary';
 
 interface ContentItem {
   id: string;
@@ -148,14 +149,48 @@ export default function ContentLibrary({ brandId }: ContentLibraryProps) {
     );
   }
 
+  const [activeTab, setActiveTab] = useState<'content' | 'images'>('content');
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Content Library</h2>
-        <div className="text-sm text-gray-600">
-          {contentItems.length} {contentItems.length === 1 ? 'item' : 'items'}
+        <div className="flex items-center gap-4">
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setActiveTab('content')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                activeTab === 'content'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <DocumentIcon className="inline mr-2" size={16} />
+              Text Content
+            </button>
+            <button
+              onClick={() => setActiveTab('images')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                activeTab === 'images'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <RobotIcon className="inline mr-2" size={16} />
+              AI Images
+            </button>
+          </div>
+          {activeTab === 'content' && (
+            <div className="text-sm text-gray-600">
+              {contentItems.length} {contentItems.length === 1 ? 'item' : 'items'}
+            </div>
+          )}
         </div>
       </div>
+
+      {activeTab === 'images' ? (
+        <ImageLibrary />
+      ) : (
 
       <div className="grid gap-6">
         {contentItems.map((item) => (
@@ -214,6 +249,7 @@ export default function ContentLibrary({ brandId }: ContentLibraryProps) {
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 }

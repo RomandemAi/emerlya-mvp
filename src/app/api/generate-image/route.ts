@@ -1,0 +1,162 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import OpenAI from 'openai';
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+export async function POST(req: NextRequest) {
+  try {
+    const supabase = await createClient();
+    
+    // Check authentication
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const { 
+      prompt, 
+      size = "1024x1024", 
+      quality = "standard",
+      style = "vivid",
+      brand_id 
+    } = await req.json();
+
+    console.log('Image generation request:', { 
+      userId: session.user.id,
+      prompt: prompt.substring(0, 100) + '...',
+      size,
+      quality,
+      style,
+      brand_id 
+    });
+
+    if (!prompt || prompt.trim().length === 0) {
+      return NextResponse.json(
+        { error: 'Prompt is required' },
+        { status: 400 }
+      );
+    }
+
+    if (prompt.length > 1000) {
+      return NextResponse.json(
+        { error: 'Prompt too long. Maximum 1000 characters.' },
+        { status: 400 }
+      );
+    }
+
+    // Check user's subscription status
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('subscription_status')
+      .eq('id', session.user.id)
+      .single();
+
+    const hasActiveSubscription = profile?.subscription_status === 'active';
+
+    if (!hasActiveSubscription) {
+      return NextResponse.json(
+        { 
+          error: 'subscription_required',
+          message: 'Image generation requires an active subscription. Please upgrade your plan.' 
+        },
+        { status: 402 }
+      );
+    }
+
+    // TODO: Add usage limits check here
+    // For now, we'll proceed with generation
+
+    console.log('🎨 Generating image with DALL-E 3...');
+
+    // Generate image with DALL-E 3
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: prompt.trim(),
+      n: 1,
+      size: size as "1024x1024" | "1024x1792" | "1792x1024",
+      quality: quality as "standard" | "hd",
+      style: style as "vivid" | "natural",
+    });
+
+    const imageUrl = response.data[0]?.url;
+    const revisedPrompt = response.data[0]?.revised_prompt;
+
+    if (!imageUrl) {
+      return NextResponse.json(
+        { error: 'Failed to generate image' },
+        { status: 500 }
+      );
+    }
+
+    console.log('✅ Image generated successfully');
+
+    // Save image record to database
+    const { data: savedImage, error: saveError } = await supabase
+      .from('brand_images')
+      .insert({
+        user_id: session.user.id,
+        brand_id: brand_id || null,
+        original_prompt: prompt.trim(),
+        revised_prompt: revisedPrompt || prompt.trim(),
+        image_url: imageUrl,
+        size,
+        quality,
+        style,
+        model: 'dall-e-3'
+      })
+      .select('id')
+      .single();
+
+    if (saveError) {
+      console.error('Failed to save image record:', saveError);
+      // Continue anyway - user still gets the image
+    }
+
+    return NextResponse.json({
+      success: true,
+      image_url: imageUrl,
+      revised_prompt: revisedPrompt,
+      id: savedImage?.id,
+      message: 'Image generated successfully'
+    });
+
+  } catch (error: any) {
+    console.error('Image generation error:', error);
+    
+    // Handle specific OpenAI errors
+    if (error?.error?.code === 'content_policy_violation') {
+      return NextResponse.json(
+        { 
+          error: 'content_policy_violation',
+          message: 'Your prompt violates OpenAI content policy. Please try a different prompt.' 
+        },
+        { status: 400 }
+      );
+    }
+
+    if (error?.error?.code === 'rate_limit_exceeded') {
+      return NextResponse.json(
+        { 
+          error: 'rate_limit_exceeded',
+          message: 'Rate limit exceeded. Please try again in a moment.' 
+        },
+        { status: 429 }
+      );
+    }
+
+    return NextResponse.json(
+      { 
+        error: 'internal_error',
+        message: 'Failed to generate image. Please try again.' 
+      },
+      { status: 500 }
+    );
+  }
+}

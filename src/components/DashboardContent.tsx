@@ -9,7 +9,8 @@ import AnalyticsDashboard from './AnalyticsDashboard';
 import ContentCalendar from './ContentCalendar';
 import ApiKeyDashboard from './ApiKeyDashboard';
 import ContentLibrary from './ContentLibrary';
-import { SparklesIcon, TargetIcon, BarChartIcon, CalendarIcon, KeyIcon, DocumentIcon } from './icons';
+import ImageGenerator from './ImageGenerator';
+import { SparklesIcon, TargetIcon, BarChartIcon, CalendarIcon, KeyIcon, DocumentIcon, RobotIcon } from './icons';
 
 interface Brand {
   id: string;
@@ -30,7 +31,7 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isDocumentsModalOpen, setIsDocumentsModalOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
-  const [activeTab, setActiveTab] = useState<'brands' | 'library' | 'analytics' | 'calendar' | 'api'>('brands');
+  const [activeTab, setActiveTab] = useState<'brands' | 'library' | 'images' | 'analytics' | 'calendar' | 'api'>('brands');
 
   return (
     <>
@@ -66,6 +67,7 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
         {[
           { key: 'brands' as const, label: 'Brands', icon: <TargetIcon size={20} /> },
           { key: 'library' as const, label: 'Library', icon: <DocumentIcon size={20} /> },
+          { key: 'images' as const, label: 'Images', icon: <RobotIcon size={20} /> },
           { key: 'analytics' as const, label: 'Analytics', icon: <BarChartIcon size={20} /> },
           { key: 'calendar' as const, label: 'Calendar', icon: <CalendarIcon size={20} /> },
           { key: 'api' as const, label: 'API', icon: <KeyIcon size={20} /> }
@@ -88,6 +90,10 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       {/* Tab Content */}
       {activeTab === 'library' && (
         <ContentLibrary />
+      )}
+      
+      {activeTab === 'images' && (
+        <ImageGenerator subscriptionStatus={subscriptionStatus} />
       )}
       
       {activeTab === 'brands' && (
