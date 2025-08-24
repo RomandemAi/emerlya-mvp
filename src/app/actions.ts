@@ -23,16 +23,51 @@ export async function createBrand(formData: FormData) {
   const wordsToAvoid = formData.get('words_to_avoid') as string;
   const documents = formData.get('documents') as string;
 
+  // Extract content-specific preferences
+  const socialStyle = formData.get('social_style') as string;
+  const socialLength = formData.get('social_length') as string;
+  const blogStyle = formData.get('blog_style') as string;
+  const blogStructure = formData.get('blog_structure') as string;
+  const emailStyle = formData.get('email_style') as string;
+  const emailGreeting = formData.get('email_greeting') as string;
+  const twitterStyle = formData.get('twitter_style') as string;
+  const instagramStyle = formData.get('instagram_style') as string;
+  const ctaStyle = formData.get('cta_style') as string;
+  const industryTerms = formData.get('industry_terms') as string;
+
   if (!brandName || !tone || !style || !targetAudience || !documents) {
     throw new Error('All required fields must be filled');
   }
 
-  // Create persona configuration object from individual fields
+  // Create enhanced persona configuration object with content-specific preferences
   const personaConfig = {
+    // Base brand settings
     tone,
     style,
     target_audience: targetAudience,
-    words_to_avoid: wordsToAvoid || '', // Optional field
+    words_to_avoid: wordsToAvoid || '',
+    
+    // Content-specific preferences
+    content_preferences: {
+      social_media: {
+        style: socialStyle || '',
+        length: socialLength || 'medium'
+      },
+      blog_posts: {
+        style: blogStyle || '',
+        structure: blogStructure || ''
+      },
+      emails: {
+        style: emailStyle || '',
+        greeting: emailGreeting || ''
+      },
+      platforms: {
+        twitter: twitterStyle || '',
+        instagram: instagramStyle || ''
+      },
+      cta_style: ctaStyle || '',
+      industry_terms: industryTerms || ''
+    }
   };
 
   try {
@@ -181,16 +216,51 @@ export async function updateBrand(formData: FormData) {
   const targetAudience = formData.get('target_audience') as string;
   const wordsToAvoid = formData.get('words_to_avoid') as string;
 
+  // Extract content-specific preferences
+  const socialStyle = formData.get('social_style') as string;
+  const socialLength = formData.get('social_length') as string;
+  const blogStyle = formData.get('blog_style') as string;
+  const blogStructure = formData.get('blog_structure') as string;
+  const emailStyle = formData.get('email_style') as string;
+  const emailGreeting = formData.get('email_greeting') as string;
+  const twitterStyle = formData.get('twitter_style') as string;
+  const instagramStyle = formData.get('instagram_style') as string;
+  const ctaStyle = formData.get('cta_style') as string;
+  const industryTerms = formData.get('industry_terms') as string;
+
   if (!brandId || !brandName || !tone || !style || !targetAudience) {
     throw new Error('All required fields must be filled');
   }
 
-  // Create persona configuration object from individual fields
+  // Create enhanced persona configuration object with content-specific preferences
   const personaConfig = {
+    // Base brand settings
     tone,
     style,
     target_audience: targetAudience,
-    words_to_avoid: wordsToAvoid || '', // Optional field
+    words_to_avoid: wordsToAvoid || '',
+    
+    // Content-specific preferences
+    content_preferences: {
+      social_media: {
+        style: socialStyle || '',
+        length: socialLength || 'medium'
+      },
+      blog_posts: {
+        style: blogStyle || '',
+        structure: blogStructure || ''
+      },
+      emails: {
+        style: emailStyle || '',
+        greeting: emailGreeting || ''
+      },
+      platforms: {
+        twitter: twitterStyle || '',
+        instagram: instagramStyle || ''
+      },
+      cta_style: ctaStyle || '',
+      industry_terms: industryTerms || ''
+    }
   };
 
   try {

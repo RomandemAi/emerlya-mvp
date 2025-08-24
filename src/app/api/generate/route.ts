@@ -133,7 +133,7 @@ export async function POST(req: Request) {
       console.log('✨ Using enhanced brand intelligence system');
       systemPrompt = styleSystemPrompt(brandProfile, brandMemory, brandSettings);
     } else {
-      // Fall back to legacy system
+      // Fall back to legacy system with content preferences
       console.log('⚠️ Falling back to legacy persona system');
       const { data: brandData, error: brandError } = await supabase
         .from('brands')
@@ -145,12 +145,56 @@ export async function POST(req: Request) {
         throw new Error(`Could not fetch brand data: ${brandError?.message}`);
       }
 
+      const personaConfig = brandData.persona_config_json;
+      
       systemPrompt = `You are an AI content generator for a brand.
 Your personality and writing style are defined by the following JSON rules:
-${JSON.stringify(brandData.persona_config_json, null, 2)}
+${JSON.stringify(personaConfig, null, 2)}
 
 You will be given a user's prompt and generate content that perfectly matches the brand's voice.
 Adhere strictly to the persona rules. Do not break character.`;
+
+      // If we have content preferences in the persona config, add them to the prompt
+      if (personaConfig.content_preferences) {
+        systemPrompt += `
+
+CONTENT-SPECIFIC PREFERENCES:`;
+        
+        const prefs = personaConfig.content_preferences;
+        if (prefs.social_media?.style || prefs.social_media?.length) {
+          systemPrompt += `
+- SOCIAL MEDIA: ${prefs.social_media.style || 'Standard approach'}, preferred length: ${prefs.social_media.length || 'medium'}`;
+        }
+        
+        if (prefs.blog_posts?.style || prefs.blog_posts?.structure) {
+          systemPrompt += `
+- BLOG POSTS: ${prefs.blog_posts.style || 'Standard approach'}, structure: ${prefs.blog_posts.structure || 'standard'}`;
+        }
+        
+        if (prefs.emails?.style || prefs.emails?.greeting) {
+          systemPrompt += `
+- EMAIL CONTENT: ${prefs.emails.style || 'Standard approach'}, greeting style: ${prefs.emails.greeting || 'professional'}`;
+        }
+        
+        if (prefs.platforms?.twitter || prefs.platforms?.instagram) {
+          systemPrompt += `
+- PLATFORM-SPECIFIC: Twitter/X: ${prefs.platforms.twitter || 'standard'}, Instagram: ${prefs.platforms.instagram || 'standard'}`;
+        }
+        
+        if (prefs.cta_style) {
+          systemPrompt += `
+- CALL-TO-ACTION STYLE: ${prefs.cta_style}`;
+        }
+        
+        if (prefs.industry_terms) {
+          systemPrompt += `
+- INDUSTRY TERMS & JARGON: ${prefs.industry_terms}`;
+        }
+
+        systemPrompt += `
+
+When generating content, adapt your format and style based on the content type and these specific preferences.`;
+      }
     }
 
     // Build user prompt with context

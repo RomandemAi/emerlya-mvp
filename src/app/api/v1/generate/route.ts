@@ -78,10 +78,16 @@ async function generateHandler(request: NextRequest, context: ApiContext) {
     }
 
     // Get brand context
-    const [profile, memory, settings] = await Promise.all([
+    const [profile, memory, settings, personaData] = await Promise.all([
       getProfile(brand_id),
       getMemory(brand_id),
-      getSettings(brand_id)
+      getSettings(brand_id),
+      // Also get the persona config for content preferences
+      supabase
+        .from('brands')
+        .select('persona_config_json')
+        .eq('id', brand_id)
+        .single()
     ]);
 
     if (!profile) {
@@ -92,11 +98,15 @@ async function generateHandler(request: NextRequest, context: ApiContext) {
       );
     }
 
+    // Extract content preferences from persona config
+    const contentPreferences = personaData.data?.persona_config_json?.content_preferences;
+
     // Build system prompt  
     const systemPrompt = styleSystemPrompt(
       profile,
       memory || [],
-      settings
+      settings,
+      contentPreferences
     );
 
     // Build user prompt

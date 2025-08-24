@@ -3,12 +3,13 @@ import { StyleProfile, BrandMemory, BrandSettings } from './types';
 export function styleSystemPrompt(
   profile: StyleProfile,
   memory: BrandMemory[],
-  settings: BrandSettings
+  settings: BrandSettings,
+  contentPreferences?: any
 ): string {
   // Sort memory by importance (highest first)
   const sortedMemory = memory.sort((a, b) => b.importance - a.importance);
   
-  return `You are Emerlya AI, a brand voice mirror that generates content with perfect brand alignment.
+  let prompt = `You are Emerlya AI, a brand voice mirror that generates content with perfect brand alignment.
 
 STYLE PROFILE (strictly adhere to every detail):
 ${JSON.stringify(profile, null, 2)}
@@ -20,7 +21,46 @@ BRAND SETTINGS:
 - Default tone: ${settings.default_tone}
 - Region: ${settings.region || 'Universal'}
 - Language: ${settings.language}
-- Profanity policy: ${settings.profanity_policy}
+- Profanity policy: ${settings.profanity_policy}`;
+
+  // Add content-specific preferences if available
+  if (contentPreferences) {
+    prompt += `
+
+CONTENT-SPECIFIC PREFERENCES:`;
+    
+    if (contentPreferences.social_media?.style || contentPreferences.social_media?.length) {
+      prompt += `
+- SOCIAL MEDIA: ${contentPreferences.social_media.style || 'Standard approach'}, preferred length: ${contentPreferences.social_media.length || 'medium'}`;
+    }
+    
+    if (contentPreferences.blog_posts?.style || contentPreferences.blog_posts?.structure) {
+      prompt += `
+- BLOG POSTS: ${contentPreferences.blog_posts.style || 'Standard approach'}, structure: ${contentPreferences.blog_posts.structure || 'standard'}`;
+    }
+    
+    if (contentPreferences.emails?.style || contentPreferences.emails?.greeting) {
+      prompt += `
+- EMAIL CONTENT: ${contentPreferences.emails.style || 'Standard approach'}, greeting style: ${contentPreferences.emails.greeting || 'professional'}`;
+    }
+    
+    if (contentPreferences.platforms?.twitter || contentPreferences.platforms?.instagram) {
+      prompt += `
+- PLATFORM-SPECIFIC: Twitter/X: ${contentPreferences.platforms.twitter || 'standard'}, Instagram: ${contentPreferences.platforms.instagram || 'standard'}`;
+    }
+    
+    if (contentPreferences.cta_style) {
+      prompt += `
+- CALL-TO-ACTION STYLE: ${contentPreferences.cta_style}`;
+    }
+    
+    if (contentPreferences.industry_terms) {
+      prompt += `
+- INDUSTRY TERMS & JARGON: ${contentPreferences.industry_terms}`;
+    }
+  }
+
+  prompt += `
 
 CORE RULES:
 1. NEVER violate brandRules.dont or use bannedWords
@@ -29,19 +69,26 @@ CORE RULES:
 4. Use only content.themes that align with the brand
 5. Respect audience demographics and pain points
 6. Apply regional spelling preferences (${settings.region || 'universal'})
-7. If the user's prompt conflicts with brand memory or rules, politely suggest an on-brand alternative
+7. Adapt content format and style based on content-specific preferences above
+8. If the user's prompt conflicts with brand memory or rules, politely suggest an on-brand alternative
 
 CONTENT GENERATION APPROACH:
 - Channel the brand's authentic voice as defined in the profile
 - Weave in relevant themes and keywords naturally
-- Match the typical structure and format preferences
+- Match the typical structure and format preferences for the specific content type
 - Address the target audience's specific interests and pain points
 - Maintain consistency with the brand's established personality
+- Apply content-type specific formatting and style preferences
 
 OUTPUT INSTRUCTIONS:
 - Generate only the requested content unless analysis is explicitly requested
 - Ensure every word reflects the brand's unique voice and values
+- Adapt the format and style based on the content type (social media, blog, email, etc.)
+- Use appropriate industry terminology when relevant
+- Apply the specified call-to-action style when appropriate
 - If unsure about brand alignment, err on the side of the established profile`;
+
+  return prompt;
 }
 
 export function styleProfilePrompt(sources: string): string {

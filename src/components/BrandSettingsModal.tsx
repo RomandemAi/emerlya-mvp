@@ -161,6 +161,178 @@ export default function BrandSettingsModal({
                   placeholder="e.g., synergy, leverage, basically"
                 />
               </div>
+
+              {/* Content Type Preferences */}
+              <div>
+                <label className="block text-lg font-semibold text-primary mb-4">
+                  Content Type Preferences
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Social Media Posts */}
+                  <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4">
+                    <h4 className="font-semibold text-primary mb-2">Social Media Posts</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <label htmlFor="social_style" className="block text-sm font-medium text-gray-700 mb-1">
+                          Style & Format
+                        </label>
+                        <input
+                          type="text"
+                          id="social_style"
+                          name="social_style"
+                          defaultValue={existingData.content_preferences?.social_media?.style || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Use emojis, hashtags, casual tone"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="social_length" className="block text-sm font-medium text-gray-700 mb-1">
+                          Preferred Length
+                        </label>
+                        <select
+                          id="social_length"
+                          name="social_length"
+                          defaultValue={existingData.content_preferences?.social_media?.length || 'medium'}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                        >
+                          <option value="short">Short (50-100 words)</option>
+                          <option value="medium">Medium (100-200 words)</option>
+                          <option value="long">Long (200+ words)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Blog Posts */}
+                  <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4">
+                    <h4 className="font-semibold text-primary mb-2">Blog Posts</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <label htmlFor="blog_style" className="block text-sm font-medium text-gray-700 mb-1">
+                          Writing Style
+                        </label>
+                        <input
+                          type="text"
+                          id="blog_style"
+                          name="blog_style"
+                          defaultValue={existingData.content_preferences?.blog_posts?.style || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Educational, storytelling, data-driven"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="blog_structure" className="block text-sm font-medium text-gray-700 mb-1">
+                          Structure Preferences
+                        </label>
+                        <input
+                          type="text"
+                          id="blog_structure"
+                          name="blog_structure"
+                          defaultValue={existingData.content_preferences?.blog_posts?.structure || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., H2/H3 headings, bullet points, examples"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Email Content */}
+                  <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4">
+                    <h4 className="font-semibold text-primary mb-2">Email Content</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <label htmlFor="email_style" className="block text-sm font-medium text-gray-700 mb-1">
+                          Email Style
+                        </label>
+                        <input
+                          type="text"
+                          id="email_style"
+                          name="email_style"
+                          defaultValue={existingData.content_preferences?.emails?.style || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Newsletter format, personal touch, CTA focus"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email_greeting" className="block text-sm font-medium text-gray-700 mb-1">
+                          Greeting Style
+                        </label>
+                        <input
+                          type="text"
+                          id="email_greeting"
+                          name="email_greeting"
+                          defaultValue={existingData.content_preferences?.emails?.greeting || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Hi [Name], Dear [Name], Hey there"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Platform-Specific Content */}
+                  <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4">
+                    <h4 className="font-semibold text-primary mb-2">Platform-Specific</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <label htmlFor="twitter_style" className="block text-sm font-medium text-gray-700 mb-1">
+                          Twitter/X Style
+                        </label>
+                        <input
+                          type="text"
+                          id="twitter_style"
+                          name="twitter_style"
+                          defaultValue={existingData.content_preferences?.platforms?.twitter || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Thread format, single tweets, use trending hashtags"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="instagram_style" className="block text-sm font-medium text-gray-700 mb-1">
+                          Instagram Style
+                        </label>
+                        <input
+                          type="text"
+                          id="instagram_style"
+                          name="instagram_style"
+                          defaultValue={existingData.content_preferences?.platforms?.instagram || ''}
+                          className="w-full px-3 py-2 bg-white/80 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent"
+                          placeholder="e.g., Visual storytelling, caption style, story format"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call-to-Action Preferences */}
+              <div>
+                <label htmlFor="cta_style" className="block text-lg font-semibold text-primary mb-3">
+                  Call-to-Action Style
+                </label>
+                <input
+                  type="text"
+                  id="cta_style"
+                  name="cta_style"
+                  defaultValue={existingData.content_preferences?.cta_style || ''}
+                  className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-lg"
+                  placeholder="e.g., Soft sell, direct action, educational approach"
+                />
+              </div>
+
+              {/* Industry-Specific Terms */}
+              <div>
+                <label htmlFor="industry_terms" className="block text-lg font-semibold text-primary mb-3">
+                  Industry-Specific Terms & Jargon
+                </label>
+                <textarea
+                  id="industry_terms"
+                  name="industry_terms"
+                  rows={3}
+                  defaultValue={existingData.content_preferences?.industry_terms || ''}
+                  className="w-full px-4 py-4 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-accent focus:border-transparent resize-none transition-all duration-200 text-lg"
+                  placeholder="e.g., fintech, SaaS, B2B, customer journey, conversion funnel"
+                />
+              </div>
             </div>
 
             {error && (
