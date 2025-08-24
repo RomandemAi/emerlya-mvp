@@ -16,10 +16,11 @@ import TopUpModal from './TopUpModal';
 
 interface ImageGeneratorProps {
   brandId?: string;
+  brandName?: string;
   subscriptionStatus?: string | null;
 }
 
-export default function ImageGenerator({ brandId, subscriptionStatus }: ImageGeneratorProps) {
+export default function ImageGenerator({ brandId, brandName, subscriptionStatus }: ImageGeneratorProps) {
   const [prompt, setPrompt] = useState('');
   const [generatedImage, setGeneratedImage] = useState<{
     url: string;
@@ -69,11 +70,11 @@ export default function ImageGenerator({ brandId, subscriptionStatus }: ImageGen
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: prompt.trim(),
+          prompt: brandName ? `${prompt.trim()} (for ${brandName} brand)` : prompt.trim(),
           size,
           quality,
-          style
-          // brand_id removed - images belong to user, not specific brand
+          style,
+          brand_id: brandId
         }),
       });
 

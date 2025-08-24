@@ -1,15 +1,22 @@
 import { createClient } from '../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import Generator from '../../../components/Generator';
+import BrandContentCreator from '../../../components/BrandContentCreator';
 import DashboardLayout from '../../../components/DashboardLayout';
 
 // Force dynamic rendering and disable caching to always get fresh subscription status
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function BrandPage({ params }: { params: Promise<{ brandId: string }> }) {
+export default async function BrandPage({ 
+  params, 
+  searchParams 
+}: { 
+  params: Promise<{ brandId: string }>;
+  searchParams: Promise<{ mode?: string }>;
+}) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
   
@@ -20,7 +27,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
   // Fetch the brand details and verify ownership
   const { data: brand, error } = await supabase
     .from('brands')
-    .select('name, persona_config_json')
+    .select('id, name, persona_config_json')
     .eq('id', resolvedParams.brandId)
     .eq('profile_id', session.user.id) // Ensure user owns this brand
     .single();
@@ -84,13 +91,13 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
         </div>
         <div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Generate Content for
+            Create Content for
             <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               {brand.name}
             </span>
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Create on-brand content using AI powered by your brand&apos;s personality and documents.
+            Generate text content and AI images that match your brand's unique voice, style, and personality.
           </p>
         </div>
       </div>
@@ -108,9 +115,11 @@ export default async function BrandPage({ params }: { params: Promise<{ brandId:
         </div>
       )}
 
-      <Generator 
+      <BrandContentCreator 
+        brand={brand}
         brandId={resolvedParams.brandId} 
         subscriptionStatus={profile?.subscription_status || null}
+        mode={resolvedSearchParams.mode}
       />
     </DashboardLayout>
   );

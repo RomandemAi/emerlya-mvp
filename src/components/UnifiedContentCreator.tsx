@@ -81,6 +81,9 @@ export default function UnifiedContentCreator({
                   <span>AI Images</span>
                 </button>
                 <button
+                  onClick={() => {
+                    window.location.href = `/brands/${brand.id}?mode=settings`;
+                  }}
                   className="px-3 py-2 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 text-xs font-medium rounded-lg transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center space-x-1"
                 >
                   <span>⚙️</span>
