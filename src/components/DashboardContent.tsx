@@ -8,7 +8,8 @@ import BrandDocumentsModal from './BrandDocumentsModal';
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ContentCalendar from './ContentCalendar';
 import ApiKeyDashboard from './ApiKeyDashboard';
-import { SparklesIcon, TargetIcon, BarChartIcon, CalendarIcon, KeyIcon } from './icons';
+import ContentLibrary from './ContentLibrary';
+import { SparklesIcon, TargetIcon, BarChartIcon, CalendarIcon, KeyIcon, DocumentIcon } from './icons';
 
 interface Brand {
   id: string;
@@ -29,7 +30,7 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isDocumentsModalOpen, setIsDocumentsModalOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
-  const [activeTab, setActiveTab] = useState<'brands' | 'analytics' | 'calendar' | 'api'>('brands');
+  const [activeTab, setActiveTab] = useState<'brands' | 'library' | 'analytics' | 'calendar' | 'api'>('brands');
 
   return (
     <>
@@ -64,6 +65,7 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       <div className="flex space-x-0.5 mb-5 bg-gray-100 rounded-lg p-0.5">
         {[
           { key: 'brands' as const, label: 'Brands', icon: <TargetIcon size={20} /> },
+          { key: 'library' as const, label: 'Library', icon: <DocumentIcon size={20} /> },
           { key: 'analytics' as const, label: 'Analytics', icon: <BarChartIcon size={20} /> },
           { key: 'calendar' as const, label: 'Calendar', icon: <CalendarIcon size={20} /> },
           { key: 'api' as const, label: 'API', icon: <KeyIcon size={20} /> }
@@ -84,6 +86,10 @@ export default function DashboardContent({ brands, userEmail, subscriptionStatus
       </div>
 
       {/* Tab Content */}
+      {activeTab === 'library' && (
+        <ContentLibrary />
+      )}
+      
       {activeTab === 'brands' && (
         <div>
           {brands.length === 0 ? (
