@@ -158,15 +158,11 @@ export default async function PricingPage() {
             </div>
           )}
 
-          <div className={`grid gap-6 ${currentSubscription && currentTierIndex >= tierHierarchy.indexOf('business') && currentSubscription !== 'active' ? 'hidden' : ''}`} style={{gridTemplateColumns: `repeat(${
-            currentSubscription ? 
-              (currentSubscription === 'active' ? 4 : Math.max(1, 4 - (currentTierIndex + 1))) 
-              : 4
-          }, minmax(0, 1fr))`}}>
+          <div className={`grid gap-6 ${currentSubscription && currentTierIndex >= tierHierarchy.indexOf('business') && currentSubscription !== 'active' ? 'hidden' : ''} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`}>
             
             {/* Free Plan */}
             {shouldShowPlan('free') && (
-            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
+            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-4 sm:p-6 shadow-xl border transition-all duration-300 relative ${
               currentSubscription === 'free' ? 'border-primary ring-2 ring-primary/20' : 'border-white/50 hover:shadow-2xl'
             }`}>
               {currentSubscription === 'free' && (
@@ -227,7 +223,7 @@ export default async function PricingPage() {
 
             {/* NEW Essentials Plan */}
             {shouldShowPlan('essentials') && (
-            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-6 shadow-xl border transition-all duration-300 relative ${
+            <div className={`backdrop-blur-xl bg-white/80 rounded-2xl p-4 sm:p-6 shadow-xl border transition-all duration-300 relative ${
               currentSubscription === 'essentials' ? 'border-green-400 ring-2 ring-green-200' : 
               currentSubscription === 'free' ? 'border-green-300 hover:border-green-400' : 'border-green-200 hover:border-green-300 hover:shadow-2xl'
             }`}>
@@ -417,7 +413,7 @@ export default async function PricingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {/* Micro Top-Up */}
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="text-center">
@@ -523,7 +519,7 @@ export default async function PricingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Free API */}
             <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 shadow-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="text-center">
@@ -751,7 +747,7 @@ export default async function PricingPage() {
       {/* Footer */}
       <footer className="bg-primary py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
